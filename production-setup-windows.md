@@ -2,8 +2,8 @@
 
 ## 📋 Resumo do Projeto
 - **Frontend**: HTML/CSS/JavaScript estático
-- **Backend**: Node.js/Express com SQLite
-- **Banco**: SQLite já configurado
+- **Backend**: Node.js/Express com PostgreSQL
+- **Banco**: PostgreSQL configurado via `DATABASE_URL`
 - **Deploy**: Vercel (serverless)
 
 ## 🚀 Deploy no Windows
@@ -43,6 +43,7 @@ vercel --prod
 PORT=3001
 NODE_ENV=production
 JWT_SECRET=sua_chave_secreta_super_segura
+DATABASE_URL=sua_string_de_conexao_postgresql
 ```
 
 ## 🎯 Comando Único para Deploy

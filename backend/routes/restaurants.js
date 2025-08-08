@@ -25,109 +25,105 @@ const isAdmin = (req, res, next) => {
 };
 
 // Get all restaurants
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const db = req.app.locals.db;
   
-  db.all('SELECT * FROM restaurants ORDER BY id', (err, rows) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Internal server error' });
-    }
-    res.json(rows);
-  });
+  try {
+    const result = await db.query('SELECT * FROM restaurants ORDER BY id');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 // Get restaurant by ID
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const db = req.app.locals.db;
   const { id } = req.params;
   
-  db.get('SELECT * FROM restaurants WHERE id = ?', [id], (err, row) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Internal server error' });
-    }
+  try {
+    const result = await db.query('SELECT * FROM restaurants WHERE id = $1', [id]);
+    const row = result.rows[0];
+
     if (!row) {
       return res.status(404).json({ message: 'Restaurant not found' });
     }
     res.json(row);
-  });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 // Create new restaurant (admin only)
-router.post('/', isAdmin, (req, res) => {
+router.post('/', isAdmin, async (req, res) => {
   const db = req.app.locals.db;
   const { name, cuisine, rating, location, image, hours, description, whatsapp, map_embed } = req.body;
   
-  db.run(
-    'INSERT INTO restaurants (name, cuisine, rating, location, image, hours, description, whatsapp, map_embed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-    [name, cuisine, rating, location, image, hours, description, whatsapp, map_embed],
-    function(err) {
-      if (err) {
-        console.error('Database error during restaurant creation:', err.message);
-        return res.status(500).json({ message: 'Internal server error', error: err.message });
-      }
-      
-      res.status(201).json({ 
-        id: this.lastID,
-        name, cuisine, rating, location, image, hours, description, whatsapp, map_embed
-      });
-    }
-  );
+  try {
+    const result = await db.query(
+      'INSERT INTO restaurants (name, cuisine, rating, location, image, hours, description, whatsapp, map_embed) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id',
+      [name, cuisine, rating, location, image, hours, description, whatsapp, map_embed]
+    );
+    
+    res.status(201).json({ 
+      id: result.rows[0].id,
+      name, cuisine, rating, location, image, hours, description, whatsapp, map_embed
+    });
+  } catch (err) {
+    console.error('Database error during restaurant creation:', err.message);
+    return res.status(500).json({ message: 'Internal server error', error: err.message });
+  }
 });
 
 // Update a restaurant (admin only)
-router.put('/:id', isAdmin, (req, res) => {
+router.put('/:id', isAdmin, async (req, res) => {
   const db = req.app.locals.db;
   const { id } = req.params;
   const { name, cuisine, rating, location, image, hours, description, whatsapp, map_embed } = req.body;
 
-  db.run(
-    `UPDATE restaurants SET 
-      name = ?, cuisine = ?, rating = ?, location = ?, image = ?, 
-      hours = ?, description = ?, whatsapp = ?, map_embed = ? 
-     WHERE id = ?`,
-    [name, cuisine, rating, location, image, hours, description, whatsapp, map_embed, id],
-    function(err) {
-      if (err) {
-        console.error('Database error during restaurant update:', err.message);
-        return res.status(500).json({ message: 'Internal server error', error: err.message });
-      }
-      if (this.changes === 0) {
-        return res.status(404).json({ message: 'Restaurant not found' });
-      }
-      res.status(200).json({ message: 'Restaurant updated successfully' });
+  try {
+    const result = await db.query(
+      `UPDATE restaurants SET 
+        name = $1, cuisine = $2, rating = $3, location = $4, image = $5, 
+        hours = $6, description = $7, whatsapp = $8, map_embed = $9 
+       WHERE id = $10`,
+      [name, cuisine, rating, location, image, hours, description, whatsapp, map_embed, id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Restaurant not found' });
     }
-  );
+    res.status(200).json({ message: 'Restaurant updated successfully' });
+  } catch (err) {
+    console.error('Database error during restaurant update:', err.message);
+    return res.status(500).json({ message: 'Internal server error', error: err.message });
+  }
 });
 
 // Delete a restaurant
-router.delete('/:id', isAdmin, (req, res) => {
+router.delete('/:id', isAdmin, async (req, res) => {
   const db = req.app.locals.db;
   const { id } = req.params;
 
-  // First, check if the restaurant has any associated coupons
-  db.get('SELECT COUNT(*) as count FROM coupons WHERE restaurant_id = ?', [id], (err, row) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Erro no servidor ao verificar cupons.' });
-    }
-    if (row.count > 0) {
+  try {
+    // First, check if the restaurant has any associated coupons
+    const couponCheckResult = await db.query('SELECT COUNT(*) as count FROM coupons WHERE restaurant_id = $1', [id]);
+    if (couponCheckResult.rows[0].count > 0) {
       return res.status(400).json({ message: 'Não é possível excluir um restaurante que possui cupons associados. Exclua os cupons primeiro.' });
     }
 
     // If no coupons, proceed with deletion
-    db.run('DELETE FROM restaurants WHERE id = ?', [id], function(err) {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Erro no servidor ao excluir o restaurante.' });
-      }
-      if (this.changes === 0) {
-        return res.status(404).json({ message: 'Restaurante não encontrado.' });
-      }
-      res.status(200).json({ message: 'Restaurante excluído com sucesso.' });
-    });
-  });
+    const deleteResult = await db.query('DELETE FROM restaurants WHERE id = $1', [id]);
+    if (deleteResult.rowCount === 0) {
+      return res.status(404).json({ message: 'Restaurante não encontrado.' });
+    }
+    res.status(200).json({ message: 'Restaurante excluído com sucesso.' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Erro no servidor ao excluir o restaurante.' });
+  }
 });
 
 module.exports = router;

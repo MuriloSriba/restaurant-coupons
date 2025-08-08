@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Get all coupons
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const db = req.app.locals.db;
 
   const query = `
@@ -14,17 +14,17 @@ router.get('/', (req, res) => {
     ORDER BY c.id
   `;
 
-  db.all(query, (err, rows) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Internal server error' });
-    }
-    res.json(rows);
-  });
+  try {
+    const result = await db.query(query);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 // Get coupon by ID
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const db = req.app.locals.db;
   const { id } = req.params;
   
@@ -34,23 +34,25 @@ router.get('/:id', (req, res) => {
       r.name as restaurant_name 
     FROM coupons c
     LEFT JOIN restaurants r ON c.restaurant_id = r.id
-    WHERE c.id = ?
+    WHERE c.id = $1
   `;
 
-  db.get(query, [id], (err, row) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Internal server error' });
-    }
+  try {
+    const result = await db.query(query, [id]);
+    const row = result.rows[0];
+
     if (!row) {
       return res.status(404).json({ message: 'Coupon not found' });
     }
     res.json(row);
-  });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 // Create new coupon (admin only)
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const db = req.app.locals.db;
   const { 
     title, code, description, discount_type, discount_value, category, type, 
@@ -72,53 +74,52 @@ router.post('/', (req, res) => {
   }
   discounted_price = Math.max(0, discounted_price || 0); // Ensure price is not negative
 
-  db.run(
-    `INSERT INTO coupons (
-      title, code, description, discount_type, discount_value, category, type, 
-      original_price, discounted_price, min_order_value, valid_from, valid_to, 
-      usage_limit, restaurant_id, image
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [
-      title, code, description, discount_type, discount_value, category, type, 
-      original_price, discounted_price, min_order_value, valid_from, valid_to, 
-      usage_limit, restaurant_id, image
-    ],
-    function(err) {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Internal server error' });
-      }
-      
-      // Return the full object that was created
-      res.status(201).json({
-        id: this.lastID,
+  try {
+    const result = await db.query(
+      `INSERT INTO coupons (
         title, code, description, discount_type, discount_value, category, type, 
         original_price, discounted_price, min_order_value, valid_from, valid_to, 
         usage_limit, restaurant_id, image
-      });
-    }
-  );
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING id`,
+      [
+        title, code, description, discount_type, discount_value, category, type, 
+        original_price, discounted_price, min_order_value, valid_from, valid_to, 
+        usage_limit, restaurant_id, image
+      ]
+    );
+    
+    // Return the full object that was created
+    res.status(201).json({
+      id: result.rows[0].id,
+      title, code, description, discount_type, discount_value, category, type, 
+      original_price, discounted_price, min_order_value, valid_from, valid_to, 
+      usage_limit, restaurant_id, image
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 // Delete a coupon
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   const db = req.app.locals.db;
   const { id } = req.params;
 
-  db.run('DELETE FROM coupons WHERE id = ?', [id], function(err) {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Erro no servidor' });
-    }
-    if (this.changes === 0) {
+  try {
+    const result = await db.query('DELETE FROM coupons WHERE id = $1', [id]);
+    if (result.rowCount === 0) {
       return res.status(404).json({ message: 'Cupom não encontrado' });
     }
     res.status(200).json({ message: 'Cupom excluído com sucesso.' });
-  });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Erro no servidor' });
+  }
 });
 
 // Update a coupon
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   const db = req.app.locals.db;
   const { id } = req.params;
   const { 
@@ -141,29 +142,29 @@ router.put('/:id', (req, res) => {
   }
   discounted_price = Math.max(0, discounted_price || 0); // Ensure price is not negative
 
-  db.run(
-    `UPDATE coupons SET
-      title = ?, code = ?, description = ?, discount_type = ?, discount_value = ?, 
-      category = ?, type = ?, original_price = ?, discounted_price = ?, 
-      min_order_value = ?, valid_from = ?, valid_to = ?, usage_limit = ?, 
-      restaurant_id = ?, image = ?
-    WHERE id = ?`,
-    [
-      title, code, description, discount_type, discount_value, category, type, 
-      original_price, discounted_price, min_order_value, valid_from, valid_to, 
-      usage_limit, restaurant_id, image, id
-    ],
-    function(err) {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Internal server error' });
-      }
-      if (this.changes === 0) {
-        return res.status(404).json({ message: 'Cupom não encontrado' });
-      }
-      res.status(200).json({ message: 'Cupom atualizado com sucesso.' });
+  try {
+    const result = await db.query(
+      `UPDATE coupons SET
+        title = $1, code = $2, description = $3, discount_type = $4, discount_value = $5, 
+        category = $6, type = $7, original_price = $8, discounted_price = $9, 
+        min_order_value = $10, valid_from = $11, valid_to = $12, usage_limit = $13, 
+        restaurant_id = $14, image = $15
+      WHERE id = $16`,
+      [
+        title, code, description, discount_type, discount_value, category, type, 
+        original_price, discounted_price, min_order_value, valid_from, valid_to, 
+        usage_limit, restaurant_id, image, id
+      ]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Cupom não encontrado' });
     }
-  );
+    res.status(200).json({ message: 'Cupom atualizado com sucesso.' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 module.exports = router;

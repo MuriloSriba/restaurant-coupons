@@ -2,8 +2,8 @@
 
 ## 📋 Resumo do Projeto
 - **Frontend**: HTML/CSS/JavaScript estático
-- **Backend**: Node.js/Express com SQLite
-- **Banco**: SQLite já configurado
+- **Backend**: Node.js/Express com PostgreSQL
+- **Banco**: PostgreSQL configurado via `DATABASE_URL`
 - **Deploy**: Vercel (serverless)
 
 ## 🚀 Opções de Deploy
@@ -103,9 +103,8 @@ rm -rf node_modules package-lock.json
 npm install
 ```
 
-### Erro com SQLite no Vercel:
-- O código já está preparado para Vercel (usa /tmp/)
-- Não precisa de configuração adicional
+### Erro com Banco de Dados no Vercel:
+- Certifique-se de que a variável de ambiente `DATABASE_URL` está configurada corretamente no Vercel com a string de conexão do seu banco de dados PostgreSQL.
 
 ## 📞 Suporte
 
