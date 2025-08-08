@@ -12,30 +12,38 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-        if (!loggedInUser) {
-            window.location.href = 'login.html';
-            return;
-        }
-
         const loginBtn = document.getElementById('loginBtn');
         const userNameDisplay = document.getElementById('userNameDisplay');
         const logoutBtn = document.getElementById('logoutBtn');
+        const adminBtn = document.getElementById('adminBtn'); // Get the admin button
 
-        loginBtn.style.display = 'none';
-        userNameDisplay.style.display = 'inline-block';
+        if (loggedInUser) {
+            loginBtn.style.display = 'none';
+            userNameDisplay.style.display = 'inline-block';
 
-        // Show full name if available, else email
-        const fullName = loggedInUser.firstName && loggedInUser.lastName
-            ? loggedInUser.firstName + ' ' + loggedInUser.lastName
-            : loggedInUser.email;
-        userNameDisplay.textContent = fullName;
+            // Show full name if available, else email
+            const fullName = loggedInUser.firstName && loggedInUser.lastName
+                ? loggedInUser.firstName + ' ' + loggedInUser.lastName
+                : loggedInUser.email;
+            userNameDisplay.textContent = fullName;
 
-        logoutBtn.style.display = 'inline-block';
+            logoutBtn.style.display = 'inline-block';
 
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('loggedInUser');
-            window.location.href = 'login.html';
-        });
+            // Show admin button if user is admin
+            if (loggedInUser.role === 'admin') {
+                adminBtn.style.display = 'inline-block';
+            }
+
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('loggedInUser');
+                localStorage.removeItem('token');
+                window.location.href = 'login.html';
+            });
+        } else {
+            loginBtn.addEventListener('click', () => {
+                window.location.href = 'login.html';
+            });
+        }
     });
 </script>
     <!-- Header -->
@@ -67,12 +75,7 @@
 
     <!-- Home Section -->
     <section id="home" class="hero">
-        <div class="hero-background">
-            <div class="hero-slideshow" id="heroSlideshow">
-                <!-- Slideshow will be populated dynamically -->
-            </div>
-            <div class="hero-overlay"></div>
-        </div>
+        <div id="heroSlideshow" class="hero-slideshow"></div>
         <div class="container">
             <div class="hero-content">
                 <h1>Descontos Exclusivos nos Melhores Restaurantes</h1>
@@ -298,6 +301,5 @@
     </section>
 
     <script src="js/script.js"></script>
-    <script src="js/slideshow.js"></script>
 </body>
 </html>

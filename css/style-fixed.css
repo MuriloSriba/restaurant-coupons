@@ -348,8 +348,4 @@ body {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary-color);
-<attempt_completion>
-<result>
-I have created a cleaned and corrected version of the CSS file as css/style-fixed.css. This file includes the proper font import and addresses common potential issues while preserving the original styles. You can use this fixed CSS file to replace or compare with your current style.css to resolve the errors you were encountering.
-</result>
-</attempt_completion>
+}

@@ -3,317 +3,270 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Login e Cadastro - FoodCupons</title>
+    <title>Login - FoodCupons</title>
     <link rel="stylesheet" href="css/style.css" />
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-light);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 1rem;
-            box-sizing: border-box;
-        }
-        .auth-container {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
+        .form-container {
             width: 100%;
-            max-width: 900px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        .tabs {
-            display: flex;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid var(--bg-light);
-        }
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 1rem;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text-light);
-            border-bottom: 3px solid transparent;
-            transition: var(--transition);
-        }
-        .tab.active {
-            color: var(--white);
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            border-radius: 6px 6px 0 0;
-        }
-        form {
-            display: none;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        form.active {
-            display: flex;
-        }
-        
-        /* Formulário de Login - mantém vertical */
-        #loginForm {
-            flex-direction: column;
             max-width: 400px;
             margin: 0 auto;
         }
         
-        /* Formulário de Cadastro - horizontal */
-        #registerForm {
-            display: none;
-            flex-direction: row;
-            flex-wrap: wrap;
-            gap: 1rem;
-            align-items: flex-end;
-        }
-        
         .form-group {
-            display: flex;
-            flex-direction: column;
-            flex: 1 1 200px;
-            min-width: 180px;
+            margin-bottom: 1rem;
+            text-align: left;
         }
         
-        label {
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
             font-weight: 600;
             color: var(--text-dark);
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
         }
         
-        input, select {
-            padding: 0.75rem;
-            border: 1px solid var(--text-light);
-            border-radius: 6px;
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
             font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+        
+        .form-group input:focus {
             outline: none;
-            transition: var(--transition);
-            width: 100%;
-        }
-        
-        input:focus, select:focus {
             border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
         }
         
-        .btn {
-            background: var(--primary-color);
-            color: var(--white);
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 25px;
+        .form-toggle {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        .form-toggle a {
+            color: var(--primary-color);
+            text-decoration: none;
             font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            flex: 0 0 auto;
-            align-self: flex-end;
-            margin-top: auto;
         }
         
-        .btn:hover {
-            background: var(--secondary-color);
+        .form-toggle a:hover {
+            text-decoration: underline;
         }
         
-        .error {
-            color: red;
-            font-size: 0.9rem;
-            width: 100%;
-            margin-top: 0.5rem;
+        .error-message {
+            color: #e74c3c;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
         }
         
-        .success {
-            color: green;
-            font-size: 0.9rem;
-            width: 100%;
-            margin-top: 0.5rem;
-        }
-        
-        /* Responsividade */
-        @media (max-width: 768px) {
-            #registerForm {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .form-group {
-                flex: 1 1 100%;
-            }
-            
-            .btn {
-                align-self: stretch;
-                margin-top: 1rem;
-            }
+        .success-message {
+            color: #27ae60;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
-    <div class="auth-container">
-        <div class="tabs">
-            <div class="tab active" id="loginTab">Login</div>
-            <div class="tab" id="registerTab">Cadastro</div>
+    <div class="login-container">
+        <h2 id="formTitle">Login</h2>
+        
+        <div class="form-container">
+            <!-- Login Form -->
+            <form id="loginForm" style="display: block;">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="seu@email.com" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" required placeholder="••••••••" />
+                </div>
+                
+                <button type="submit" class="full-width">Entrar</button>
+            </form>
+
+            <!-- Registration Form -->
+            <form id="registerForm" style="display: none;">
+                <div class="form-group">
+                    <label for="firstName">Nome</label>
+                    <input type="text" id="firstName" name="firstName" required placeholder="Seu nome" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">Sobrenome</label>
+                    <input type="text" id="lastName" name="lastName" required placeholder="Seu sobrenome" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" name="email" required placeholder="seu@email.com" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="regPassword">Senha</label>
+                    <input type="password" id="regPassword" name="password" required placeholder="Mínimo 6 caracteres" minlength="6" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="adminCode">Código Administrativo (opcional)</label>                    
+                    <input type="text" id="adminCode" name="adminCode" placeholder="Digite ADMIN2024 para criar conta admin" />
+                </div>
+                
+                <button type="submit" class="full-width">Cadastrar</button>
+            </form>
+
+            <!-- Toggle between forms -->
+            <div class="form-toggle">
+                <p id="toggleText">
+                    Não tem uma conta? 
+                    <a href="#" id="toggleForm">Cadastre-se</a>
+                </p>
+            </div>
+
+            <div id="message" class="error-message"></div>
         </div>
-        <form id="loginForm" class="active">
-            <label for="loginEmail">Email</label>
-            <input type="email" id="loginEmail" required />
-            <label for="loginPassword">Senha</label>
-            <input type="password" id="loginPassword" required />
-            <button type="submit" class="btn">Entrar</button>
-            <div id="loginError" class="error"></div>
-        </form>
-        <form id="registerForm" class="active">
-            <div class="form-group">
-                <label for="registerFirstName">Nome</label>
-                <input type="text" id="registerFirstName" required />
-            </div>
-            <div class="form-group">
-                <label for="registerLastName">Sobrenome</label>
-                <input type="text" id="registerLastName" required />
-            </div>
-            <div class="form-group">
-                <label for="registerEmail">Email</label>
-                <input type="email" id="registerEmail" required />
-            </div>
-            <div class="form-group">
-                <label for="registerPassword">Senha</label>
-                <input type="password" id="registerPassword" required />
-            </div>
-            <div class="form-group">
-                <label for="planSelect">Plano Mensal</label>
-                <select id="planSelect" required>
-                    <option value="">Selecione um plano</option>
-                    <option value="bronze">Bronze</option>
-                    <option value="prata">Prata</option>
-                    <option value="ouro">Ouro</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="adminCode">Código Admin (opcional)</label>
-                <input type="text" id="adminCode" placeholder="Insira o código de admin" />
-            </div>
-            <button type="submit" class="btn">Cadastrar</button>
-            <div id="registerError" class="error"></div>
-            <div id="registerSuccess" class="success"></div>
-        </form>
     </div>
 
     <script>
-        const loginTab = document.getElementById('loginTab');
-        const registerTab = document.getElementById('registerTab');
         const loginForm = document.getElementById('loginForm');
         const registerForm = document.getElementById('registerForm');
-        const loginError = document.getElementById('loginError');
-        const registerError = document.getElementById('registerError');
-        const registerSuccess = document.getElementById('registerSuccess');
+        const toggleForm = document.getElementById('toggleForm');
+        const formTitle = document.getElementById('formTitle');
+        const toggleText = document.getElementById('toggleText');
+        const message = document.getElementById('message');
 
-        loginTab.addEventListener('click', () => {
-            loginTab.classList.add('active');
-            registerTab.classList.remove('active');
-            loginForm.style.display = 'flex';
-            registerForm.style.display = 'none';
-            clearMessages();
-        });
+        let isLoginMode = true;
 
-        registerTab.addEventListener('click', () => {
-            registerTab.classList.add('active');
-            loginTab.classList.remove('active');
-            registerForm.style.display = 'flex';
-            loginForm.style.display = 'none';
-            clearMessages();
-        });
-
-        function clearMessages() {
-            loginError.textContent = '';
-            registerError.textContent = '';
-            registerSuccess.textContent = '';
-        }
-
-        // Simulated user database in localStorage
-        function getUsers() {
-            return JSON.parse(localStorage.getItem('users') || '[]');
-        }
-
-        function saveUsers(users) {
-            localStorage.setItem('users', JSON.stringify(users));
-        }
-
-        // Simulate payment validation (always success for demo)
-        function validatePayment(plan) {
-            return plan === 'bronze' || plan === 'prata' || plan === 'ouro';
-        }
-
-            registerForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                clearMessages();
-
-                const firstName = document.getElementById('registerFirstName').value.trim();
-                const lastName = document.getElementById('registerLastName').value.trim();
-                const email = document.getElementById('registerEmail').value.trim();
-                const password = document.getElementById('registerPassword').value.trim();
-                const plan = document.getElementById('planSelect').value;
-                const adminCodeInput = document.getElementById('adminCode').value.trim();
-                const ADMIN_CODE = "ADMIN2024";
-
-                if (!validatePayment(plan)) {
-                    registerError.textContent = 'Selecione um plano válido para continuar.';
-                    return;
-                }
-
-                const users = getUsers();
-                if (users.find(u => u.email === email)) {
-                    registerError.textContent = 'Email já cadastrado.';
-                    return;
-                }
-
-                // Determine role based on admin code
-                let role = 'user';
-                if (adminCodeInput === ADMIN_CODE) {
-                    role = 'admin';
-                } else if (adminCodeInput.length > 0) {
-                    registerError.textContent = 'Código de administração inválido.';
-                    return;
-                }
-
-                // Save user with plan, role, firstName and lastName
-                users.push({ firstName, lastName, email, password, plan, role });
-                saveUsers(users);
-
-                registerSuccess.textContent = 'Cadastro realizado com sucesso! Você pode fazer login agora.';
-                registerForm.reset();
-            });
-
-        loginForm.addEventListener('submit', (e) => {
+        // Toggle between login and registration forms
+        toggleForm.addEventListener('click', (e) => {
             e.preventDefault();
-            clearMessages();
+            isLoginMode = !isLoginMode;
+            
+            if (isLoginMode) {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                formTitle.textContent = 'Login';
+                toggleText.innerHTML = 'Não tem uma conta? <a href="#" id="toggleForm">Cadastre-se</a>';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                formTitle.textContent = 'Cadastro';
+                toggleText.innerHTML = 'Já tem uma conta? <a href="login.html" id="toggleForm">Faça login</a>';
+            }
+            message.textContent = '';
+            message.className = 'error-message';
+            
+            // Re-attach event listener
+            document.getElementById('toggleForm').addEventListener('click', arguments.callee);
+        });
 
-            const email = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPassword').value.trim();
+        // Handle login form submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            message.textContent = '';
+            message.className = 'error-message';
 
-            const users = getUsers();
-            const user = users.find(u => u.email === email && u.password === password);
+            const email = loginForm.email.value.trim();
+            const password = loginForm.password.value;
 
-            if (!user) {
-                loginError.textContent = 'Email ou senha inválidos.';
+            if (!email || !password) {
+                message.textContent = 'Por favor, preencha todos os campos';
                 return;
             }
 
-            // Save login status in localStorage
-            localStorage.setItem('loggedInUser', JSON.stringify(user));
+            try {
+                const response = await fetch('http://localhost:3001/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password }),
+                });
 
-            // Redirect to main page
-            window.location.href = 'index.html';
+                if (response.status === 402) {
+                const data = await response.json();
+                localStorage.setItem('token', data.token);
+                // Save loggedInUser for payment.html
+                localStorage.setItem('loggedInUser', JSON.stringify(data.user));
+                window.location.href = 'payment.html';
+            } else if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('token', data.token);
+                // Save loggedInUser for index.html
+                localStorage.setItem('loggedInUser', JSON.stringify(data.user));
+                window.location.href = 'index.html';
+            } else {
+                const error = await response.json();
+                loginError.textContent = error.message;
+                loginError.style.display = 'block';
+            }
+            } catch (error) {
+                message.textContent = 'Erro ao conectar com o servidor';
+            }
         });
 
-        // On page load, if user is logged in, redirect to main page
-        if (window.location.pathname.endsWith('login.html')) {
-            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-            if (loggedInUser) {
-                window.location.href = 'index.html';
+        // Handle registration form submission
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            message.textContent = '';
+            message.className = 'error-message';
+
+            const firstName = registerForm.firstName.value.trim();
+            const lastName = registerForm.lastName.value.trim();
+            const email = registerForm.email.value.trim();
+            const password = registerForm.password.value;
+            const adminCode = document.getElementById('adminCode').value.trim();
+
+            // Validation
+            if (!firstName || !lastName || !email || !password) {
+                message.textContent = 'Por favor, preencha todos os campos';
+                return;
             }
-        }
+
+            if (password.length < 6) {
+                message.textContent = 'A senha deve ter pelo menos 6 caracteres';
+                return;
+            }
+
+            if (!email.includes('@')) {
+                message.textContent = 'Por favor, insira um email válido';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3001/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ firstName, lastName, email, password, adminCode }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    message.textContent = data.message || 'Erro no cadastro';
+                    return;
+                }
+
+                if (data.user.status === 'pending') {
+                    const token = data.token;
+                    localStorage.setItem('token', token);
+                    window.location.href = 'payment.html';
+                } else {
+                    message.className = 'success-message';
+                    message.textContent = 'Cadastro realizado com sucesso! Redirecionando...';
+                    
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                }
+                
+            } catch (error) {
+                message.textContent = 'Erro ao conectar com o servidor';
+            }
+        });
     </script>
 </body>
 </html>
