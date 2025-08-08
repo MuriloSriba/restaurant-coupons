@@ -5,7 +5,7 @@
       "src": "backend/index.js",
       "use": "@vercel/node",
       "config": { "includeFiles": ["backend/database.sqlite"] }
-    },,
+    },
     {
       "src": "css/**",
       "use": "@vercel/static"
