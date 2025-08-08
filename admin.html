@@ -686,7 +686,7 @@
             couponFormMessage.className = 'message';
             const couponId = document.getElementById('couponId').value;
             const isEditing = !!couponId;
-            const url = isEditing ? `http://localhost:3001/api/coupons/${couponId}` : 'http://localhost:3001/api/coupons';
+            const url = isEditing ? `/api/coupons/${couponId}` : '/api/coupons';
             const method = isEditing ? 'PUT' : 'POST';
 
             try {
