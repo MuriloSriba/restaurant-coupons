@@ -16,9 +16,20 @@ const fs = require('fs-extra');
 const dbSource = path.join(__dirname, 'database.sqlite');
 const dbDest = '/tmp/database.sqlite';
 
+console.log(`DB Source: ${dbSource}`);
+console.log(`DB Destination: ${dbDest}`);
+
 // Copy the database file if it doesn't exist in the destination
 if (!fs.existsSync(dbDest)) {
-  fs.copySync(dbSource, dbDest);
+  console.log(`DB Destination ${dbDest} does not exist. Copying...`);
+  try {
+    fs.copySync(dbSource, dbDest);
+    console.log('Database copied successfully.');
+  } catch (copyErr) {
+    console.error('Error copying database:', copyErr.message);
+  }
+} else {
+  console.log(`DB Destination ${dbDest} already exists.`);
 }
 
 const db = new sqlite3.Database(dbDest, (err) => {
