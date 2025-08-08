@@ -396,7 +396,7 @@
 
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch('http://localhost:3001/api/restaurants', {
+                const response = await fetch('/api/restaurants', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
 
@@ -545,7 +545,7 @@
             formMessage.className = 'message';
             const restaurantId = document.getElementById('restaurantId').value;
             const isEditing = !!restaurantId;
-            const url = isEditing ? `http://localhost:3001/api/restaurants/${restaurantId}` : 'http://localhost:3001/api/restaurants';
+            const url = isEditing ? `/api/restaurants/${restaurantId}` : '/api/restaurants';
             const method = isEditing ? 'PUT' : 'POST';
 
             try {
@@ -718,7 +718,7 @@
             listContainer.innerHTML = '<p>Carregando...</p>';
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch('http://localhost:3001/api/restaurants', {
+                const response = await fetch('/api/restaurants', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 const restaurants = await response.json();

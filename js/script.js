@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     try {
         // Fetch restaurants from backend
-        const resRestaurants = await fetch('http://localhost:3001/api/restaurants', {
+        const resRestaurants = await fetch('/api/restaurants', {
             // No authorization needed to view public restaurant list
         });
         if (!resRestaurants.ok) throw new Error('Falha ao carregar restaurantes');
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         restaurantsData.splice(0, restaurantsData.length, ...restaurants);
 
         // Fetch coupons from backend
-        const resCoupons = await fetch('http://localhost:3001/api/coupons', {
+        const resCoupons = await fetch('/api/coupons', {
             // No authorization needed to view public coupon list
         });
         if (!resCoupons.ok) throw new Error('Falha ao carregar cupons');
@@ -364,7 +364,7 @@ if (restaurantRegistrationForm) {
         }
 
         try {
-            const response = await fetch('http://localhost:3001/api/restaurants', {
+            const response = await fetch('/api/restaurants', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -432,7 +432,7 @@ if (couponRegistrationForm) {
         }
 
         try {
-            const response = await fetch('http://localhost:3001/api/coupons', {
+            const response = await fetch('/api/coupons', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
