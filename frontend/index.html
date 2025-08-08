@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodCupons - Descontos em Restaurantes</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+        const loginBtn = document.getElementById('loginBtn');
+        const userNameDisplay = document.getElementById('userNameDisplay');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const adminBtn = document.getElementById('adminBtn'); // Get the admin button
+
+        if (loggedInUser) {
+            loginBtn.style.display = 'none';
+            userNameDisplay.style.display = 'inline-block';
+
+            // Show full name if available, else email
+            const fullName = loggedInUser.firstName && loggedInUser.lastName
+                ? loggedInUser.firstName + ' ' + loggedInUser.lastName
+                : loggedInUser.email;
+            userNameDisplay.textContent = fullName;
+
+            logoutBtn.style.display = 'inline-block';
+
+            // Show admin button if user is admin
+            if (loggedInUser.role === 'admin') {
+                adminBtn.style.display = 'inline-block';
+            }
+
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('loggedInUser');
+                localStorage.removeItem('token');
+                window.location.href = 'login.html';
+            });
+        } else {
+            loginBtn.addEventListener('click', () => {
+                window.location.href = 'login.html';
+            });
+        }
+    });
+</script>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>FoodCupons</span>
+                </div>
+                <nav class="nav">
+                    <a href="#home" class="nav-link active">Início</a>
+                    <a href="#restaurants" class="nav-link">Restaurantes</a>
+                    <a href="#categories" class="nav-link">Categorias</a>
+                    <a href="#about" class="nav-link">Sobre</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="search-btn" id="searchBtn" title="Buscar">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="login-btn" id="loginBtn">Entrar</button>
+        <button class="admin-btn" id="adminBtn" style="display:none; background:none; border:none; color: var(--primary-color); cursor:pointer; margin-left: 10px;">Administração</button>
+        <div id="userNameDisplay" style="display:none; color: var(--primary-color); font-weight: 600; cursor: default;"></div>
+        <button class="logout-btn" id="logoutBtn" style="display:none; background:none; border:none; color: var(--primary-color); cursor:pointer; margin-left: 10px;">Sair</button>
+    </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="hero">
+        <div id="heroSlideshow" class="hero-slideshow"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Descontos Exclusivos nos Melhores Restaurantes</h1>
+                <p>Economize até 50% em restaurantes premium com nossos cupons exclusivos</p>
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar restaurantes ou tipos de comida..." id="searchInput">
+                    <button class="search-button">
+                        <i class="fas fa-search"></i>
+                        Buscar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section id="categories" class="categories">
+        <div class="container">
+            <div class="categories-grid minimal">
+                <div class="category-card" data-category="japones" title="Japonês">
+                    <i class="fas fa-fish"></i>
+                    <span>Japonês</span>
+                </div>
+                <div class="category-card" data-category="italiano" title="Italiano">
+                    <i class="fas fa-pizza-slice"></i>
+                    <span>Italiano</span>
+                </div>
+                <div class="category-card" data-category="brasileiro" title="Brasileiro">
+                    <i class="fas fa-drumstick-bite"></i>
+                    <span>Brasileiro</span>
+                </div>
+                <div class="category-card" data-category="vegano" title="Vegano">
+                    <i class="fas fa-seedling"></i>
+                    <span>Vegano</span>
+                </div>
+                <div class="category-card" data-category="churrasco" title="Churrasco">
+                    <i class="fas fa-fire"></i>
+                    <span>Churrasco</span>
+                </div>
+                <div class="category-card" data-category="sobremesas" title="Sobremesas">
+                    <i class="fas fa-ice-cream"></i>
+                    <span>Sobremesas</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Coupons -->
+    <section class="featured-coupons">
+        <div class="container">
+            <div class="section-header">
+                <h2>Cupons em Destaque</h2>
+                <div class="filter-tabs">
+                    <button class="tab active" data-filter="all">Todos</button>
+                    <button class="tab" data-filter="popular">Mais Populares</button>
+                    <button class="tab" data-filter="new">Novos</button>
+                    <button class="tab" data-filter="expiring">Finalizando</button>
+                </div>
+            </div>
+            <div class="coupons-grid" id="couponsGrid">
+                <!-- Coupons will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Restaurant List -->
+    <section id="restaurants" class="restaurants">
+        <div class="container">
+            <h2>Restaurantes Parceiros</h2>
+            <div class="restaurants-grid" id="restaurantsGrid">
+                <!-- Restaurants will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>Sobre o FoodCupons</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Transformando a experiência gastronômica</h3>
+                    <p>O FoodCupons nasceu com a missão de tornar a gastronomia de qualidade mais acessível para todos. Conectamos os melhores restaurantes da cidade com clientes que buscam experiências únicas a preços especiais.</p>
+                    
+                    <h3>Nossa história</h3>
+                    <p>Fundado em 2024, o FoodCupons já ajudou milhares de pessoas a descobrirem novos restaurantes e economizarem em suas refeições favoritas. Trabalhamos com mais de 100 restaurantes parceiros, oferecendo descontos que chegam a 50%.</p>
+                    
+                    <h3>Nossos valores</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Transparência em todos os descontos oferecidos</li>
+                        <li><i class="fas fa-check-circle"></i> Qualidade garantida em todos os restaurantes parceiros</li>
+                        <li><i class="fas fa-check-circle"></i> Excelência no atendimento ao cliente</li>
+                        <li><i class="fas fa-check-circle"></i> Inovação constante em nossa plataforma</li>
+                    </ul>
+                </div>
+                
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-utensils"></i>
+                        <h4>100+</h4>
+                        <p>Restaurantes Parceiros</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-ticket-alt"></i>
+                        <h4>500+</h4>
+                        <p>Cupons Ativos</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <h4>10k+</h4>
+                        <p>Clientes Satisfeitos</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-percentage"></i>
+                        <h4>50%</h4>
+                        <p>Desconto Máximo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FoodCupons</h3>
+                    <p>Os melhores descontos nos melhores restaurantes da sua cidade.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Empresa</h4>
+                    <ul>
+                        <li><a href="#">Sobre Nós</a></li>
+                        <li><a href="#">Trabalhe Conosco</a></li>
+                        <li><a href="#">Imprensa</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Parceiros</h4>
+                    <ul>
+                        <li><a href="#">Seja um Parceiro</a></li>
+                        <li><a href="#">Portal do Restaurante</a></li>
+                        <li><a href="#">Suporte</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Ajuda</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Privacidade</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FoodCupons. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Coupon Modal -->
+    <div class="modal" id="couponModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="coupon-details" id="couponDetails">
+                <!-- Coupon details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Restaurant Modal -->
+    <div class="modal" id="restaurantModal" style="display:none;">
+        <div class="modal-content" style="max-width: 600px; position: relative;">
+            <span class="close" id="restaurantModalClose" style="cursor:pointer; position: absolute; top: 10px; right: 15px; font-size: 28px;">&times;</span>
+            <div id="restaurantDetails">
+                <!-- Restaurant details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Restaurant Registration Section -->
+    <section id="adminRestaurantRegistration" class="admin-restaurant-registration" style="display:none; padding: 2rem; background: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow); max-width: 700px; margin: 2rem auto;">
+        <h2>Cadastro de Restaurante</h2>
+        <form id="restaurantRegistrationForm">
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <label for="restaurantName">Nome do Restaurante</label>
+                <input type="text" id="restaurantName" name="restaurantName" required />
+
+                <label for="restaurantCuisine">Culinária</label>
+                <input type="text" id="restaurantCuisine" name="restaurantCuisine" required />
+
+                <label for="restaurantRating">Avaliação (0 a 5)</label>
+                <input type="number" id="restaurantRating" name="restaurantRating" min="0" max="5" step="0.1" required />
+
+                <label for="restaurantLocation">Localização</label>
+                <input type="text" id="restaurantLocation" name="restaurantLocation" required />
+
+                <label for="restaurantImage">Ícone (classe FontAwesome)</label>
+                <input type="text" id="restaurantImage" name="restaurantImage" placeholder="ex: fas fa-utensils" required />
+
+                <label for="restaurantHours">Horário de Funcionamento</label>
+                <input type="text" id="restaurantHours" name="restaurantHours" required />
+
+                <label for="restaurantDescription">Descrição</label>
+                <textarea id="restaurantDescription" name="restaurantDescription" rows="3" required></textarea>
+
+                <label for="restaurantWhatsapp">WhatsApp (número com código do país)</label>
+                <input type="text" id="restaurantWhatsapp" name="restaurantWhatsapp" placeholder="ex: 5511999999999" required />
+
+                <label for="restaurantMapEmbed">Embed do Mapa (iframe)</label>
+                <textarea id="restaurantMapEmbed" name="restaurantMapEmbed" rows="3" placeholder="Cole o código iframe do Google Maps" required></textarea>
+
+                <button type="submit" class="btn">Cadastrar Restaurante</button>
+                <div id="restaurantRegistrationMessage" style="margin-top: 1rem;"></div>
+            </div>
+        </form>
+    </section>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
