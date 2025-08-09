@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { MercadoPagoConfig, Payment } = require('mercadopago');
+const mercadopago = require('mercadopago');
 
-// Configure o Mercado Pago com suas credenciais
-const client = new MercadoPagoConfig({ accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN });
+// Configure o Mercado Pago com suas credenciais (versão 1.x)
+mercadopago.configurations.setAccessToken(process.env.MERCADOPAGO_ACCESS_TOKEN || 'TEST_ACCESS_TOKEN');
 console.log('Mercado Pago Access Token (first 5 chars):', process.env.MERCADOPAGO_ACCESS_TOKEN ? process.env.MERCADOPAGO_ACCESS_TOKEN.substring(0, 5) : 'Not set');
-const payment = new Payment(client);
 
 router.post('/process-payment', async (req, res) => {
     const { token, amount, description, installments, payment_method_id, issuer_id, payer } = req.body;
@@ -27,7 +26,7 @@ router.post('/process-payment', async (req, res) => {
             },
         };
 
-        const result = await payment.create({ body: paymentData });
+        const result = await mercadopago.payment.create(paymentData);
         res.status(201).json(result);
     } catch (error) {
         console.error('Error processing payment:', error);
@@ -49,7 +48,7 @@ router.post('/pix-payment', async (req, res) => {
             },
         };
 
-        const result = await payment.create({ body: pixPaymentData });
+        const result = await mercadopago.payment.create(pixPaymentData);
         console.log('Mercado Pago PIX creation result:', JSON.stringify(result, null, 2));
 
         if (result && result.point_of_interaction && result.point_of_interaction.transaction_data) {

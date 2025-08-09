@@ -32,6 +32,10 @@
       "dest": "/js/$1"
     },
     {
+      "src": "/",
+      "dest": "/backend/index.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/$1"
     }

@@ -200,8 +200,8 @@
                 window.location.href = 'index.html';
             } else {
                 const error = await response.json();
-                loginError.textContent = error.message;
-                loginError.style.display = 'block';
+                message.textContent = error.message;
+                message.style.display = 'block';
             }
             } catch (error) {
                 message.textContent = 'Erro ao conectar com o servidor';

@@ -49,6 +49,7 @@ router.get('/:id', async (req, res) => {
     if (!row) {
       return res.status(404).json({ message: 'Restaurant not found' });
     }
+    console.log('Restaurant data from DB:', row);
     res.json(row);
   } catch (err) {
     console.error(err);

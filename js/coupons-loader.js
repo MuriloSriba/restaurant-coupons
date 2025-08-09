@@ -1,5 +1,5 @@
 // Coupons Loader - Automatically loads coupons from backend
-const API_BASE_URL = 'http://localhost:3001/api';
+const API_BASE_URL = window.location.origin + '/api';
 
 // Authentication helper
 function getAuthHeaders() {
@@ -227,13 +227,14 @@ async function openRestaurantModal(restaurantId) {
         }
         
         const restaurant = await response.json();
+        console.log('Restaurant data on client:', restaurant);
         
         const modal = document.getElementById('restaurantModal');
         const restaurantDetails = document.getElementById('restaurantDetails');
         
         restaurantDetails.innerHTML = `
             <div style="display: flex; gap: 2rem; align-items: flex-start; padding: 1.5rem;">
-                <img src="https://via.placeholder.com/150" alt="${restaurant.name}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 12px; flex-shrink: 0;" />
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Crect width='150' height='150' fill='%23ccc'/%3E%3C/svg%3E" alt="${restaurant.name}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 12px; flex-shrink: 0;" />
                 <div style="flex: 1; font-size: 0.9rem; line-height: 1.4;">
                     <h2 style="margin-top: 0; font-size: 1.5rem;">${restaurant.name}</h2>
                     <p><strong>Culinária:</strong> ${restaurant.cuisine}</p>
