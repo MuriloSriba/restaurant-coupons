@@ -6,8 +6,7 @@ const cors = require('cors');
 const { Pool } = require('pg');
 const path = require('path');
 
-const app = express();
-const port = process.env.PORT || 3001;
+const restaurantsRouter = require('./routes/restaurants');
 
 // Check if DATABASE_URL is available
 if (!process.env.DATABASE_URL) {
@@ -32,7 +31,7 @@ pool.on('error', (err) => {
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '..')));
+app.use('/api/restaurants', restaurantsRouter);
 
 // Database instance for routes
 app.locals.db = pool;

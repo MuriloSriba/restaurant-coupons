@@ -33,7 +33,7 @@
     },
     {
       "src": "/",
-      "dest": "/backend/index.js"
+      "dest": "/index.html"
     },
     {
       "src": "/(.*)",
