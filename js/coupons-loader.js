@@ -227,11 +227,12 @@ async function openRestaurantModal(restaurantId) {
         }
         
         const restaurant = await response.json();
-        console.log('Restaurant data on client:', restaurant);
         
         const modal = document.getElementById('restaurantModal');
         const restaurantDetails = document.getElementById('restaurantDetails');
         
+        const decodedMapEmbed = new DOMParser().parseFromString(restaurant.map_embed, 'text/html').body.textContent;
+
         restaurantDetails.innerHTML = `
             <div style="display: flex; gap: 2rem; align-items: flex-start; padding: 1.5rem;">
                 <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Crect width='150' height='150' fill='%23ccc'/%3E%3C/svg%3E" alt="${restaurant.name}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 12px; flex-shrink: 0;" />
@@ -253,7 +254,7 @@ async function openRestaurantModal(restaurantId) {
                 </div>
             </div>
             <div style="margin-top: 1rem;">
-                ${restaurant.map_embed || ''}
+                ${decodedMapEmbed || ''}
             </div>
         `;
         

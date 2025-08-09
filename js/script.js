@@ -85,7 +85,7 @@ const restaurantsData = [
         hours: "Seg-Sex: 11h - 23h, Sáb-Dom: 12h - 00h",
         description: "Churrasco tradicional com cortes nobres e buffet completo.",
         whatsapp: "5511999999999",
-        mapEmbed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.633309!3d-23.55052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0x123456789abcdef!2sFogo%20de%20Ch%C3%A3o!5e0!3m2!1spt-BR!2sbr!4v1234567890' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
+        map_embed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.633309!3d-23.55052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0x123456789abcdef!2sFogo%20de%20Ch%C3%A3o!5e0!3m2!1spt-BR!2sbr!4v1234567890' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
     },
     {
         id: 2,
@@ -97,7 +97,7 @@ const restaurantsData = [
         hours: "Ter-Dom: 12h - 22h",
         description: "Sushis e sashimis frescos com ingredientes selecionados.",
         whatsapp: "5511988888888",
-        mapEmbed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.987654321!2d-46.650000!3d-23.560000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c987654321%3A0xabcdef123456789!2sSushi%20Bar!5e0!3m2!1spt-BR!2sbr!4v1234567891' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
+        map_embed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.987654321!2d-46.650000!3d-23.560000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c987654321%3A0xabcdef123456789!2sSushi%20Bar!5e0!3m2!1spt-BR!2sbr!4v1234567891' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
     },
     {
         id: 3,
@@ -109,7 +109,7 @@ const restaurantsData = [
         hours: "Seg-Dom: 11h - 23h",
         description: "Pizzas tradicionais e especiais com massa fina e crocante.",
         whatsapp: "5511977777777",
-        mapEmbed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.640000!3d-23.570000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0xabcdefabcdef1234!2sPizza%20Hut!5e0!3m2!1spt-BR!2sbr!4v1234567892' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
+        map_embed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.640000!3d-23.570000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0xabcdefabcdef1234!2sPizza%20Hut!5e0!3m2!1spt-BR!2sbr!4v1234567892' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
     },
     {
         id: 4,
@@ -121,7 +121,7 @@ const restaurantsData = [
         hours: "Qua-Dom: 12h - 22h",
         description: "Feijoada completa com acompanhamentos tradicionais.",
         whatsapp: "5511966666666",
-        mapEmbed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.630000!3d-23.580000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0xabcdefabcdef5678!2sCasa%20da%20Feijoada!5e0!3m2!1spt-BR!2sbr!4v1234567893' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
+        map_embed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.630000!3d-23.580000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0xabcdefabcdef5678!2sCasa%20da%20Feijoada!5e0!3m2!1spt-BR!2sbr!4v1234567893' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
     },
     {
         id: 5,
@@ -133,7 +133,7 @@ const restaurantsData = [
         hours: "Seg-Sex: 11h - 21h",
         description: "Comida vegana saudável e saborosa com ingredientes orgânicos.",
         whatsapp: "5511955555555",
-        mapEmbed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.620000!3d-23.590000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0xabcdefabcdef9012!2sGreen%20Food!5e0!3m2!1spt-BR!2sbr!4v1234567894' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
+        map_embed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.620000!3d-23.590000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0xabcdefabcdef9012!2sGreen%20Food!5e0!3m2!1spt-BR!2sbr!4v1234567894' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
     },
     {
         id: 6,
@@ -145,7 +145,7 @@ const restaurantsData = [
         hours: "Ter-Dom: 12h - 22h",
         description: "Sobremesas artesanais e especiais para adoçar seu dia.",
         whatsapp: "5511944444444",
-        mapEmbed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.610000!3d-23.600000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0xabcdefabcdef3456!2sSweet%20Dreams!5e0!3m2!1spt-BR!2sbr!4v1234567895' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
+        map_embed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.610000!3d-23.600000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0xabcdefabcdef3456!2sSweet%20Dreams!5e0!3m2!1spt-BR!2sbr!4v1234567895' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
     }
 ];
 
@@ -795,11 +795,12 @@ function openRestaurantModal(restaurantId) {
     const restaurant = restaurantsData.find(r => r.id === restaurantId);
     const restaurantModal = document.getElementById('restaurantModal');
     const restaurantDetails = document.getElementById('restaurantDetails');
+    const restaurantMap = document.getElementById('restaurantMap');
 
     if (restaurant) {
         const imageSrc = (restaurant.image && (restaurant.image.startsWith('http') || restaurant.image.startsWith('data:image')))
             ? restaurant.image
-            : 'https://via.placeholder.com/150'; // Fallback for old data or icon classes
+            : 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'150\' viewBox=\'0 0 150 150\'%3E%3Crect width=\'150\' height=\'150\' fill=\'%23ccc\'%3E%3C/rect%3E%3C/svg%3E'; // Fallback for old data or icon classes
 
         restaurantDetails.innerHTML = `
             <div style="display: flex; gap: 2rem; align-items: flex-start; padding: 1.5rem;">
@@ -821,177 +822,9 @@ function openRestaurantModal(restaurantId) {
                     </a></p>
                 </div>
             </div>
-            <div style="margin-top: 1rem;">
-                ${restaurant.mapEmbed}
-            </div>
         `;
 
-        // Add animation to rating stars
-        const starsSpan = restaurantDetails.querySelector('span');
-        if (starsSpan) {
-            starsSpan.style.animation = 'pulse 2s infinite';
-        }
-
-        restaurantModal.style.display = 'block';
-    }
-}
-
-
-
-// Close coupon modal
-function closeCouponModal() {
-    modal.style.display = 'none';
-}
-
-// Copy coupon code
-function copyCouponCode() {
-    const couponCode = document.getElementById('couponCode').textContent;
-    navigator.clipboard.writeText(couponCode).then(() => {
-        const copyBtn = document.querySelector('.copy-btn');
-        const originalText = copyBtn.innerHTML;
-        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
-        
-        setTimeout(() => {
-            copyBtn.innerHTML = originalText;
-        }, 2000);
-    });
-}
-
-// Use coupon
-function useCoupon(couponId) {
-    alert('Cupom reservado com sucesso! Você será redirecionado para o restaurante.');
-    closeCouponModal();
-}
-
-// Generate random date for coupon validity
-function getRandomDate() {
-    const today = new Date();
-    const future = new Date(today);
-    future.setDate(today.getDate() + Math.floor(Math.random() * 30) + 7);
-    
-    return future.toLocaleDateString('pt-BR');
-}
-
-// Helper function to create image/icon element
-function createImageDisplay(image, defaultIconClass) {
-    if (image && (image.startsWith('http') || image.startsWith('data:image'))) {
-        // It's a URL or base64 string, use an <img> tag
-        return `<img src="${image}" alt="Imagem do item" class="card-entity-image">`;
-    }
-    // It's likely a FontAwesome class or empty, use an <i> tag
-    return `<i class="${image || defaultIconClass}"></i>`;
-}
-
-// Render restaurants
-function renderRestaurants(restaurants) {
-    const restaurantsGrid = document.getElementById('restaurantsGrid');
-    restaurantsGrid.innerHTML = '';
-
-    restaurants.forEach(restaurant => {
-        const card = document.createElement('div');
-        card.className = 'restaurant-card';
-        card.dataset.id = restaurant.id;
-
-        card.innerHTML = `
-            <div class="restaurant-image">
-                <i class="${restaurant.image}"></i>
-            </div>
-            <div class="restaurant-info">
-                <h3 class="restaurant-name">${restaurant.name}</h3>
-                <p class="restaurant-cuisine">${restaurant.cuisine}</p>
-                <div class="restaurant-rating">
-                    <div class="stars">
-                        ${generateStars(restaurant.rating)}
-                    </div>
-                    <span>${restaurant.rating}</span>
-                </div>
-                <p class="restaurant-location">
-                    <i class="fas fa-map-marker-alt"></i> ${restaurant.location}
-                </p>
-            </div>
-        `;
-
-        card.addEventListener('click', () => {
-            openRestaurantModal(restaurant.id);
-        });
-
-        restaurantsGrid.appendChild(card);
-    });
-}
-
-// Create restaurant card element
-function createRestaurantCard(restaurant) {
-    const card = document.createElement('div');
-    card.className = 'restaurant-card';
-    card.dataset.id = restaurant.id;  // Add data-id attribute for identification
-    
-    card.style.cursor = 'pointer'; // Indicate clickable
-    card.style.userSelect = 'none'; // Prevent text selection
-    
-    card.innerHTML = `
-        <div class="restaurant-image">
-            ${createImageDisplay(restaurant.image, 'fas fa-utensils')}
-        </div>
-        <div class="restaurant-info">
-            <h3 class="restaurant-name">${restaurant.name}</h3>
-            <p class="restaurant-cuisine">${restaurant.cuisine}</p>
-            <div class="restaurant-rating">
-                <div class="stars">
-                    ${generateStars(restaurant.rating)}
-                </div>
-                <span>${restaurant.rating}</span>
-            </div>
-            <p class="restaurant-location">
-                <i class="fas fa-map-marker-alt"></i> ${restaurant.location}
-            </p>
-        </div>
-    `;
-    
-    // Add direct click handler to ensure it works
-    card.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        openRestaurantModal(restaurant.id);
-    });
-    
-    return card;
-}
-
-// Open restaurant modal
-function openRestaurantModal(restaurantId) {
-    const restaurant = restaurantsData.find(r => r.id === restaurantId);
-    const restaurantModal = document.getElementById('restaurantModal');
-    const restaurantDetails = document.getElementById('restaurantDetails');
-
-    if (restaurant) {
-        const imageSrc = (restaurant.image && (restaurant.image.startsWith('http') || restaurant.image.startsWith('data:image')))
-            ? restaurant.image
-            : 'https://via.placeholder.com/150'; // Fallback for old data or icon classes
-
-        restaurantDetails.innerHTML = `
-            <div style="display: flex; gap: 2rem; align-items: flex-start; padding: 1.5rem;">
-                <img src="${imageSrc}" alt="${restaurant.name}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 12px; flex-shrink: 0;" />
-                <div style="flex: 1; font-size: 0.9rem; line-height: 1.4;">
-                    <h2 style="margin-top: 0; font-size: 1.5rem;">${restaurant.name}</h2>
-                    <p><strong>Culinária:</strong> ${restaurant.cuisine}</p>
-                    <p><strong>Horário de Funcionamento:</strong> ${restaurant.hours}</p>
-                    <p><strong>Descrição:</strong> ${restaurant.description}</p>
-                    <p><strong>Localização:</strong> ${restaurant.location}</p>
-                    <p style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; font-size: 1rem;">
-                        <strong>Avaliação:</strong> ${restaurant.rating} / 5
-                        <span style="color: #FFD700; font-size: 1.1rem;">
-                            ${generateStars(restaurant.rating)}
-                        </span>
-                    </p>
-                    <p><a href="https://wa.me/${restaurant.whatsapp}" target="_blank" style="color: #25D366; font-size: 1.3rem;">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a></p>
-                </div>
-            </div>
-            <div style="margin-top: 1rem;">
-                ${restaurant.mapEmbed}
-            </div>
-        `;
+        restaurantMap.innerHTML = restaurant.map_embed;
 
         // Add animation to rating stars
         const starsSpan = restaurantDetails.querySelector('span');
@@ -1054,7 +887,7 @@ function renderTopRatedRestaurantsSlide() {
     topRestaurants.forEach((restaurant, index) => {
         const slide = document.createElement('div');
         slide.className = 'hero-slide';
-        slide.style.background = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/1200x600/333/fff?text=${encodeURIComponent(restaurant.name)}')`;
+        slide.style.background = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'600\' viewBox=\'0 0 1200 600\'%3E%3Crect width=\'1200\' height=\'600\' fill=\'%23333\'%3E%3C/rect%3E%3Ctext x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'50\' fill=\'%23fff\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E${encodeURIComponent(restaurant.name)}%3C/text%3E%3C/svg%3E')`;
         slide.style.backgroundSize = 'cover';
         slide.style.backgroundPosition = 'center';
         slide.style.position = 'absolute';
@@ -1400,7 +1233,7 @@ function renderTopRatedRestaurantsSlide() {
     topRestaurants.forEach((restaurant, index) => {
         const slide = document.createElement('div');
         slide.className = 'hero-slide';
-        slide.style.background = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/1200x600/333/fff?text=${encodeURIComponent(restaurant.name)}')`;
+        slide.style.background = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'600\' viewBox=\'0 0 1200 600\'%3E%3Crect width=\'1200\' height=\'600\' fill=\'%23333\'%3E%3C/rect%3E%3Ctext x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'50\' fill=\'%23fff\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E${encodeURIComponent(restaurant.name)}%3C/text%3E%3C/svg%3E')`;
         slide.style.backgroundSize = 'cover';
         slide.style.backgroundPosition = 'center';
         slide.style.position = 'absolute';
