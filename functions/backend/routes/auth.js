@@ -3,8 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
-const ADMIN_CODE = 'ADMIN2024'; // Código fixo para cadastro administrativo
+const JWT_SECRET = process.env.JWT_SECRET || '6J5HFkNGZVTliik6IWFiXz+0W/CNLrq28arALni84JC7/MhKxg6o9/+GPvdv0TeCL9ZebaMA1aGQX9VZtEuFsg==';
+const ADMIN_CODE = 'ADMIN2025'; // Código fixo para cadastro administrativo
 
 // Middleware to authenticate JWT token
 const authenticateToken = (req, res, next) => {
