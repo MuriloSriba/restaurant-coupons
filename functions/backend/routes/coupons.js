@@ -1,9 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const { authenticateToken } = require('../routes/auth'); // Import the middleware
 
 // Get all coupons
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => { // Apply middleware here
   const db = req.app.locals.db;
+
+  // Check user role and status from the authenticated token
+  if (req.user.role !== 'admin' && req.user.status !== 'complete') {
+    return res.status(403).json({ message: 'Access denied. Only administrators and paying users can view coupons.' });
+  }
 
   const query = `
     SELECT 
@@ -24,9 +30,14 @@ router.get('/', async (req, res) => {
 });
 
 // Get coupon by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', authenticateToken, async (req, res) => { // Apply middleware here
   const db = req.app.locals.db;
   const { id } = req.params;
+
+  // Check user role and status from the authenticated token
+  if (req.user.role !== 'admin' && req.user.status !== 'complete') {
+    return res.status(403).json({ message: 'Access denied. Only administrators and paying users can view coupons.' });
+  }
   
   const query = `
     SELECT 
@@ -52,7 +63,12 @@ router.get('/:id', async (req, res) => {
 });
 
 // Create new coupon (admin only)
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => { // Apply middleware here
+  // Only allow admins to create coupons
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Access denied. Only administrators can create coupons.' });
+  }
+
   const db = req.app.locals.db;
   const { 
     title, code, description, discount_type, discount_value, category, type, 
@@ -102,7 +118,12 @@ router.post('/', async (req, res) => {
 });
 
 // Delete a coupon
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authenticateToken, async (req, res) => { // Apply middleware here
+  // Only allow admins to delete coupons
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Access denied. Only administrators can delete coupons.' });
+  }
+
   const db = req.app.locals.db;
   const { id } = req.params;
 
@@ -119,7 +140,12 @@ router.delete('/:id', async (req, res) => {
 });
 
 // Update a coupon
-router.put('/:id', async (req, res) => {
+router.put('/:id', authenticateToken, async (req, res) => { // Apply middleware here
+  // Only allow admins to update coupons
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Access denied. Only administrators can update coupons.' });
+  }
+
   const db = req.app.locals.db;
   const { id } = req.params;
   const { 

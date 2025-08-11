@@ -6,6 +6,24 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
 const ADMIN_CODE = 'ADMIN2024'; // Código fixo para cadastro administrativo
 
+// Middleware to authenticate JWT token
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (token == null) {
+    return res.status(401).json({ message: 'Authorization token not provided' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: 'Invalid or expired token' });
+    }
+    req.user = user;
+    next();
+  });
+};
+
 // Register new user
 router.post('/register', async (req, res) => {
   const { firstName, lastName, email, password, adminCode } = req.body;
@@ -33,7 +51,7 @@ router.post('/register', async (req, res) => {
       );
       const userId = result.rows[0].id;
       const token = jwt.sign(
-        { userId: userId, email: email, role: role }, 
+        { userId: userId, email: email, role: role, status: status }, // Include status in token
         JWT_SECRET, 
         { expiresIn: '1d' }
       );
@@ -81,7 +99,7 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
     const token = jwt.sign(
-      { userId: user.id, email: user.email, role: user.role }, 
+      { userId: user.id, email: user.email, role: user.role, status: user.status }, // Include status in token
       JWT_SECRET, 
       { expiresIn: '1d' }
     );
@@ -92,7 +110,8 @@ router.post('/login', async (req, res) => {
         email: user.email, 
         firstName: user.first_name, 
         lastName: user.last_name, 
-        role: user.role 
+        role: user.role, 
+        status: user.status // Include status in user object
       } 
     });
   } catch (err) {
@@ -101,23 +120,23 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.post('/update-payment-status', async (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) {
-    return res.status(401).json({ message: 'Authorization token not provided' });
-  }
+router.post('/update-payment-status', authenticateToken, async (req, res) => { // Apply middleware here
+  const userId = req.user.userId; // Get userId from authenticated token
+  const db = req.app.locals.db;
 
   try {
-    const decodedToken = jwt.verify(token, JWT_SECRET);
-    const userId = decodedToken.userId;
-    const db = req.app.locals.db;
-
     await db.query('UPDATE users SET status = $1 WHERE id = $2', ['complete', userId]);
-    res.status(200).json({ message: 'Payment status updated successfully' });
+    // Update the token with the new status so frontend can reflect it immediately
+    const newToken = jwt.sign(
+      { userId: req.user.userId, email: req.user.email, role: req.user.role, status: 'complete' },
+      JWT_SECRET,
+      { expiresIn: '1d' }
+    );
+    res.status(200).json({ message: 'Payment status updated successfully', token: newToken });
   } catch (err) {
     console.error(err);
-    res.status(401).json({ message: 'Invalid or expired token' });
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
-module.exports = router;
+module.exports = { router, authenticateToken }; // Export both router and middleware

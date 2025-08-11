@@ -287,6 +287,15 @@ function setupEventListeners() {
         });
     }
 
+    // Header search button functionality
+    const headerSearchBtn = document.getElementById('searchBtn');
+    if (headerSearchBtn && searchInput) {
+        headerSearchBtn.addEventListener('click', () => {
+            searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            searchInput.focus();
+        });
+    }
+
     // Modal close
     const closeModal = couponModal.querySelector('.close');
     if (closeModal) {

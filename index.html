@@ -16,6 +16,7 @@
         const userNameDisplay = document.getElementById('userNameDisplay');
         const logoutBtn = document.getElementById('logoutBtn');
         const adminBtn = document.getElementById('adminBtn'); // Get the admin button
+        const mobileLoginAdmin = document.getElementById('mobileLoginAdmin'); // Get the mobile login/admin button
 
         if (loggedInUser) {
             loginBtn.style.display = 'none';
@@ -29,7 +30,20 @@
 
             logoutBtn.style.display = 'inline-block';
 
-            // Show admin button if user is admin
+            // Update mobile login/admin button
+            if (mobileLoginAdmin) {
+                if (loggedInUser.role === 'admin') {
+                    mobileLoginAdmin.href = 'admin.html';
+                    mobileLoginAdmin.querySelector('i').className = 'fas fa-user-shield'; // Admin icon
+                    mobileLoginAdmin.querySelector('span').textContent = 'Admin';
+                } else {
+                    mobileLoginAdmin.href = '#'; // Or a profile page
+                    mobileLoginAdmin.querySelector('i').className = 'fas fa-user-circle'; // User icon
+                    mobileLoginAdmin.querySelector('span').textContent = 'Perfil';
+                }
+            }
+
+            // Show admin button in header if user is admin
             if (loggedInUser.role === 'admin') {
                 adminBtn.style.display = 'inline-block';
             }
@@ -43,6 +57,12 @@
             loginBtn.addEventListener('click', () => {
                 window.location.href = 'login.html';
             });
+            // Ensure mobile login/admin button is set to login if not logged in
+            if (mobileLoginAdmin) {
+                mobileLoginAdmin.href = 'login.html';
+                mobileLoginAdmin.querySelector('i').className = 'fas fa-user';
+                mobileLoginAdmin.querySelector('span').textContent = 'Entrar';
+            }
         }
     });
 </script>
@@ -263,6 +283,30 @@
     </div>
 
     
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-bottom-nav">
+        <a href="#home" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Início</span>
+        </a>
+        <a href="#restaurants" class="nav-item">
+            <i class="fas fa-utensils"></i>
+            <span>Restaurantes</span>
+        </a>
+        <a href="#categories" class="nav-item">
+            <i class="fas fa-th-large"></i>
+            <span>Categorias</span>
+        </a>
+        <a href="#about" class="nav-item">
+            <i class="fas fa-info-circle"></i>
+            <span>Sobre</span>
+        </a>
+        <a href="login.html" class="nav-item" id="mobileLoginAdmin">
+            <i class="fas fa-user"></i>
+            <span>Entrar</span>
+        </a>
+    </div>
 
     <script src="js/script.js"></script>
 </body>
