@@ -573,6 +573,10 @@ function renderTopRatedRestaurantsSlide() {
     let currentSlide = 0;
     const slides = heroSlideshow.querySelectorAll('.hero-slide');
     
+    if (slides.length === 0) {
+        return; // No slides to rotate, exit
+    }
+
     setInterval(() => {
         slides[currentSlide].style.opacity = '0';
         currentSlide = (currentSlide + 1) % slides.length;
