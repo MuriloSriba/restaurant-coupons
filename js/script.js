@@ -1,153 +1,6 @@
 // Sample data for coupons and restaurants
-const couponsData = [
-   {
-       id: 1,
-        title: "Churrasco Premium - 40% OFF",
-        restaurant: "Fogo de Chão",
-        description: "Desconto imperdível no melhor churrasco da cidade! Inclui buffet completo e sobremesa.",
-        discount: "40%",
-        originalPrice: 89.90,
-        discountedPrice: 53.94,
-        category: "churrasco",
-        type: "popular",
-        image: "fas fa-fire"
-    },
-    {
-        id: 2,
-        title: "Sushi All You Can Eat",
-        restaurant: "Sushi Bar",
-        description: "Coma à vontade os melhores sushis e sashimis com 30% de desconto!",
-        discount: "30%",
-        originalPrice: 79.90,
-        discountedPrice: 55.93,
-        category: "japones",
-        type: "new",
-        image: "fas fa-fish"
-    },
-    {
-        id: 3,
-        title: "Pizza Família + Refrigerante",
-        restaurant: "Pizza Hut",
-        description: "Pizza grande de até 2 sabores + refrigerante 2L. Perfeito para compartilhar!",
-        discount: "25%",
-        originalPrice: 59.90,
-        discountedPrice: 44.93,
-        category: "italiano",
-        type: "popular",
-        image: "fas fa-pizza-slice"
-    },
-    {
-        id: 4,
-        title: "Feijoada Completa",
-        restaurant: "Casa da Feijoada",
-        description: "Feijoada tradicional com todos os acompanhamentos. Sabor brasileiro autêntico!",
-        discount: "35%",
-        originalPrice: 49.90,
-        discountedPrice: 32.44,
-        category: "brasileiro",
-        type: "expiring",
-        image: "fas fa-drumstick-bite"
-    },
-    {
-        id: 5,
-        title: "Menu Vegano Especial",
-        restaurant: "Green Food",
-        description: "Menu completo vegano com entrada, prato principal e sobremesa. Saudável e delicioso!",
-        discount: "20%",
-        originalPrice: 45.90,
-        discountedPrice: 36.72,
-        category: "vegano",
-        type: "new",
-        image: "fas fa-seedling"
-    },
-    {
-        id: 6,
-        title: "Sobremesa Premium",
-        restaurant: "Sweet Dreams",
-        description: "Escolha 3 sobremesas do nosso menu especial. Perfeito para adoçar seu dia!",
-        discount: "50%",
-        originalPrice: 35.90,
-        discountedPrice: 17.95,
-        category: "sobremesas",
-        type: "expiring",
-        image: "fas fa-ice-cream"
-    }
-];
-
-const restaurantsData = [
-    {
-        id: 1,
-        name: "Fogo de Chão",
-        cuisine: "Churrasco",
-        rating: 4.8,
-        location: "Centro",
-        image: "fas fa-fire",
-        hours: "Seg-Sex: 11h - 23h, Sáb-Dom: 12h - 00h",
-        description: "Churrasco tradicional com cortes nobres e buffet completo.",
-        whatsapp: "5511999999999",
-        map_embed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.633309!3d-23.55052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0x123456789abcdef!2sFogo%20de%20Ch%C3%A3o!5e0!3m2!1spt-BR!2sbr!4v1234567890' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
-    },
-    {
-        id: 2,
-        name: "Sushi Bar",
-        cuisine: "Japonês",
-        rating: 4.6,
-        location: "Jardins",
-        image: "fas fa-fish",
-        hours: "Ter-Dom: 12h - 22h",
-        description: "Sushis e sashimis frescos com ingredientes selecionados.",
-        whatsapp: "5511988888888",
-        map_embed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.987654321!2d-46.650000!3d-23.560000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c987654321%3A0xabcdef123456789!2sSushi%20Bar!5e0!3m2!1spt-BR!2sbr!4v1234567891' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
-    },
-    {
-        id: 3,
-        name: "Pizza Hut",
-        cuisine: "Italiano",
-        rating: 4.4,
-        location: "Vila Mariana",
-        image: "fas fa-pizza-slice",
-        hours: "Seg-Dom: 11h - 23h",
-        description: "Pizzas tradicionais e especiais com massa fina e crocante.",
-        whatsapp: "5511977777777",
-        map_embed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.640000!3d-23.570000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0xabcdefabcdef1234!2sPizza%20Hut!5e0!3m2!1spt-BR!2sbr!4v1234567892' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
-    },
-    {
-        id: 4,
-        name: "Casa da Feijoada",
-        cuisine: "Brasileiro",
-        rating: 4.7,
-        location: "Liberdade",
-        image: "fas fa-drumstick-bite",
-        hours: "Qua-Dom: 12h - 22h",
-        description: "Feijoada completa com acompanhamentos tradicionais.",
-        whatsapp: "5511966666666",
-        map_embed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.630000!3d-23.580000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0xabcdefabcdef5678!2sCasa%20da%20Feijoada!5e0!3m2!1spt-BR!2sbr!4v1234567893' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
-    },
-    {
-        id: 5,
-        name: "Green Food",
-        cuisine: "Vegano",
-        rating: 4.5,
-        location: "Pinheiros",
-        image: "fas fa-seedling",
-        hours: "Seg-Sex: 11h - 21h",
-        description: "Comida vegana saudável e saborosa com ingredientes orgânicos.",
-        whatsapp: "5511955555555",
-        map_embed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.620000!3d-23.590000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0xabcdefabcdef9012!2sGreen%20Food!5e0!3m2!1spt-BR!2sbr!4v1234567894' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
-    },
-    {
-        id: 6,
-        name: "Sweet Dreams",
-        cuisine: "Sobremesas",
-        rating: 4.9,
-        location: "Moema",
-        image: "fas fa-ice-cream",
-        hours: "Ter-Dom: 12h - 22h",
-        description: "Sobremesas artesanais e especiais para adoçar seu dia.",
-        whatsapp: "5511944444444",
-        map_embed: "<iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.123456789!2d-46.610000!3d-23.600000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c123456789%3A0xabcdefabcdef3456!2sSweet%20Dreams!5e0!3m2!1spt-BR!2sbr!4v1234567895' width='100%' height='200' style='border:0;' allowfullscreen='' loading='lazy'></iframe>"
-    }
-];
+let couponsData = [];
+let restaurantsData = [];
 
 // DOM Elements
 const couponsGrid = document.getElementById('couponsGrid');
@@ -155,9 +8,58 @@ const restaurantsGrid = document.getElementById('restaurantsGrid');
 const searchInput = document.getElementById('searchInput');
 const filterTabs = document.querySelectorAll('.tab');
 const categoryCards = document.querySelectorAll('.category-card');
-const modal = document.getElementById('couponModal');
-const closeModal = document.querySelector('.close');
+const couponModal = document.getElementById('couponModal');
+const restaurantModal = document.getElementById('restaurantModal');
 const couponDetails = document.getElementById('couponDetails');
+const restaurantDetails = document.getElementById('restaurantDetails');
+const restaurantMap = document.getElementById('restaurantMap');
+
+const API_BASE_URL = window.location.origin + '/api';
+
+// Authentication helper
+function getAuthHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+    };
+}
+
+// Fetch coupons from backend
+async function fetchCoupons() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/coupons`, {
+            headers: getAuthHeaders()
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch coupons');
+        }
+        
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching coupons:', error);
+        return [];
+    }
+}
+
+// Fetch restaurants from backend
+async function fetchRestaurants() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/restaurants`, {
+            headers: getAuthHeaders()
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch restaurants');
+        }
+        
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching restaurants:', error);
+        return [];
+    }
+}
 
 // Helper function to transform coupon data from API to frontend format
 function transformCouponFromApi(c) {
@@ -199,282 +101,6 @@ function createImageDisplay(image, defaultIconClass) {
     }
     // It's likely a FontAwesome class or empty, use an <i> tag
     return `<i class="${image || defaultIconClass}"></i>`;
-}
-
-// Initialize the app
-document.addEventListener('DOMContentLoaded', async function() {
-    // We can still get the token to use for authenticated actions if needed,
-    // but we won't block the page load if it's not present.
-    const token = localStorage.getItem('token');
-
-    try {
-        // Fetch restaurants from backend
-        const resRestaurants = await fetch('/api/restaurants', {
-            // No authorization needed to view public restaurant list
-        });
-        if (!resRestaurants.ok) throw new Error('Falha ao carregar restaurantes');
-        const restaurants = await resRestaurants.json();
-        // Sobrescreve os dados estáticos com os dados do backend
-        restaurantsData.splice(0, restaurantsData.length, ...restaurants);
-
-        // Fetch coupons from backend
-        const resCoupons = await fetch('/api/coupons', {
-            // No authorization needed to view public coupon list
-        });
-        if (!resCoupons.ok) throw new Error('Falha ao carregar cupons');
-        const couponsFromApi = await resCoupons.json();
-
-        const transformedCoupons = couponsFromApi.map(transformCouponFromApi);
-        // Sobrescreve os dados estáticos com os dados do backend
-        couponsData.splice(0, couponsData.length, ...transformedCoupons);
-
-        // Renderiza usando os dados atualizados
-        renderCoupons(couponsData);
-        renderRestaurants(restaurantsData);
-        setupEventListeners();
-        initNavigation();
-
-        populateRestaurantDropdown();
-
-        checkAdminAccess();
-        
-        // Ensure "All" filter is active by default
-        const allTab = document.querySelector('[data-filter="all"]');
-
-        if (allTab) {
-            allTab.classList.add('active');
-            filterCoupons('all');
-
-        }
-        } catch (error) {
-        console.error('Erro ao carregar dados:', error);
-        const couponsGrid = document.getElementById('couponsGrid');
-        if (couponsGrid) {
-            couponsGrid.innerHTML = '<p style="text-align: center; color: red;">Não foi possível carregar os cupons. Verifique a conexão com o servidor.</p>';
-        }
-    }
-});
-
-// Popula o dropdown de restaurantes no formulário de cupons
-function populateRestaurantDropdown() {
-    const select = document.getElementById('couponRestaurantId');
-    if (!select) return; // Só executa se o elemento existir na página
-
-    // Limpa opções existentes e adiciona a padrão
-    select.innerHTML = '<option value="">Selecione um Restaurante</option>';
-
-    restaurantsData.forEach(restaurant => {
-        const option = document.createElement('option');
-        option.value = restaurant.id;
-        option.textContent = restaurant.name;
-        select.appendChild(option);
-    });
-}
-
-// Render restaurants
-function renderRestaurants(restaurants) {
-    const restaurantsGrid = document.getElementById('restaurantsGrid');
-    restaurantsGrid.innerHTML = '';
-
-    restaurants.forEach(restaurant => {
-        const card = document.createElement('div');
-        card.className = 'restaurant-card';
-        card.dataset.id = restaurant.id;
-
-        card.innerHTML = `
-            <div class="restaurant-image">
-                <i class="${restaurant.image}"></i>
-            </div>
-            <div class="restaurant-info">
-                <h3 class="restaurant-name">${restaurant.name}</h3>
-                <p class="restaurant-cuisine">${restaurant.cuisine}</p>
-                <div class="restaurant-rating">
-                    <div class="stars">
-                        ${generateStars(restaurant.rating)}
-                    </div>
-                    <span>${restaurant.rating}</span>
-                </div>
-                <p class="restaurant-location">
-                    <i class="fas fa-map-marker-alt"></i> ${restaurant.location}
-                </p>
-            </div>
-        `;
-
-        card.addEventListener('click', () => {
-            openRestaurantModal(restaurant.id);
-        });
-
-        restaurantsGrid.appendChild(card);
-    });
-}
-
-function checkAdminAccess() {
-    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-    const adminBtn = document.getElementById('adminBtn');
-    const adminSection = document.getElementById('adminRestaurantRegistration');
-    
-    if (loggedInUser && loggedInUser.role === 'admin') {
-        adminBtn.style.display = 'inline-block';
-        adminSection.style.display = 'block';
-        
-        // Add click event to admin button to redirect to admin.html
-        adminBtn.addEventListener('click', () => {
-            window.location.href = 'admin.html';
-        });
-    } else {
-        adminBtn.style.display = 'none';
-        if (adminSection) {
-            adminSection.style.display = 'none';
-        }
-    }
-}
-
-// Handle restaurant registration form submission
-const restaurantRegistrationForm = document.getElementById('restaurantRegistrationForm');
-if (restaurantRegistrationForm) {
-    restaurantRegistrationForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const messageDiv = document.getElementById('restaurantRegistrationMessage');
-        messageDiv.textContent = '';
-
-        const token = localStorage.getItem('token');
-        if (!token) {
-            messageDiv.textContent = 'Usuário não autenticado.';
-            messageDiv.style.color = 'red';
-            return;
-        }
-
-        const newRestaurant = {
-            name: this.restaurantName.value.trim(),
-            cuisine: this.restaurantCuisine.value.trim(),
-            rating: parseFloat(this.restaurantRating.value),
-            location: this.restaurantLocation.value.trim(),
-            image: this.restaurantImage.value.trim(),
-            hours: this.restaurantHours.value.trim(),
-            description: this.restaurantDescription.value.trim(),
-            whatsapp: this.restaurantWhatsapp.value.trim(),
-            map_embed: this.restaurantMapEmbed.value.trim()
-        };
-
-        // Basic validation
-        if (!newRestaurant.name || !newRestaurant.cuisine || isNaN(newRestaurant.rating) || !newRestaurant.location) {
-            messageDiv.textContent = 'Por favor, preencha todos os campos obrigatórios corretamente.';
-            messageDiv.style.color = 'red';
-            return;
-        }
-
-        try {
-            const response = await fetch('/api/restaurants', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(newRestaurant)
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                messageDiv.textContent = errorData.message || 'Erro ao cadastrar restaurante.';
-                messageDiv.style.color = 'red';
-                return;
-            }
-
-            const createdRestaurant = await response.json();
-
-            // Update restaurant list with the new data
-            restaurantsData.push(createdRestaurant);
-            renderRestaurants(restaurantsData); // Re-render with the updated list
-            populateRestaurantDropdown(); // Atualiza a lista de restaurantes no formulário de cupons
-
-            messageDiv.textContent = 'Restaurante cadastrado com sucesso!';
-            messageDiv.style.color = 'green';
-            console.log('Restaurante cadastrado com sucesso!');
-            this.reset();
-        } catch (error) {
-            messageDiv.textContent = 'Erro ao conectar com o servidor.';
-            messageDiv.style.color = 'red';
-        }
-    });
-}
-
-// Handle coupon registration form submission
-const couponRegistrationForm = document.getElementById('couponRegistrationForm');
-if (couponRegistrationForm) {
-    couponRegistrationForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const messageDiv = document.getElementById('couponRegistrationMessage');
-        messageDiv.textContent = '';
-
-        const token = localStorage.getItem('token');
-        if (!token) {
-            messageDiv.textContent = 'Usuário não autenticado.';
-            messageDiv.style.color = 'red';
-            return;
-        }
-
-        const newCoupon = {
-            title: this.couponTitle.value.trim(),
-            description: this.couponDescription.value.trim(),
-            discount: parseFloat(this.couponDiscount.value),
-            original_price: parseFloat(this.couponOriginalPrice.value),
-            category: this.couponCategory.value.trim(),
-            type: this.couponType.value.trim(),
-            image: this.couponImage.value.trim(),
-            restaurant_id: parseInt(this.couponRestaurantId.value)
-        };
-
-        // Validação básica
-        if (!newCoupon.title || !newCoupon.restaurant_id || isNaN(newCoupon.discount) || isNaN(newCoupon.original_price)) {
-            messageDiv.textContent = 'Por favor, preencha todos os campos obrigatórios corretamente.';
-            messageDiv.style.color = 'red';
-            return;
-        }
-
-        try {
-            const response = await fetch('/api/coupons', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(newCoupon)
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                messageDiv.textContent = errorData.message || 'Erro ao cadastrar cupom.';
-                messageDiv.style.color = 'red';
-                return;
-            }
-
-            const createdCoupon = await response.json();
-
-            // Transforma o cupom criado para o formato do frontend
-            const transformedCoupon = {
-                id: createdCoupon.id,
-                title: createdCoupon.title,
-                restaurant: createdCoupon.restaurant_name || 'Restaurante',
-                description: createdCoupon.description,
-                discount: `${createdCoupon.discount}%`,
-                originalPrice: createdCoupon.original_price,
-                discountedPrice: createdCoupon.discounted_price,
-                category: createdCoupon.category,
-                type: createdCoupon.type,
-                image: createdCoupon.image
-            };
-
-            couponsData.push(transformedCoupon);
-            renderCoupons(couponsData); // Re-renderiza a lista com o novo cupom
-
-            messageDiv.textContent = 'Cupom cadastrado com sucesso!';
-            messageDiv.style.color = 'green';
-            this.reset();
-        } catch (error) {
-            messageDiv.textContent = 'Erro ao conectar com o servidor.';
-            messageDiv.style.color = 'red';
-        }
-    });
 }
 
 // Render coupons
@@ -609,6 +235,20 @@ function generateStars(rating) {
 }
 
 // Setup event listeners
+function checkAdminAccess() {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    const adminBtn = document.getElementById('adminBtn');
+    
+    if (adminBtn) {
+        if (loggedInUser && loggedInUser.role === 'admin') {
+            adminBtn.style.display = 'inline-block';
+        } else {
+            adminBtn.style.display = 'none';
+        }
+    }
+}
+
+// Setup event listeners
 function setupEventListeners() {
     // Filter tabs
     filterTabs.forEach(tab => {
@@ -648,19 +288,23 @@ function setupEventListeners() {
     }
 
     // Modal close
-    closeModal.addEventListener('click', closeCouponModal);
+    const closeModal = couponModal.querySelector('.close');
+    if (closeModal) {
+        closeModal.addEventListener('click', closeCouponModal);
+    }
     window.addEventListener('click', function(event) {
-        if (event.target === modal) {
+        if (event.target === couponModal) {
             closeCouponModal();
         }
     });
 
     // Restaurant modal close
-    const restaurantModal = document.getElementById('restaurantModal');
-    const restaurantModalClose = document.getElementById('restaurantModalClose');
-    restaurantModalClose.addEventListener('click', () => {
-        restaurantModal.style.display = 'none';
-    });
+    const restaurantModalClose = restaurantModal.querySelector('.close');
+    if (restaurantModalClose) {
+        restaurantModalClose.addEventListener('click', () => {
+            restaurantModal.style.display = 'none';
+        });
+    }
     window.addEventListener('click', function(event) {
         if (event.target === restaurantModal) {
             restaurantModal.style.display = 'none';
@@ -668,21 +312,31 @@ function setupEventListeners() {
     });
 
     // Add click event to restaurant cards to open modal
-    const restaurantsGrid = document.getElementById('restaurantsGrid');
-    restaurantsGrid.addEventListener('click', (event) => {
-        event.preventDefault();
-        let card = event.target;
-        
-        // Find the closest restaurant card
-        while (card && !card.classList.contains('restaurant-card')) {
-            card = card.parentElement;
-        }
-        
-        if (card && card.dataset.id) {
-            const restaurantId = parseInt(card.dataset.id);
-            openRestaurantModal(restaurantId);
-        }
-    });
+    const restaurantsGridElement = document.getElementById('restaurantsGrid');
+    if (restaurantsGridElement) {
+        restaurantsGridElement.addEventListener('click', (event) => {
+            event.preventDefault();
+            let card = event.target;
+            
+            // Find the closest restaurant card
+            while (card && !card.classList.contains('restaurant-card')) {
+                card = card.parentElement;
+            }
+            
+            if (card && card.dataset.id) {
+                const restaurantId = parseInt(card.dataset.id);
+                openRestaurantModal(restaurantId);
+            }
+        });
+    }
+
+    // Admin button click event
+    const adminBtn = document.getElementById('adminBtn');
+    if (adminBtn) {
+        adminBtn.addEventListener('click', () => {
+            window.location.href = 'admin.html';
+        });
+    }
 }
 
 // Filter coupons
@@ -703,7 +357,8 @@ function filterByCategory(category) {
     
     // Update active tab
     filterTabs.forEach(tab => tab.classList.remove('active'));
-    document.querySelector('[data-filter="all"]').classList.add('active');
+    const allTab = document.querySelector('[data-filter="all"]');
+    if (allTab) allTab.classList.add('active');
 }
 
 // Search coupons
@@ -786,27 +441,24 @@ function openCouponModal(couponId) {
             </div>
         `;
         
-        modal.style.display = 'block';
+        couponModal.style.display = 'block';
     }
 }
 
 // Open restaurant modal
 function openRestaurantModal(restaurantId) {
     const restaurant = restaurantsData.find(r => r.id === restaurantId);
-    const restaurantModal = document.getElementById('restaurantModal');
-    const restaurantDetails = document.getElementById('restaurantDetails');
-    const restaurantMap = document.getElementById('restaurantMap');
 
     if (restaurant) {
         const imageSrc = (restaurant.image && (restaurant.image.startsWith('http') || restaurant.image.startsWith('data:image')))
             ? restaurant.image
-            : 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'150\' viewBox=\'0 0 150 150\'%3E%3Crect width=\'150\' height=\'150\' fill=\'%23ccc\'%3E%3C/rect%3E%3C/svg%3E'; // Fallback for old data or icon classes
+            : 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'150\' viewBox=\'0 0 150 150\'%3E%3Crect width=\'150\' height=\'150\' fill=\'%23ccc\'%3E%3C/rect%3E%3Ctext x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'50\' fill=\'%23fff\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E${encodeURIComponent(restaurant.name)}%3C/text%3E%3C/svg%3E'; // Fallback for old data or icon classes
 
         restaurantDetails.innerHTML = `
-            <div style="display: flex; gap: 2rem; align-items: flex-start; padding: 1.5rem;">
-                <img src="${imageSrc}" alt="${restaurant.name}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 12px; flex-shrink: 0;" />
-                <div style="flex: 1; font-size: 0.9rem; line-height: 1.4;">
-                    <h2 style="margin-top: 0; font-size: 1.5rem;">${restaurant.name}</h2>
+            <div class="modal-restaurant-content">
+                <img src="${imageSrc}" alt="${restaurant.name}" class="modal-restaurant-image" />
+                <div class="modal-restaurant-info">
+                    <h2 class="modal-restaurant-name">${restaurant.name}</h2>
                     <p><strong>Culinária:</strong> ${restaurant.cuisine}</p>
                     <p><strong>Horário de Funcionamento:</strong> ${restaurant.hours}</p>
                     <p><strong>Descrição:</strong> ${restaurant.description}</p>
@@ -836,11 +488,9 @@ function openRestaurantModal(restaurantId) {
     }
 }
 
-
-
 // Close coupon modal
 function closeCouponModal() {
-    modal.style.display = 'none';
+    couponModal.style.display = 'none';
 }
 
 // Copy coupon code
@@ -863,15 +513,6 @@ function useCoupon(couponId) {
     closeCouponModal();
 }
 
-// Generate random date for coupon validity
-function getRandomDate() {
-    const today = new Date();
-    const future = new Date(today);
-    future.setDate(today.getDate() + Math.floor(Math.random() * 30) + 7);
-    
-    return future.toLocaleDateString('pt-BR');
-}
-
 // Function to render top rated restaurants in slideshow
 function renderTopRatedRestaurantsSlide() {
     const heroSlideshow = document.getElementById('heroSlideshow');
@@ -887,7 +528,7 @@ function renderTopRatedRestaurantsSlide() {
     topRestaurants.forEach((restaurant, index) => {
         const slide = document.createElement('div');
         slide.className = 'hero-slide';
-        slide.style.background = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'600\' viewBox=\'0 0 1200 600\'%3E%3Crect width=\'1200\' height=\'600\' fill=\'%23333\'%3E%3C/rect%3E%3Ctext x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'50\' fill=\'%23fff\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E${encodeURIComponent(restaurant.name)}%3C/text%3E%3C/svg%3E')`;
+        slide.style.background = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'600\' viewBox=\'0 0 1200 600\'%3E%3Crect width=\'1200\' height=\'600\' fill=\'%23ccc\'%3E%3C/rect%3E%3Ctext x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'50\' fill=\'%23fff\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E${encodeURIComponent(restaurant.name)}%3C/text%3E%3C/svg%3E')`;
         slide.style.backgroundSize = 'cover';
         slide.style.backgroundPosition = 'center';
         slide.style.position = 'absolute';
@@ -1011,7 +652,9 @@ function throttle(func, limit) {
 
 // Add loading animation
 function showLoading() {
-    couponsGrid.innerHTML = '<div class="loading">Carregando cupons...</div>';
+    if (couponsGrid) {
+        couponsGrid.innerHTML = '<div class="loading">Carregando cupons...</div>';
+    }
 }
 
 // Add to favorites functionality (bonus feature)
@@ -1035,243 +678,45 @@ function isFavorite(couponId) {
     return favorites.includes(couponId);
 }
 
-// Add CSS for modal styles
-const modalStyles = `
-    <style>
-        .modal-coupon-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 1rem;
-        }
-        
-        .modal-coupon-header h2 {
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
-        
-        .modal-coupon-restaurant h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        
-        .modal-coupon-description {
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-        
-        .modal-coupon-pricing {
-            background: var(--bg-light);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 2rem;
-        }
-        
-        .price-comparison {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-        
-        .original-price {
-            color: var(--text-light);
-            text-decoration: line-through;
-        }
-        
-        .final-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-        
-        .savings {
-            color: var(--secondary-color);
-            font-weight: 600;
-        }
-        
-        .modal-coupon-code {
-            margin-bottom: 2rem;
-        }
-        
-        .code-box {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: var(--bg-light);
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            margin-top: 0.5rem;
-        }
-        
-        .code-box span {
-            font-family: monospace;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            flex: 1;
-        }
-        
-        .copy-btn {
-            background: var(--primary-color);
-            color: var(--white);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .copy-btn:hover {
-            background: var(--secondary-color);
-        }
-        
-        .modal-coupon-validity {
-            color: var(--text-light);
-            margin-bottom: 2rem;
+// Initialize the app
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        // Show loading state
+        showLoading();
+
+        // Fetch data from backend
+        const [couponsFromApi, restaurantsFromApi] = await Promise.all([
+            fetchCoupons(),
+            fetchRestaurants()
+        ]);
+
+        // Transform and store data globally
+        couponsData = couponsFromApi.map(transformCouponFromApi);
+        restaurantsData = restaurantsFromApi;
+
+        // Render the data
+        renderCoupons(couponsData);
+        renderRestaurants(restaurantsData);
+        renderTopRatedRestaurantsSlide();
+
+        // Setup event listeners
+        setupEventListeners();
+        initNavigation();
+
+        // Ensure "All" filter is active by default
+        const allTab = document.querySelector('[data-filter="all"]');
+        if (allTab) {
+            allTab.classList.add('active');
+            filterCoupons('all');
         }
 
-        .modal-coupon-terms {
-            margin-bottom: 2rem;
+    } catch (error) {
+        console.error('Erro ao carregar dados iniciais:', error);
+        if (couponsGrid) {
+            couponsGrid.innerHTML = '<p style="text-align: center; color: red;">Não foi possível carregar os cupons. Verifique a conexão com o servidor.</p>';
         }
-
-        .modal-coupon-terms h4 {
-            margin-bottom: 1rem;
-            color: var(--text-dark);
+        if (restaurantsGrid) {
+            restaurantsGrid.innerHTML = '<p style="text-align: center; color: red;">Não foi possível carregar os restaurantes. Verifique a conexão com o servidor.</p>';
         }
-
-        .modal-coupon-terms ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .modal-coupon-terms li {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            color: var(--text-light);
-        }
-        
-        .use-coupon-btn {
-            width: 100%;
-            background: var(--primary-color);
-            color: var(--white);
-            border: none;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .use-coupon-btn:hover {
-            background: var(--secondary-color);
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-light);
-            font-size: 1.2rem;
-        }
-    </style>
-`;
-
-document.head.insertAdjacentHTML('beforeend', modalStyles);
-
-// Close coupon modal
-function closeCouponModal() {
-    modal.style.display = 'none';
-}
-
-// Copy coupon code
-function copyCouponCode() {
-    const couponCode = document.getElementById('couponCode').textContent;
-    navigator.clipboard.writeText(couponCode).then(() => {
-        const copyBtn = document.querySelector('.copy-btn');
-        const originalText = copyBtn.innerHTML;
-        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
-        
-        setTimeout(() => {
-            copyBtn.innerHTML = originalText;
-        }, 2000);
-    });
-}
-
-// Use coupon
-function useCoupon(couponId) {
-    alert('Cupom reservado com sucesso! Você será redirecionado para o restaurante.');
-    closeCouponModal();
-}
-
-// Generate random date for coupon validity
-function getRandomDate() {
-    const today = new Date();
-    const future = new Date(today);
-    future.setDate(today.getDate() + Math.floor(Math.random() * 30) + 7);
-    
-    return future.toLocaleDateString('pt-BR');
-}
-
-// Function to render top rated restaurants in slideshow
-function renderTopRatedRestaurantsSlide() {
-    const heroSlideshow = document.getElementById('heroSlideshow');
-    if (!heroSlideshow) return;
-
-    // Get top 3 rated restaurants
-    const topRestaurants = [...restaurantsData]
-        .sort((a, b) => b.rating - a.rating)
-        .slice(0, 3);
-
-    heroSlideshow.innerHTML = '';
-    
-    topRestaurants.forEach((restaurant, index) => {
-        const slide = document.createElement('div');
-        slide.className = 'hero-slide';
-        slide.style.background = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'600\' viewBox=\'0 0 1200 600\'%3E%3Crect width=\'1200\' height=\'600\' fill=\'%23333\'%3E%3C/rect%3E%3Ctext x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'50\' fill=\'%23fff\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E${encodeURIComponent(restaurant.name)}%3C/text%3E%3C/svg%3E')`;
-        slide.style.backgroundSize = 'cover';
-        slide.style.backgroundPosition = 'center';
-        slide.style.position = 'absolute';
-        slide.style.top = '0';
-        slide.style.left = '0';
-        slide.style.width = '100%';
-        slide.style.height = '100%';
-        slide.style.opacity = index === 0 ? '1' : '0';
-        slide.style.transition = 'opacity 1s ease-in-out';
-        
-        const slideContent = document.createElement('div');
-        slideContent.className = 'hero-slide-content';
-        slideContent.style.position = 'absolute';
-        slideContent.style.top = '50%';
-        slideContent.style.left = '50%';
-        slideContent.style.transform = 'translate(-50%, -50%)';
-        slideContent.style.textAlign = 'center';
-        slideContent.style.color = 'white';
-        
-        slideContent.innerHTML = `
-            <h2>${restaurant.name}</h2>
-            <p>${restaurant.cuisine} • ${restaurant.rating} ⭐</p>
-            <button class="hero-cta" onclick="openRestaurantModal(${restaurant.id})">
-                Ver Detalhes
-            </button>
-        `;
-        
-        slide.appendChild(slideContent);
-        heroSlideshow.appendChild(slide);
-    });
-
-    // Auto-rotate slides
-    let currentSlide = 0;
-    const slides = heroSlideshow.querySelectorAll('.hero-slide');
-    
-    setInterval(() => {
-        slides[currentSlide].style.opacity = '0';
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].style.opacity = '1';
-    }, 5000);
-}
+    }
+});

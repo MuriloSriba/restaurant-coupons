@@ -1,0 +1,8 @@
+[build]
+  publish = "." # Publish the root directory for static assets
+  functions = "functions" # Netlify Functions will be in the 'functions' directory
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/backend/:splat" # Route API requests to the backend function
+  status = 200
