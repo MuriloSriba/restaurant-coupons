@@ -1521,6 +1521,10 @@ button.btn-submit:hover {
         gap: 0.8rem;
     }
 
+    .admin-btn {
+        display: none !important; /* Hide admin button on mobile */
+    }
+
     .hero-content { /* Make hero-content invisible on mobile */
         display: none;
     }
