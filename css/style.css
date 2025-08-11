@@ -31,6 +31,9 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 16px;
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
@@ -607,6 +610,13 @@ button {
     line-height: 1.6;
     box-sizing: border-box;
     box-shadow: var(--shadow-hover);
+    margin: auto; /* Explicitly center within flex container */
+}
+
+/* Specific style for Coupon Modal */
+#couponModal .modal-content {
+    max-width: 420px; /* Smaller width for card-like appearance */
+    padding: 25px; /* More compact padding */
 }
 
 .close {
@@ -806,7 +816,7 @@ button {
 /* Login Page Styles */
 .login-container {
     max-width: 450px;
-    margin: 6rem auto;
+    margin: auto; /* Centered horizontally and vertically */
     padding: 2.5rem;
     background: var(--white);
     border-radius: var(--border-radius);
@@ -910,6 +920,7 @@ button {
     max-width: 450px;
     padding: 2.5rem;
     text-align: center;
+    margin: auto; /* Explicitly center within flex container */
 }
 
 #authModal form {
@@ -972,7 +983,7 @@ button {
     box-shadow: var(--shadow-hover);
     width: 100%;
     max-width: 750px;
-    margin-top: 120px;
+    margin: auto; /* Centered horizontally and vertically */
     border: 1px solid var(--border-color);
 }
 
@@ -1401,7 +1412,7 @@ button.btn-submit:hover {
 
     .admin-container {
         padding: 2rem;
-        margin-top: 100px;
+        margin: auto; /* Centered horizontally and vertically */
     }
 
     .admin-container h1 {
@@ -1470,6 +1481,10 @@ button.btn-submit:hover {
         width: 100%;
         justify-content: center;
         gap: 0.8rem;
+    }
+
+    .hero-content { /* Make hero-content invisible on mobile */
+        display: none;
     }
 
     .hero {
@@ -1634,7 +1649,7 @@ button.btn-submit:hover {
     }
 
     .login-container {
-        margin: 4rem auto;
+        margin: auto; /* Centered horizontally and vertically */
         padding: 2rem;
     }
 
@@ -1663,7 +1678,7 @@ button.btn-submit:hover {
 
     .admin-container {
         padding: 1.8rem;
-        margin-top: 90px;
+        margin: auto; /* Centered horizontally and vertically */
     }
 
     .admin-container h1 {
@@ -1734,8 +1749,8 @@ button.btn-submit:hover {
     }
 
     .use-coupon-btn {
-        font-size: 1.1rem;
-        padding: 1rem;
+        font-size: 1rem;
+        padding: 0.9rem;
     }
 }
 
@@ -1829,7 +1844,7 @@ button.btn-submit:hover {
     }
 
     .login-container {
-        margin: 3rem auto;
+        margin: auto; /* Centered horizontally and vertically */
         padding: 1.5rem;
     }
 
@@ -1844,7 +1859,7 @@ button.btn-submit:hover {
 
     .admin-container {
         padding: 1.5rem;
-        margin-top: 80px;
+        margin: auto; /* Centered horizontally and vertically */
     }
 
     .admin-container h1 {
@@ -2015,7 +2030,7 @@ button.btn-submit:hover {
 /* Payment Page Styles (from payment.css) */
 .payment-container {
     max-width: 600px;
-    margin: 5rem auto;
+    margin: auto; /* Centered horizontally and vertically */
     padding: 2.5rem;
     background: var(--white);
     border-radius: var(--border-radius);
@@ -2163,7 +2178,7 @@ button.btn-submit:hover {
 /* Responsive adjustments for payment.css */
 @media (max-width: 768px) {
     .payment-container {
-        margin: 3rem auto;
+        margin: auto; /* Centered horizontally and vertically */
         padding: 2rem;
     }
 
@@ -2188,7 +2203,7 @@ button.btn-submit:hover {
 
 @media (max-width: 480px) {
     .payment-container {
-        margin: 2rem auto;
+        margin: auto; /* Centered horizontally and vertically */
         padding: 1.5rem;
     }
 
