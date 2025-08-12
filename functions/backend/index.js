@@ -1,5 +1,6 @@
 require('dotenv').config({ path: './.env' });
 console.log('Dotenv loaded. PORT:', process.env.PORT, 'DATABASE_URL:', process.env.DATABASE_URL ? 'Loaded' : 'Not Loaded');
+console.log('JWT_SECRET:', process.env.JWT_SECRET ? 'Loaded' : 'Not Loaded');
 
 const express = require('express');
 const cors = require('cors');
@@ -71,87 +72,83 @@ app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-// Function to initialize database and then start the application
-const initializeDatabase = async () => {
-  try {
-    const client = await pool.connect();
-    
-    // Create tables with error handling
-    try {
-      await client.query(`CREATE TABLE IF NOT EXISTS users (
-        id SERIAL PRIMARY KEY,
-        first_name TEXT,
-        last_name TEXT,
-        email TEXT UNIQUE NOT NULL,
-        password_hash TEXT NOT NULL,
-        role TEXT DEFAULT 'user',
-        status TEXT DEFAULT 'pending',
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )`);
-
-      await client.query(`CREATE TABLE IF NOT EXISTS restaurants (
-        id SERIAL PRIMARY KEY,
-        name TEXT NOT NULL,
-        cuisine TEXT,
-        rating REAL,
-        location TEXT,
-        image TEXT,
-        hours TEXT,
-        description TEXT,
-        whatsapp TEXT,
-        map_embed TEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )`);
-
-      await client.query(`CREATE TABLE IF NOT EXISTS coupons (
-        id SERIAL PRIMARY KEY,
-        title TEXT NOT NULL,
-        code TEXT,
-        restaurant_id INTEGER REFERENCES restaurants(id) ON DELETE CASCADE,
-        description TEXT,
-        discount_type TEXT,
-        discount_value REAL,
-        original_price REAL,
-        discounted_price REAL,
-        min_order_value REAL,
-        valid_from TEXT,
-        valid_to TEXT,
-        usage_limit INTEGER,
-        category TEXT,
-        type TEXT,
-        image TEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )`);
-    } catch (dbError) {
-      console.error('Database initialization error:', dbError);
-      throw dbError;
-    } finally {
-      client.release();
-    }
-
-    console.log("Database tables checked/created successfully.");
-  } catch (err) {
-    console.error('Database initialization error:', err);
-    throw err;
-  }
+// Function to initialize database
+const initializeDatabase = () => {
+  return pool.connect()
+    .then(client => {
+      return Promise.all([
+        client.query(`CREATE TABLE IF NOT EXISTS users (
+          id SERIAL PRIMARY KEY,
+          first_name TEXT,
+          last_name TEXT,
+          email TEXT UNIQUE NOT NULL,
+          password_hash TEXT NOT NULL,
+          role TEXT DEFAULT 'user',
+          status TEXT DEFAULT 'pending',
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )`),
+        client.query(`CREATE TABLE IF NOT EXISTS restaurants (
+          id SERIAL PRIMARY KEY,
+          name TEXT NOT NULL,
+          cuisine TEXT,
+          rating REAL,
+          location TEXT,
+          image TEXT,
+          hours TEXT,
+          description TEXT,
+          whatsapp TEXT,
+          map_embed TEXT,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )`),
+        client.query(`CREATE TABLE IF NOT EXISTS coupons (
+          id SERIAL PRIMARY KEY,
+          title TEXT NOT NULL,
+          code TEXT,
+          restaurant_id INTEGER REFERENCES restaurants(id) ON DELETE CASCADE,
+          description TEXT,
+          discount_type TEXT,
+          discount_value REAL,
+          original_price REAL,
+          discounted_price REAL,
+          min_order_value REAL,
+          valid_from TEXT,
+          valid_to TEXT,
+          usage_limit INTEGER,
+          category TEXT,
+          type TEXT,
+          image TEXT,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )`)
+      ])
+      .then(() => {
+        console.log("Database tables checked/created successfully.");
+        client.release();
+      })
+      .catch(error => {
+        client.release();
+        console.error('Database initialization error:', error);
+        throw error;
+      });
+    });
 };
 
 // Serverless handler
 let dbInitializedPromise = null;
 
-// Serverless handler
-let cachedServerlessHandler;
-
-module.exports.handler = async (event, context) => {
+module.exports.handler = (event, context) => {
   if (!dbInitializedPromise) {
     dbInitializedPromise = initializeDatabase();
   }
-  await dbInitializedPromise; // Await the initialization promise
-
-  if (!cachedServerlessHandler) {
-    cachedServerlessHandler = serverless(app);
-  }
-  return cachedServerlessHandler(event, context);
+  
+  return dbInitializedPromise
+    .then(() => {
+      const serverlessHandler = serverless(app);
+      return serverlessHandler(event, context);
+    })
+    .catch(error => {
+      console.error('Error during initialization:', error);
+      throw error;
+    });
 };
 
 process.on('uncaughtException', (err) => {
