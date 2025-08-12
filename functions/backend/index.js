@@ -137,11 +137,18 @@ const initializeDatabase = async () => {
 };
 
 // Serverless handler
+let dbInitializedPromise = null;
+
+// Serverless handler
 let cachedServerlessHandler;
 
 module.exports.handler = async (event, context) => {
+  if (!dbInitializedPromise) {
+    dbInitializedPromise = initializeDatabase();
+  }
+  await dbInitializedPromise; // Await the initialization promise
+
   if (!cachedServerlessHandler) {
-    await initializeDatabase(); // Ensure database is initialized
     cachedServerlessHandler = serverless(app);
   }
   return cachedServerlessHandler(event, context);
