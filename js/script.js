@@ -14,7 +14,7 @@ const couponDetails = document.getElementById('couponDetails');
 const restaurantDetails = document.getElementById('restaurantDetails');
 const restaurantMap = document.getElementById('restaurantMap');
 
-const API_BASE_URL = window.location.origin;
+const API_BASE_URL = window.location.origin + '/.netlify/functions/backend';
 
 // Authentication helper
 function getAuthHeaders() {
