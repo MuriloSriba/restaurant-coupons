@@ -46,4 +46,46 @@
         height: 250px; /* A bit more space for the map */
         flex-shrink: 0;
     }
+
+    /* Restaurant Modal Specific Adjustments for Mobile */
+    .modal-restaurant-content {
+        flex-direction: column; /* Stack image and info vertically */
+        align-items: center; /* Center items when stacked */
+        text-align: center; /* Center text */
+        gap: 15px; /* Reduce gap */
+    }
+
+    .modal-restaurant-image {
+        width: 120px !important; /* Smaller image */
+        height: 120px !important; /* Smaller image */
+        margin-right: 0 !important; /* Remove inline margin */
+        margin-bottom: 15px; /* Add some space below the image */
+    }
+
+    .modal-restaurant-info h2 {
+        font-size: 1.4rem; /* Smaller font for title */
+        margin-bottom: 0.5rem;
+    }
+
+    .modal-restaurant-info p {
+        font-size: 0.85rem; /* Smaller font for paragraphs */
+        margin-bottom: 0.4rem;
+    }
+
+    .modal-restaurant-info p strong {
+        font-size: 0.9rem; /* Smaller font for strong text */
+    }
+
+    .modal-restaurant-info p a {
+        font-size: 1rem; /* Smaller font for links */
+    }
+
+    #restaurantMap {
+        height: 180px; /* Slightly smaller map */
+    }
+
+    #restaurantDetails {
+        overflow-y: hidden; /* Attempt to remove scroll */
+        padding: 15px; /* Slightly reduced padding */
+    }
 }

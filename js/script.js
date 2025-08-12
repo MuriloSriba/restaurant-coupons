@@ -468,8 +468,9 @@ function openRestaurantModal(restaurantId) {
 
         restaurantDetails.innerHTML =
             `
+            restaurantDetails.innerHTML = `
             <div class="modal-restaurant-content">
-                <img src="${imageSrc}" alt="${restaurant.name}" class="modal-restaurant-image" style="width: 200px; height: 200px; object-fit: cover; border-radius: 8px; margin-right: 20px;"/>
+                <img src="${imageSrc}" alt="${restaurant.name}" class="modal-restaurant-image"/>
                 <div class="modal-restaurant-info">
                     <h2 class="modal-restaurant-name">${restaurant.name}</h2>
                     <p><strong>Culinária:</strong> ${restaurant.cuisine}</p>
@@ -487,6 +488,7 @@ function openRestaurantModal(restaurantId) {
                     </a></p>
                 </div>
             </div>
+        `;
         `;
 
         restaurantMap.innerHTML = restaurant.map_embed;
