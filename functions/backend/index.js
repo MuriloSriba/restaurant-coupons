@@ -74,8 +74,10 @@ app.get('/health', (req, res) => {
 
 // Function to initialize database
 const initializeDatabase = () => {
+  console.log('Attempting to initialize database...');
   return pool.connect()
     .then(client => {
+      console.log('Database client connected for initialization.');
       return Promise.all([
         client.query(`CREATE TABLE IF NOT EXISTS users (
           id SERIAL PRIMARY KEY,
@@ -136,18 +138,24 @@ const initializeDatabase = () => {
 let dbInitializedPromise = null;
 
 module.exports.handler = (event, context) => {
+  console.log('Netlify Function handler invoked.');
+  console.log('Event:', JSON.stringify(event, null, 2));
+  
   if (!dbInitializedPromise) {
+    console.log('Database initialization promise not yet created. Creating now...');
     dbInitializedPromise = initializeDatabase();
   }
   
   return dbInitializedPromise
     .then(() => {
+      console.log('Database initialized. Creating serverless handler...');
       const serverlessHandler = serverless(app);
+      console.log('Invoking serverless handler with event.');
       return serverlessHandler(event, context);
     })
     .catch(error => {
-      console.error('Error during initialization:', error);
-      throw error;
+      console.error('Error during function initialization or database setup:', error);
+      throw error; // Re-throw to ensure Netlify reports an error
     });
 };
 
