@@ -140,6 +140,7 @@ let dbInitializedPromise = null;
 
 module.exports.handler = (event, context) => {
   console.log('Netlify Function handler invoked.');
+  console.log('Event Path:', event.path);
   console.log('Event:', JSON.stringify(event, null, 2));
   
   if (!dbInitializedPromise) {
