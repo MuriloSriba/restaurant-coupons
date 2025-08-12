@@ -72,7 +72,7 @@ app.get('/health', (req, res) => {
 });
 
 // Function to initialize database and then start the application
-const initializeDatabaseAndStartApp = async () => {
+const initializeDatabase = async () => {
   try {
     const client = await pool.connect();
     
@@ -125,9 +125,10 @@ const initializeDatabaseAndStartApp = async () => {
     } catch (dbError) {
       console.error('Database initialization error:', dbError);
       throw dbError;
+    } finally {
+      client.release();
     }
 
-    client.release();
     console.log("Database tables checked/created successfully.");
   } catch (err) {
     console.error('Database initialization error:', err);
@@ -135,16 +136,16 @@ const initializeDatabaseAndStartApp = async () => {
   }
 };
 
-// Start the initialization process
-initializeDatabaseAndStartApp().then(() => {
-  const PORT = process.env.PORT || 3001;
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}).catch(err => {
-  console.error('Failed to initialize database and start app:', err);
-  process.exit(1);
-});
+// Serverless handler
+let cachedServerlessHandler;
+
+module.exports.handler = async (event, context) => {
+  if (!cachedServerlessHandler) {
+    await initializeDatabase(); // Ensure database is initialized
+    cachedServerlessHandler = serverless(app);
+  }
+  return cachedServerlessHandler(event, context);
+};
 
 process.on('uncaughtException', (err) => {
   console.error('Unhandled Exception caught!', err);
@@ -155,5 +156,3 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
   process.exit(1);
 });
-
-module.exports.handler = serverless(app);
