@@ -61,6 +61,7 @@ app.use(express.json({ limit: '5mb' }));
 app.use('/api/restaurants', restaurantsRouter);
 app.use('/api/coupons', couponsRouter);
 app.use('/api/auth', authRouter);
+console.log('Type of paymentRouter:', typeof paymentRouter);
 app.use('/api/pix-payment', paymentRouter);
 
 // Make db pool available to all routes
