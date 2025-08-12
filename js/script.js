@@ -819,4 +819,28 @@ function isFavorite(couponId) {
                 mobileLoginAdmin.querySelector('span').textContent = 'Entrar';
             }
         }
+
+    // Initial data load and rendering
+    showLoading();
+    Promise.all([
+        fetchCoupons(),
+        fetchRestaurants()
+    ]).then(([coupons, restaurants]) => {
+        couponsData = coupons;
+        restaurantsData = restaurants;
+        renderCoupons(couponsData);
+        renderRestaurants(restaurantsData);
+        renderTopRatedRestaurantsSlide();
+        setupEventListeners();
+        checkAdminAccess();
+        initNavigation();
+    }).catch(error => {
+        console.error('Error loading initial data:', error);
+        if (couponsGrid) {
+            couponsGrid.innerHTML = '<p class="error-message">Erro ao carregar dados. Tente novamente mais tarde.</p>';
+        }
+        if (restaurantsGrid) {
+            restaurantsGrid.innerHTML = '<p class="error-message">Erro ao carregar dados. Tente novamente mais tarde.</p>';
+        }
     });
+});
