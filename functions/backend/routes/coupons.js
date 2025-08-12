@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { authenticateToken } = require('../routes/auth'); // Import the middleware
+const authenticateToken = require('../middleware/authenticateToken'); // Import the middleware
 
 // Get all coupons
 router.get('/', authenticateToken, async (req, res) => { // Apply middleware here
