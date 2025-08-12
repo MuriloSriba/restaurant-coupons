@@ -184,7 +184,7 @@
 
 
     <script>
-        const API_BASE_URL = '/api';
+        const API_BASE_URL = '/.netlify/functions/backend';
         // Check if user is admin, else redirect to login
         const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
         if (!loggedInUser || loggedInUser.role !== 'admin') {
