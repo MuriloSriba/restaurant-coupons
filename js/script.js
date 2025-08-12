@@ -466,9 +466,7 @@ function openRestaurantModal(restaurantId) {
             ? restaurant.image
             : 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'150\' viewBox=\'0 0 150 150\'%3E%3Crect width=\'150\' height=\'150\' fill=\'%23ccc\'%3E%3C/rect%3E%3Ctext x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'50\' fill=\'%23fff\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E${encodeURIComponent(restaurant.name)}%3C/text%3E%3C/svg%3E'; // Fallback for old data or icon classes
 
-        restaurantDetails.innerHTML =
-            `
-            restaurantDetails.innerHTML = `
+        restaurantDetails.innerHTML = `
             <div class="modal-restaurant-content">
                 <img src="${imageSrc}" alt="${restaurant.name}" class="modal-restaurant-image"/>
                 <div class="modal-restaurant-info">
