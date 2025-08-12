@@ -13,7 +13,7 @@ const app = express();
 const restaurantsRouter = require('./routes/restaurants');
 const couponsRouter = require('./routes/coupons');
 const authRouter = require('./routes/auth');
-const paymentRouter = require('./routes/payment');
+// const paymentRouter = require('./routes/payment');
 
 // Check if DATABASE_URL is available
 if (!process.env.DATABASE_URL) {
@@ -61,8 +61,8 @@ app.use(express.json({ limit: '5mb' }));
 app.use('/api/restaurants', restaurantsRouter);
 app.use('/api/coupons', couponsRouter);
 app.use('/api/auth', authRouter);
-console.log('Type of paymentRouter:', typeof paymentRouter);
-app.use('/api/pix-payment', paymentRouter);
+// console.log('Type of paymentRouter:', typeof paymentRouter);
+// app.use('/api/pix-payment', paymentRouter);
 
 // Make db pool available to all routes
 app.locals.db = pool;
