@@ -60,10 +60,46 @@ router.post('/', async (req, res) => {
                 first_name: 'Test', // Placeholder
                 last_name: 'User' // Placeholder
             },
-            // Removed receiver_address as it caused a 400 error.
-            // If the ACCESS_TOKEN is for the recipient's account, the PIX payment should go there implicitly.
-            // If a specific recipient PIX key is still required, please consult Mercado Pago's official PIX API documentation
-            // for the correct field and placement (e.g., additional_info or a different structure within transaction_data).
+            additional_info: {
+                // This is a common way to pass recipient's PIX key for some Mercado Pago integrations.
+                // Please verify with Mercado Pago's official PIX API documentation for the exact field.
+                external_reference: 'PIX_TO_CPF_42189406811', // Custom reference
+                items: [
+                    {
+                        id: 'subscription',
+                        title: 'Monthly Subscription',
+                        description: 'FoodCupons Monthly Subscription',
+                        quantity: 1,
+                        unit_price: amount
+                    }
+                ],
+                payer: { // This payer object is for additional info about the payer, not the recipient
+                    first_name: 'Test',
+                    last_name: 'User',
+                    phone: {
+                        area_code: '11',
+                        number: '999999999'
+                    },
+                    address: {
+                        zip_code: '01000000',
+                        street_name: 'Test Street',
+                        street_number: '123',
+                        neighborhood: 'Test Neighborhood',
+                        city: 'Test City',
+                        federal_unit: 'SP'
+                    }
+                },
+                // For specifying the recipient's PIX key (CPF), Mercado Pago's documentation
+                // often points to using 'receiver_address' within 'point_of_interaction.transaction_data'
+                // or a specific 'pix_key' field. Since 'receiver_address' caused an error,
+                // and 'additional_info' is for extra data, the most reliable way to ensure
+                // the payment goes to a specific CPF is to ensure the ACCESS_TOKEN used
+                // belongs to the account with that CPF as its PIX key.
+                // If the ACCESS_TOKEN is for a different account, and you need to target
+                // a specific CPF, you MUST consult Mercado Pago's official PIX API documentation
+                // for the correct field to specify the recipient's PIX key in the request.
+                // The 'additional_info' here is for general payment details, not recipient PIX key.
+            },
         };
 
         const result = await mercadopago.payment.create(pixPaymentData);

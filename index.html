@@ -10,63 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-        const loginBtn = document.getElementById('loginBtn');
-        const userNameDisplay = document.getElementById('userNameDisplay');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const adminBtn = document.getElementById('adminBtn'); // Get the admin button
-        const mobileLoginAdmin = document.getElementById('mobileLoginAdmin'); // Get the mobile login/admin button
 
-        if (loggedInUser) {
-            loginBtn.style.display = 'none';
-            userNameDisplay.style.display = 'inline-block';
-
-            // Show full name if available, else email
-            const fullName = loggedInUser.firstName && loggedInUser.lastName
-                ? loggedInUser.firstName + ' ' + loggedInUser.lastName
-                : loggedInUser.email;
-            userNameDisplay.textContent = fullName;
-
-            logoutBtn.style.display = 'inline-block';
-
-            // Update mobile login/admin button
-            if (mobileLoginAdmin) {
-                if (loggedInUser.role === 'admin') {
-                    mobileLoginAdmin.href = 'admin.html';
-                    mobileLoginAdmin.querySelector('i').className = 'fas fa-user-shield'; // Admin icon
-                    mobileLoginAdmin.querySelector('span').textContent = 'Admin';
-                } else {
-                    mobileLoginAdmin.href = '#'; // Or a profile page
-                    mobileLoginAdmin.querySelector('i').className = 'fas fa-user-circle'; // User icon
-                    mobileLoginAdmin.querySelector('span').textContent = 'Perfil';
-                }
-            }
-
-            // Show admin button in header if user is admin
-            if (loggedInUser.role === 'admin') {
-                adminBtn.style.display = 'inline-block';
-            }
-
-            logoutBtn.addEventListener('click', () => {
-                localStorage.removeItem('loggedInUser');
-                localStorage.removeItem('token');
-                window.location.href = 'login.html';
-            });
-        } else {
-            loginBtn.addEventListener('click', () => {
-                window.location.href = 'login.html';
-            });
-            // Ensure mobile login/admin button is set to login if not logged in
-            if (mobileLoginAdmin) {
-                mobileLoginAdmin.href = 'login.html';
-                mobileLoginAdmin.querySelector('i').className = 'fas fa-user';
-                mobileLoginAdmin.querySelector('span').textContent = 'Entrar';
-            }
-        }
-    });
-</script>
     <!-- Header -->
     <header class="header">
         <div class="container">

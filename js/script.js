@@ -736,13 +736,18 @@ function isFavorite(couponId) {
 
         if (loggedInUser) {
             loginBtn.style.display = 'none';
-            userProfileActions.style.display = 'flex'; // Show the new container
+            if (userProfileActions) { // Add null check for userProfileActions
+                userProfileActions.style.display = 'flex'; // Show the new container
+            }
 
             // Show full name if available, else email
             const fullName = loggedInUser.firstName && loggedInUser.lastName
                 ? loggedInUser.firstName + ' ' + loggedInUser.lastName
                 : loggedInUser.email;
-            userNameDisplay.textContent = fullName;
+            
+            if (userNameDisplay) { // Add null check for userNameDisplay
+                userNameDisplay.textContent = fullName;
+            }
 
             // logoutBtn.style.display = 'inline-block'; // This is now handled by userProfileActions display
 
