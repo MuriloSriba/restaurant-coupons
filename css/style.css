@@ -676,6 +676,8 @@ button {
     display: flex; /* Enable flexbox for internal layout */
     flex-direction: column; /* Stack children vertically */
     max-height: 90vh; /* Limit height to viewport height */
+    left: 25%;
+    top: 5%;
 }
 
 .modal-restaurant-content {
