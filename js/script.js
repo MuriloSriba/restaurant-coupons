@@ -135,9 +135,16 @@ function createCouponCard(coupon) {
         </div>`
         : '';
 
-    const buttonHTML = isLoggedIn
-        ? `<button class="coupon-cta" onclick="openCouponModal(${coupon.id})">Ver Cupom</button>`
-        : `<button class="coupon-cta" onclick="window.location.href='login.html'">Faça Login para Ver</button>`;
+    let buttonHTML = '';
+    if (isLoggedIn) {
+        if (loggedInUser && loggedInUser.status === 'complete') {
+            buttonHTML = `<button class="coupon-cta" onclick="openCouponModal(${coupon.id})">Ver Cupom</button>`;
+        } else { // Logged in but status is 'pending'
+            buttonHTML = `<button class="coupon-cta coupon-cta-subscribe" onclick="window.location.href='payment.html'">Assine para Ver</button>`;
+        }
+    } else { // Not logged in
+        buttonHTML = `<button class="coupon-cta" onclick="window.location.href='login.html'">Faça Login para Ver</button>`;
+    }
 
     card.innerHTML = `
         <div class="coupon-image">
