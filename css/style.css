@@ -716,7 +716,7 @@ button {
 
 #restaurantMap iframe {
     width: 100%;
-    height: 200px; /* Reduced height */
+    height: 150px; /* Further reduced from 200px */
     border-radius: var(--border-radius);
     border: none;
     box-shadow: var(--shadow);
@@ -1260,35 +1260,35 @@ button.btn-submit:hover {
     display: flex;
     justify-content: space-between;
     align-items: start;
-    margin-bottom: 1.2rem; /* Reduced margin */
+    margin-bottom: 0.8rem; /* Reduced margin */
 }
 
 .modal-coupon-header h2 {
     color: var(--text-dark);
-    margin-bottom: 0.2rem; /* Reduced margin */
+    margin-bottom: 0.1rem; /* Reduced margin */
     font-size: 1.6rem; /* Slightly smaller font */
     font-weight: 700;
 }
 
 .modal-coupon-restaurant h3 {
     color: var(--primary-color);
-    margin-bottom: 1.2rem; /* Reduced margin */
+    margin-bottom: 0.8rem; /* Reduced margin */
     font-size: 1.2rem; /* Slightly smaller font */
     font-weight: 600;
 }
 
 .modal-coupon-description {
     color: var(--text-dark);
-    margin-bottom: 1.5rem; /* Reduced margin */
+    margin-bottom: 1rem; /* Reduced from 1.5rem */
     line-height: 1.6;
     font-size: 0.9rem; /* Slightly smaller font */
 }
 
 .modal-coupon-pricing {
     background: var(--bg-light);
-    padding: 1rem; /* Reduced padding */
+    padding: 0.8rem; /* Reduced from 1rem */
     border-radius: var(--border-radius);
-    margin-bottom: 1.5rem; /* Reduced margin */
+    margin-bottom: 1rem; /* Reduced from 1.5rem */
     border: 1px solid var(--border-color);
 }
 
@@ -1318,7 +1318,7 @@ button.btn-submit:hover {
 }
 
 .modal-coupon-code {
-    margin-bottom: 2rem; /* Reduced margin */
+    margin-bottom: 1.5rem; /* Reduced from 2rem */
 }
 
 .code-box {
@@ -1361,16 +1361,16 @@ button.btn-submit:hover {
 
 .modal-coupon-validity {
     color: var(--text-light);
-    margin-bottom: 2rem; /* Reduced margin */
+    margin-bottom: 1.5rem; /* Reduced from 2rem */
     font-size: 0.9rem; /* Slightly smaller font */
 }
 
 .modal-coupon-terms {
-    margin-bottom: 2rem; /* Reduced margin */
+    margin-bottom: 1.5rem; /* Reduced from 2rem */
 }
 
 .modal-coupon-terms h4 {
-    margin-bottom: 1rem; /* Reduced margin */
+    margin-bottom: 0.8rem; /* Reduced from 1rem */
     color: var(--text-dark);
     font-size: 1rem; /* Slightly smaller font */
     font-weight: 600;
@@ -1382,7 +1382,7 @@ button.btn-submit:hover {
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem; /* Reduced gap */
+    gap: 0.6rem; /* Reduced from 0.8rem */
 }
 
 .modal-coupon-terms li {
@@ -1404,7 +1404,7 @@ button.btn-submit:hover {
     background: var(--primary-color);
     color: var(--white);
     border: none;
-    padding: 1rem; /* Reduced padding */
+    padding: 0.8rem; /* Reduced from 1rem */
     border-radius: var(--border-radius);
     font-size: 1.2rem; /* Slightly smaller font */
     font-weight: 700;
