@@ -46,7 +46,9 @@ async function fetchCoupons() {
 // Fetch restaurants from backend
 async function fetchRestaurants() {
     try {
-        const response = await fetch(`${API_BASE_URL}/restaurants`, {
+        const url = `${API_BASE_URL}/restaurants`;
+        console.log('Fetching restaurants from:', url);
+        const response = await fetch(url, {
             headers: getAuthHeaders()
         });
         
