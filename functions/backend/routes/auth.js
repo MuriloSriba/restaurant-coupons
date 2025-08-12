@@ -139,4 +139,4 @@ router.post('/update-payment-status', authenticateToken, async (req, res) => { /
   }
 });
 
-module.exports = { router, authenticateToken }; // Export both router and middleware
+module.exports = router; // Export only the router
