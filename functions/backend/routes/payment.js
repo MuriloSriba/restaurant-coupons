@@ -60,16 +60,10 @@ router.post('/', async (req, res) => {
                 first_name: 'Test', // Placeholder
                 last_name: 'User' // Placeholder
             },
-            point_of_interaction: {
-                transaction_data: {
-                    // This is where the recipient's PIX key is specified.
-                    // For CPF, use key_type: "CPF" and key: "the_cpf_number"
-                    receiver_address: {
-                        key_type: "CPF",
-                        key: "42189406811" // The target CPF provided by the user
-                    }
-                }
-            }
+            // Removed receiver_address as it caused a 400 error.
+            // If the ACCESS_TOKEN is for the recipient's account, the PIX payment should go there implicitly.
+            // If a specific recipient PIX key is still required, please consult Mercado Pago's official PIX API documentation
+            // for the correct field and placement (e.g., additional_info or a different structure within transaction_data).
         };
 
         const result = await mercadopago.payment.create(pixPaymentData);
