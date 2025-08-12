@@ -1,23 +1,23 @@
 # Fix CSS Deployment Issue - FoodCupons
 
-## 🎯 **Problema Identificado**
-CSS não está sendo carregado corretamente no deploy.
+## 🎯 **Problem Identified**
+CSS is not loading correctly on deployment.
 
-## 🔧 **Solução para CSS no Deploy**
+## 🔧 **Solution for CSS on Deployment**
 
-### 1. **Verificar estrutura de arquivos**
+### 1. **Check file structure**
 ```bash
-# Verificar se CSS está no diretório correto
+# Verify that CSS is in the correct directory
 ls -la css/
 ```
 
-### 2. **Corrigir paths no CSS**
+### 2. **Correct paths in CSS**
 ```css
-/* No CSS, certifique-se de usar paths relativos */
+/* In CSS, make sure to use relative paths */
 @import url('css/style.css');
 ```
 
-### 3. **Atualizar vercel.json para CSS**
+### 3. **Update vercel.json for CSS**
 ```json
 {
   "version": 2,
@@ -60,29 +60,29 @@ ls -la css/
 }
 ```
 
-### 4. **Verificar links no HTML**
+### 4. **Check links in HTML**
 ```html
-<!-- Certifique-se de que os links estão corretos -->
+<!-- Make sure the links are correct -->
 <link rel="stylesheet" href="/css/style.css">
 ```
 
-### 5. **Comando para verificar e corrigir**
+### 5. **Command to verify and correct**
 ```bash
-# Verificar se CSS está sendo servido corretamente
+# Verify that CSS is being served correctly
 curl -I https://foodcupons.vercel.app/css/style.css
 ```
 
-### 6. **Solução rápida**
+### 6. **Quick solution**
 ```bash
-# Re-deploy com configuração correta
+# Re-deploy with correct configuration
 npx vercel --prod
 ```
 
-## 🎯 **Comando final para corrigir CSS**
+## 🎯 **Final command to fix CSS**
 ```bash
-# Atualizar vercel.json e re-deploy
+# Update vercel.json and re-deploy
 npx vercel --prod
 ```
 
-## 📱 **URL Final**
+## 📱 **Final URL**
 `https://foodcupons.vercel.app`

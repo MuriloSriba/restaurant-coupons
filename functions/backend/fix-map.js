@@ -1,25 +1,33 @@
-require('dotenv').config({ path: './backend/.env' });
-const { Pool } = require('pg');
+require('dotenv').config({ path: './.env' });
+const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+const dbPath = path.join(__dirname, 'database.sqlite');
+
+const db = new sqlite3.Database(dbPath, (err) => {
+  if (err) {
+    console.error('Error opening database', err.message);
+  } else {
+    console.log('Connected to the SQLite database.');
+  }
 });
 
 const fixMapEmbed = async () => {
   try {
-    const client = await pool.connect();
-    const result = await client.query(
-      "UPDATE restaurants SET map_embed = '' WHERE map_embed IS NULL OR map_embed = 'undefined'"
+    db.run(
+      "UPDATE restaurants SET map_embed = '' WHERE map_embed IS NULL OR map_embed = 'undefined'",
+      function(err) {
+        if (err) {
+          console.error('Error fixing map embed:', err);
+        } else {
+          console.log(`${this.changes} records updated.`);
+        }
+      }
     );
-    console.log(`${result.rowCount} records updated.`);
-    client.release();
   } catch (err) {
     console.error('Error fixing map embed:', err);
   } finally {
-    pool.end();
+    db.close();
   }
 };
 

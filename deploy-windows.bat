@@ -1,28 +1,28 @@
 @echo off
-echo 🚀 Iniciando deploy do FoodCupons no Windows...
+echo 🚀 Starting FoodCupons deployment on Windows...
 
-REM 1. Instalar dependências do backend
-echo 📦 Instalando dependências do backend...
+REM 1. Install backend dependencies
+echo 📦 Installing backend dependencies...
 cd backend
 call npm install --production
 cd ..
 
-REM 2. Verificar se o banco de dados existe
-echo 🔍 Verificando banco de dados...
+REM 2. Check if the database exists
+echo 🔍 Checking database...
 if not exist "backend\database.sqlite" (
-    echo ⚠️  Banco de dados não encontrado, criando...
+    echo ⚠️ Database not found, creating...
     cd backend
     call npm run init-db
     cd ..
 )
 
-REM 3. Preparar para deploy na Vercel
-echo 🎯 Preparando deploy na Vercel...
+REM 3. Prepare for Vercel deployment
+echo 🎯 Preparing for Vercel deployment...
 
 REM 4. Deploy
-echo 🚀 Fazendo deploy...
+echo 🚀 Deploying...
 call npx vercel --prod
 
-echo ✅ Deploy concluído!
-echo 🔗 Acesse: https://foodcupons.vercel.app
+echo ✅ Deployment complete!
+echo 🔗 Access: https://foodcupons.vercel.app
 pause

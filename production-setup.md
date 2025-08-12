@@ -1,132 +1,132 @@
-# Guia de Deploy Completo - FoodCupons
+# Complete Deployment Guide - FoodCupons
 
-## 📋 Resumo do Projeto
-- **Frontend**: HTML/CSS/JavaScript estático
-- **Backend**: Node.js/Express com PostgreSQL
-- **Banco**: PostgreSQL configurado via `DATABASE_URL`
-- **Deploy**: Vercel (serverless)
+## 📋 Project Summary
+- **Frontend**: Static HTML/CSS/JavaScript
+- **Backend**: Node.js/Express with PostgreSQL
+- **Database**: PostgreSQL configured via `DATABASE_URL`
+- **Deployment**: Vercel (serverless)
 
-## 🚀 Opções de Deploy
+## 🚀 Deployment Options
 
-### Opção 1: Deploy na Vercel (RECOMENDADO)
+### Option 1: Deploy on Vercel (RECOMMENDED)
 
-#### Pré-requisitos:
-1. Conta na [Vercel](https://vercel.com)
-2. Node.js instalado
-3. Git instalado
+#### Prerequisites:
+1. Account on [Vercel](https://vercel.com)
+2. Node.js installed
+3. Git installed
 
-#### Passos Rápidos:
+#### Quick Steps:
 ```bash
-# 1. Clone ou prepare o projeto
+# 1. Clone or prepare the project
 cd restaurant-coupons
 
-# 2. Torne o script executável
+# 2. Make the script executable
 chmod +x deploy.sh
 
-# 3. Execute o deploy
+# 3. Run the deployment
 ./deploy.sh
 ```
 
 #### Manual via Vercel CLI:
 ```bash
-# Instalar Vercel CLI
+# Install Vercel CLI
 npm install -g vercel
 
-# Fazer login
+# Log in
 vercel login
 
 # Deploy
 vercel --prod
 ```
 
-### Opção 2: Deploy Manual via Interface Web
+### Option 2: Manual Deployment via Web Interface
 
-1. **Acesse**: [vercel.com](https://vercel.com)
-2. **Importe**: Seu repositório Git ou faça upload dos arquivos
-3. **Configure**: 
+1. **Go to**: [vercel.com](https://vercel.com)
+2. **Import**: Your Git repository or upload the files
+3. **Configure**:
    - Framework: Node.js
    - Root Directory: `.`
-   - Build Command: `npm run build` (se houver)
+   - Build Command: `npm run build` (if any)
    - Output Directory: `.`
-4. **Deploy**: Clique em "Deploy"
+4. **Deploy**: Click "Deploy"
 
-## 🔧 Configurações de Produção
+## 🔧 Production Settings
 
-### Variáveis de Ambiente (Vercel Dashboard):
+### Environment Variables (Vercel Dashboard):
 ```
 PORT=3001
 NODE_ENV=production
-JWT_SECRET=sua_chave_secreta_super_segura
+JWT_SECRET=your_super_secret_key
 ```
 
-### Endpoints da API:
-- **Base**: `https://seu-dominio.vercel.app/api`
+### API Endpoints:
+- **Base**: `https://your-domain.vercel.app/api`
 - **Auth**: `/api/auth/*`
-- **Restaurantes**: `/api/restaurants/*`
-- **Cupons**: `/api/coupons/*`
-- **Pagamento**: `/api/payment/*`
+- **Restaurants**: `/api/restaurants/*`
+- **Coupons**: `/api/coupons/*`
+- **Payment**: `/api/payment/*`
 
-## 📊 Monitoramento
+## 📊 Monitoring
 
 ### Logs:
 - Vercel Dashboard → Functions → Logs
-- Comando: `vercel logs --follow`
+- Command: `vercel logs --follow`
 
 ### Performance:
-- Vercel Analytics (opcional)
-- Google Analytics (já incluído)
+- Vercel Analytics (optional)
+- Google Analytics (already included)
 
-## 🔄 Atualizações Futuras
+## 🔄 Future Updates
 
-### Para atualizar o site:
+### To update the site:
 ```bash
-# Após fazer push para Git
+# After pushing to Git
 git add .
-git commit -m "Atualização"
+git commit -m "Update"
 git push origin main
 
-# O deploy é automático via Git
+# Deployment is automatic via Git
 ```
 
-### Para atualizar manualmente:
+### To update manually:
 ```bash
-# Re-executar o deploy
+# Re-run the deployment
 ./deploy.sh
 ```
 
-## 🐛 Solução de Problemas
+## 🐛 Troubleshooting
 
-### Erro comum: "Cannot find module"
+### Common error: "Cannot find module"
 ```bash
-# Limpar cache e reinstalar
+# Clear cache and reinstall
 rm -rf node_modules package-lock.json
 npm install
 ```
 
-### Erro com Banco de Dados no Vercel:
-- Certifique-se de que a variável de ambiente `DATABASE_URL` está configurada corretamente no Vercel com a string de conexão do seu banco de dados PostgreSQL.
+### Error with Database on Vercel:
+- Make sure the `DATABASE_URL` environment variable is correctly configured on Vercel with your PostgreSQL database connection string.
 
-## 📞 Suporte
+## 📞 Support
 
-Se encontrar problemas:
-1. Verifique os logs no Vercel Dashboard
-2. Teste localmente: `npm run dev` no backend
-3. Confira as variáveis de ambiente
+If you encounter problems:
+1. Check the logs in the Vercel Dashboard
+2. Test locally: `npm run dev` in the backend
+3. Check the environment variables
 
-## ✅ Checklist Final
+## ✅ Final Checklist
 
-- [ ] Backend está funcionando localmente
-- [ ] Banco de dados está populado
-- [ ] Variáveis de ambiente configuradas
-- [ ] Deploy realizado com sucesso
-- [ ] Teste de endpoints da API
-- [ ] Teste de funcionalidades do frontend
-- [ ] SSL ativado (automático na Vercel)
-- [ ] Domínio personalizado (opcional)
+- [ ] Backend is working locally
+- [ ] Database is populated
+- [ ] Environment variables configured
+- [ ] Deployment successful
+- [ ] API endpoints tested
+- [ ] Frontend functionalities tested
+- [ ] SSL activated (automatic on Vercel)
+- [ ] Custom domain (optional)
 
-## 🎯 Comando Único para Deploy
+## 🎯 Single Command for Deployment
 
-Execute tudo de uma vez:
+Execute everything at once:
 ```bash
 # Linux/Mac
 chmod +x deploy.sh && ./deploy.sh
@@ -134,10 +134,10 @@ chmod +x deploy.sh && ./deploy.sh
 # Windows (Git Bash)
 bash deploy.sh
 
-# Ou manual:
+# Or manual:
 vercel --prod
 ```
 
-## 📱 URL Final
-Após o deploy, seu site estará disponível em:
+## 📱 Final URL
+After deployment, your site will be available at:
 `https://foodcupons.vercel.app`

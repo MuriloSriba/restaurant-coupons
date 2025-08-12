@@ -114,6 +114,6 @@ router.put('/:id/reject', (req, res) => {
       res.json({ message: 'Restaurant rejected successfully' });
     }
   );
-);
+});
 
 module.exports = router;

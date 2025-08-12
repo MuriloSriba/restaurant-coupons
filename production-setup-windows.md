@@ -1,56 +1,56 @@
-# Guia de Deploy Completo - FoodCupons (Windows)
+# Complete Deployment Guide - FoodCupons (Windows)
 
-## 📋 Resumo do Projeto
-- **Frontend**: HTML/CSS/JavaScript estático
-- **Backend**: Node.js/Express com PostgreSQL
-- **Banco**: PostgreSQL configurado via `DATABASE_URL`
-- **Deploy**: Vercel (serverless)
+## 📋 Project Summary
+- **Frontend**: Static HTML/CSS/JavaScript
+- **Backend**: Node.js/Express with PostgreSQL
+- **Database**: PostgreSQL configured via `DATABASE_URL`
+- **Deployment**: Vercel (serverless)
 
-## 🚀 Deploy no Windows
+## 🚀 Deploy on Windows
 
-### Opção 1: Deploy Automático (RECOMENDADO)
+### Option 1: Automatic Deployment (RECOMMENDED)
 ```cmd
-# Execute o arquivo batch
+# Execute the batch file
 deploy-windows.bat
 ```
 
-### Opção 2: Manual via Vercel CLI
+### Option 2: Manual via Vercel CLI
 ```cmd
-# Instalar Vercel CLI
+# Install Vercel CLI
 npm install -g vercel
 
-# Fazer login
+# Log in
 vercel login
 
 # Deploy
 vercel --prod
 ```
 
-### Opção 3: Interface Web
-1. **Acesse**: [vercel.com](https://vercel.com)
-2. **Importe**: Seu repositório Git ou faça upload dos arquivos
-3. **Configure**: 
+### Option 3: Web Interface
+1. **Go to**: [vercel.com](https://vercel.com)
+2. **Import**: Your Git repository or upload the files
+3. **Configure**:
    - Framework: Node.js
    - Root Directory: `.`
-   - Build Command: `npm run build` (se houver)
+   - Build Command: `npm run build` (if any)
    - Output Directory: `.`
-4. **Deploy**: Clique em "Deploy"
+4. **Deploy**: Click "Deploy"
 
-## 🔧 Configurações de Produção
+## 🔧 Production Settings
 
-### Variáveis de Ambiente (Vercel Dashboard):
+### Environment Variables (Vercel Dashboard):
 ```
 PORT=3001
 NODE_ENV=production
-JWT_SECRET=sua_chave_secreta_super_segura
-DATABASE_URL=sua_string_de_conexao_postgresql
+JWT_SECRET=your_super_secret_key
+DATABASE_URL=your_postgresql_connection_string
 ```
 
-## 🎯 Comando Único para Deploy
+## 🎯 Single Command for Deployment
 ```cmd
 deploy-windows.bat
 ```
 
-## 📱 URL Final
-Após o deploy, seu site estará disponível em:
+## 📱 Final URL
+After deployment, your site will be available at:
 `https://foodcupons.vercel.app`

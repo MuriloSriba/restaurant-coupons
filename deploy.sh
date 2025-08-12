@@ -1,28 +1,28 @@
 #!/bin/bash
 
-echo "🚀 Iniciando deploy do FoodCupons..."
+echo "🚀 Starting FoodCupons deployment..."
 
-# 1. Instalar dependências do backend
-echo "📦 Instalando dependências do backend..."
+# 1. Install backend dependencies
+echo "📦 Installing backend dependencies..."
 cd backend
 npm install --production
 cd ..
 
-# 2. Verificar se o banco de dados existe
-echo "🔍 Verificando banco de dados..."
+# 2. Check if the database exists
+echo "🔍 Checking database..."
 if [ ! -f "backend/database.sqlite" ]; then
-    echo "⚠️  Banco de dados não encontrado, criando..."
+    echo "⚠️ Database not found, creating..."
     cd backend
     npm run init-db
     cd ..
 fi
 
-# 3. Preparar para deploy na Vercel
-echo "🎯 Preparando deploy na Vercel..."
+# 3. Prepare for Vercel deployment
+echo "🎯 Preparing for Vercel deployment..."
 
 # 4. Deploy
-echo "🚀 Fazendo deploy..."
+echo "🚀 Deploying..."
 npx vercel --prod
 
-echo "✅ Deploy concluído!"
-echo "🔗 Acesse: https://foodcupons.vercel.app"
+echo "✅ Deployment complete!"
+echo "🔗 Access: https://foodcupons.vercel.app"

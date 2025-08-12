@@ -1,42 +1,42 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagamento de Assinatura - FoodCupons</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Subscription Payment - FoodCupons</title>
+    <link rel="stylesheet" href="css/payment-new.css">
 </head>
 <body>
     <div class="payment-container">
         <div class="payment-header">
-            <h2>Finalize seu Cadastro</h2>
-            <p>Para ter acesso a todos os cupons, realize o pagamento da sua assinatura mensal.</p>
+            <h2>Complete Your Registration</h2>
+            <p>To access all coupons, please pay for your monthly subscription.</p>
         </div>
 
         <div class="plan-details">
-            <h4>Plano Mensal</h4>
+            <h4>Monthly Plan</h4>
             <div class="price">R$ 25,00</div>
         </div>
 
         <div class="payment-methods">
             <div class="method-tabs">
-                <button class="tab-link active" data-target="creditCard">Cartão de Crédito/Débito</button>
+                <button class="tab-link active" data-target="creditCard">Credit/Debit Card</button>
                 <button class="tab-link" data-target="pix">PIX</button>
             </div>
 
             <div id="creditCard" class="tab-content active">
                 <form id="paymentForm">
                     <div class="form-group">
-                        <label for="form-checkout__cardNumber">Número do Cartão</label>
+                        <label for="form-checkout__cardNumber">Card Number</label>
                         <div id="form-checkout__cardNumber" class="secure-field"></div>
                     </div>
                     <div class="form-group">
-                        <label for="form-checkout__cardholderName">Nome no Cartão</label>
-                        <input type="text" id="form-checkout__cardholderName" placeholder="Nome Completo" required>
+                        <label for="form-checkout__cardholderName">Name on Card</label>
+                        <input type="text" id="form-checkout__cardholderName" placeholder="Full Name" required>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="form-checkout__expirationDate">Validade</label>
+                            <label for="form-checkout__expirationDate">Expiration Date</label>
                             <div id="form-checkout__expirationDate" class="secure-field"></div>
                         </div>
                         <div class="form-group">
@@ -46,32 +46,32 @@
                     </div>
                     <div class="form-group">
                         <label for="form-checkout__cardholderEmail">Email</label>
-                        <input type="email" id="form-checkout__cardholderEmail" placeholder="seu.email@exemplo.com" required>
+                        <input type="email" id="form-checkout__cardholderEmail" placeholder="your.email@example.com" required>
                     </div>
                     <div class="form-group">
-                        <label for="form-checkout__identificationType">Tipo de Documento</label>
+                        <label for="form-checkout__identificationType">Document Type</label>
                         <select id="form-checkout__identificationType" required></select>
                     </div>
                     <div class="form-group">
-                        <label for="form-checkout__identificationNumber">Número do Documento</label>
+                        <label for="form-checkout__identificationNumber">Document Number</label>
                         <input type="text" id="form-checkout__identificationNumber" placeholder="000.000.000-00" required>
                     </div>
                     <div class="form-group">
-                        <label for="form-checkout__installments">Parcelas</label>
+                        <label for="form-checkout__installments">Installments</label>
                         <select id="form-checkout__installments" required></select>
                     </div>
-                    <button type="submit" class="submit-btn">Pagar com Cartão</button>
+                    <button type="submit" class="submit-btn">Pay with Card</button>
                 </form>
             </div>
 
             <div id="pix" class="tab-content">
                 <div class="pix-info">
-                    <p>Escaneie o código QR abaixo com seu aplicativo de pagamentos:</p>
-                    <div id="pixLoading" style="display: none; text-align: center; margin-top: 20px;">Carregando QR Code...</div>
-                    <img id="pixQrCodeImage" src="" alt="Código QR do PIX" style="display: none; max-width: 200px; height: 200px;">
+                    <p>Scan the QR code below with your payment app:</p>
+                    <div id="pixLoading" style="display: none; text-align: center; margin-top: 20px;">Loading QR Code...</div>
+                    <img id="pixQrCodeImage" src="" alt="PIX QR Code" style="display: none; max-width: 200px; height: 200px;">
                     <p id="pixCopyPasteCode" style="word-break: break-all; font-size: 0.9em; margin-top: 10px;"></p>
-                    <button id="pixCopyButton" class="submit-btn" style="margin-top: 10px;">Copiar Código PIX</button>
-                    <button id="pixPaidBtn" class="submit-btn">Já Paguei</button>
+                    <button id="pixCopyButton" class="submit-btn" style="margin-top: 10px;">Copy PIX Code</button>
+                    <button id="pixPaidBtn" class="submit-btn">I Already Paid</button>
                 </div>
             </div>
         </div>

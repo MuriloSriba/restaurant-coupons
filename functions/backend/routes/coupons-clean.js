@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authenticateToken = require('../middleware/authenticateToken');
 
-// Get all coupons
+// Get all coupons - visible to all
 router.get('/', async (req, res) => {
   const db = req.app.locals.db;
   
@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get coupon by ID
+// Get coupon details - restricted access
 router.get('/:id', authenticateToken, async (req, res) => {
   const db = req.app.locals.db;
   const { id } = req.params;
@@ -41,110 +41,139 @@ router.get('/:id', authenticateToken, async (req, res) => {
 
   try {
     const result = await db.query(query, [id]);
-    const coupon = result.rows[0];
+    const row = result.rows[0];
 
-    if (!coupon) {
+    if (!row) {
       return res.status(404).json({ message: 'Coupon not found' });
     }
-
-    res.json(coupon);
+    res.json(row);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'Internal server error' });
   }
 });
 
-// Create new coupon
+// Create new coupon (admin only)
 router.post('/', authenticateToken, async (req, res) => {
+  // Only allow admins to create coupons
   if (req.user.role !== 'admin') {
-    return res.status(403).json({ message: 'Access denied. Admin only.' });
+    return res.status(403).json({ message: 'Access denied. Only administrators can create coupons.' });
   }
 
   const db = req.app.locals.db;
   const { 
-    title, code, description, discount_type, discount_value, category, 
-    original_price, discounted_price, valid_from, valid_to, restaurant_id, image 
+    title, code, description, discount_type, discount_value, category, type, 
+    original_price, min_order_value, valid_from, valid_to, usage_limit, 
+    restaurant_id, image 
   } = req.body;
 
-  if (!title || !code || !discount_type || !discount_value || !original_price) {
-    return res.status(400).json({ message: 'Missing required fields' });
+  // Basic server-side validation for required fields
+  if (!title || !code || !restaurant_id || !discount_type || !category || !type || original_price == null || discount_value == null) {
+    return res.status(400).json({ message: 'Please fill all required fields.' });
   }
+
+  // Server-side calculation for discounted_price
+  let discounted_price;
+  if (discount_type === 'percentage') {
+    discounted_price = original_price * (1 - discount_value / 100);
+  } else if (discount_type === 'fixed') {
+    discounted_price = original_price - discount_value;
+  }
+  discounted_price = Math.max(0, discounted_price || 0);
 
   try {
     const result = await db.query(
-      `INSERT INTO coupons (
-        title, code, description, discount_type, discount_value, category,
-        original_price, discounted_price, valid_from, valid_to, restaurant_id, image
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *`,
+      'INSERT INTO coupons (title, code, description, discount_type, discount_value, category, type, original_price, discounted_price, min_order_value, valid_from, valid_to, usage_limit, restaurant_id, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING id',
       [
-        title, code, description, discount_type, discount_value, category,
-        original_price, discounted_price, valid_from, valid_to, restaurant_id, image
+        title, code, description, discount_type, discount_value, category, type, 
+        original_price, discounted_price, min_order_value, valid_from, valid_to, 
+        usage_limit, restaurant_id, image
       ]
     );
-
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-// Update coupon
-router.put('/:id', authenticateToken, async (req, res) => {
-  if (req.user.role !== 'admin') {
-    return res.status(403).json({ message: 'Access denied. Admin only.' });
-  }
-
-  const db = req.app.locals.db;
-  const { id } = req.params;
-  const { 
-    title, code, description, discount_type, discount_value, category, 
-    original_price, discounted_price, valid_from, valid_to, restaurant_id, image 
-  } = req.body;
-
-  try {
-    const result = await db.query(
-      `UPDATE coupons SET
-        title = $1, code = $2, description = $3, discount_type = $4, 
-        discount_value = $5, category = $6, original_price = $7, 
-        discounted_price = $8, valid_from = $9, valid_to = $10, 
-        restaurant_id = $11, image = $12, updated_at = CURRENT_TIMESTAMP
-      WHERE id = $13 RETURNING *`,
-      [
-        title, code, description, discount_type, discount_value, category,
-        original_price, discounted_price, valid_from, valid_to,
-        restaurant_id, image, id
-      ]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'Coupon not found' });
-    }
-
-    res.json(result.rows[0]);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-// Delete coupon
-router.delete('/:id', authenticateToken, async (req, res) => {
-  if (req.user.role !== 'admin') {
-    return res.status(403).json({ message: 'Access denied. Admin only.' });
-  }
-
-  const db = req.app.locals.db;
-  const { id } = req.params;
-
-  try {
-    const result = await db.query('DELETE FROM coupons WHERE id = $1 RETURNING *', [id]);
     
-    if (result.rows.length === 0) {
+    res.status(201).json({ 
+      id: result.rows[0].id,
+      title, code, description, discount_type, discount_value, category, type, 
+      original_price, discounted_price, min_order_value, valid_from, valid_to, 
+      usage_limit, restaurant_id, image
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// Update a coupon (admin only)
+router.put('/:id', authenticateToken, async (req, res) => {
+  // Only allow admins to update coupons
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Access denied. Only administrators can update coupons.' });
+  }
+
+  const db = req.app.locals.db;
+  const { id } = req.params;
+  const { 
+    title, code, description, discount_type, discount_value, category, type, 
+    original_price, min_order_value, valid_from, valid_to, usage_limit, 
+    restaurant_id, image 
+  } = req.body;
+
+  // Basic server-side validation for required fields
+  if (!title || !code || !restaurant_id || !discount_type || !category || !type || original_price == null || discount_value == null) {
+    return res.status(400).json({ message: 'Please fill all required fields.' });
+  }
+
+  // Server-side calculation for discounted_price
+  let discounted_price;
+  if (discount_type === 'percentage') {
+    discounted_price = original_price * (1 - discount_value / 100);
+  } else if (discount_type === 'fixed') {
+    discounted_price = original_price - discount_value;
+  }
+  discounted_price = Math.max(0, discounted_price || 0);
+
+  try {
+    const result = await db.query(
+      `UPDATE coupons SET 
+        title = $1, code = $2, description = $3, discount_type = $4, discount_value = $5, 
+        category = $6, type = $7, original_price = $8, discounted_price = $9, 
+        min_order_value = $10, valid_from = $11, valid_to = $12, usage_limit = $13, 
+        restaurant_id = $14, image = $15 
+       WHERE id = $16`,
+      [
+        title, code, description, discount_type, discount_value, category, type, 
+        original_price, discounted_price, min_order_value, valid_from, valid_to, 
+        usage_limit, restaurant_id, image, id
+      ]
+    );
+
+    if (result.rowCount === 0) {
       return res.status(404).json({ message: 'Coupon not found' });
     }
+    res.status(200).json({ message: 'Coupon updated successfully' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
-    res.json({ message: 'Coupon deleted successfully' });
+// Delete a coupon (admin only)
+router.delete('/:id', authenticateToken, async (req, res) => {
+  // Only allow admins to delete coupons
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Access denied. Only administrators can delete coupons.' });
+  }
+
+  const db = req.app.locals.db;
+  const { id } = req.params;
+
+  try {
+    const result = await db.query('DELETE FROM coupons WHERE id = $1', [id]);
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Coupon not found' });
+    }
+    res.status(200).json({ message: 'Coupon deleted successfully' });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'Internal server error' });

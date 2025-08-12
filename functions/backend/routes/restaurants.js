@@ -10,18 +10,18 @@ const isAdmin = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
-    return res.status(401).json({ message: 'Acesso negado. Nenhum token fornecido.' });
+    return res.status(401).json({ message: 'Access denied. No token provided.' });
   }
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     if (decoded.role !== 'admin') {
-      return res.status(403).json({ message: 'Acesso negado. Requer função de administrador.' });
+      return res.status(403).json({ message: 'Access denied. Requires admin role.' });
     }
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ message: 'Token inválido.' });
+    return res.status(401).json({ message: 'Invalid token.' });
   }
 };
 
@@ -50,7 +50,6 @@ router.get('/:id', async (req, res) => {
     if (!row) {
       return res.status(404).json({ message: 'Restaurant not found' });
     }
-    console.log('Restaurant data from DB:', row);
     res.json(row);
   } catch (err) {
     console.error(err);
@@ -113,18 +112,18 @@ router.delete('/:id', isAdmin, async (req, res) => {
     // First, check if the restaurant has any associated coupons
     const couponCheckResult = await db.query('SELECT COUNT(*) as count FROM coupons WHERE restaurant_id = $1', [id]);
     if (couponCheckResult.rows[0].count > 0) {
-      return res.status(400).json({ message: 'Não é possível excluir um restaurante que possui cupons associados. Exclua os cupons primeiro.' });
+      return res.status(400).json({ message: 'Cannot delete a restaurant with associated coupons. Delete coupons first.' });
     }
 
     // If no coupons, proceed with deletion
     const deleteResult = await db.query('DELETE FROM restaurants WHERE id = $1', [id]);
     if (deleteResult.rowCount === 0) {
-      return res.status(404).json({ message: 'Restaurante não encontrado.' });
+      return res.status(404).json({ message: 'Restaurant not found.' });
     }
-    res.status(200).json({ message: 'Restaurante excluído com sucesso.' });
+    res.status(200).json({ message: 'Restaurant deleted successfully.' });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: 'Erro no servidor ao excluir o restaurante.' });
+    return res.status(500).json({ message: 'Server error while deleting restaurant.' });
   }
 });
 
