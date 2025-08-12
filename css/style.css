@@ -431,8 +431,7 @@ button {
     gap: 2.5rem;
 }
 
-.coupon-card,
-.restaurant-card {
+.coupon-card {
     background: var(--white);
     border-radius: var(--border-radius);
     overflow: hidden;
@@ -443,14 +442,12 @@ button {
     flex-direction: column;
 }
 
-.coupon-card:hover,
-.restaurant-card:hover {
+.coupon-card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-hover);
 }
 
-.coupon-image,
-.restaurant-image {
+.coupon-image {
     width: 100%;
     height: 220px;
     background-size: cover;
@@ -464,20 +461,86 @@ button {
     position: relative;
 }
 
-.coupon-image img,
-.restaurant-image img {
+.coupon-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.coupon-content,
-.restaurant-info {
+.coupon-content {
     padding: 1.8rem;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
+
+.restaurant-item {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    cursor: pointer;
+    display: flex;
+    align-items: center; /* Align items vertically in the middle */
+    padding: 1.2rem;
+    gap: 1.5rem;
+}
+
+.restaurant-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.restaurant-item-image {
+    width: 100px; /* Fixed width for the image */
+    height: 100px; /* Fixed height for the image */
+    flex-shrink: 0; /* Prevent image from shrinking */
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    font-size: 2.5rem;
+}
+
+.restaurant-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.restaurant-item-info {
+    flex-grow: 1; /* Allow info to take remaining space */
+    text-align: left;
+}
+
+.restaurant-item-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.4rem;
+}
+
+.restaurant-item-cuisine {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+}
+
+.restaurant-item-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.8rem;
+}
+
+.restaurant-item-location {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
 
 .coupon-header {
     display: flex;

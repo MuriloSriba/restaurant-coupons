@@ -152,7 +152,7 @@ function createCouponCard(coupon) {
             <div class="coupon-footer">
                 ${priceHTML}
                 ${buttonHTML}
-            </div>
+            }
         </div>
     `;
 
@@ -177,26 +177,26 @@ function renderRestaurants(restaurants) {
 // Create restaurant card element
 function createRestaurantCard(restaurant) {
     const card = document.createElement('div');
-    card.className = 'restaurant-card';
+    card.className = 'restaurant-item'; // Changed class name to avoid conflict with existing card styles
     card.dataset.id = restaurant.id;  // Add data-id attribute for identification
     
     card.style.cursor = 'pointer'; // Indicate clickable
     card.style.userSelect = 'none'; // Prevent text selection
     
     card.innerHTML = `
-        <div class="restaurant-image">
+        <div class="restaurant-item-image">
             ${createImageDisplay(restaurant.image, 'fas fa-utensils')}
         </div>
-        <div class="restaurant-info">
-            <h3 class="restaurant-name">${restaurant.name}</h3>
-            <p class="restaurant-cuisine">${restaurant.cuisine}</p>
-            <div class="restaurant-rating">
+        <div class="restaurant-item-info">
+            <h3 class="restaurant-item-name">${restaurant.name}</h3>
+            <p class="restaurant-item-cuisine">${restaurant.cuisine}</p>
+            <div class="restaurant-item-rating">
                 <div class="stars">
                     ${generateStars(restaurant.rating)}
                 </div>
                 <span>${restaurant.rating}</span>
             </div>
-            <p class="restaurant-location">
+            <p class="restaurant-item-location">
                 <i class="fas fa-map-marker-alt"></i> ${restaurant.location}
             </p>
         </div>
@@ -328,7 +328,7 @@ function setupEventListeners() {
             let card = event.target;
             
             // Find the closest restaurant card
-            while (card && !card.classList.contains('restaurant-card')) {
+            while (card && !card.classList.contains('restaurant-item')) {
                 card = card.parentElement;
             }
             
@@ -465,7 +465,7 @@ function openRestaurantModal(restaurantId) {
 
         restaurantDetails.innerHTML = `
             <div class="modal-restaurant-content">
-                <img src="${imageSrc}" alt="${restaurant.name}" class="modal-restaurant-image" />
+                <img src="${imageSrc}" alt="${restaurant.name}" class="modal-restaurant-image" style="width: 200px; height: 200px; object-fit: cover; border-radius: 8px; margin-right: 20px;"/>
                 <div class="modal-restaurant-info">
                     <h2 class="modal-restaurant-name">${restaurant.name}</h2>
                     <p><strong>Culinária:</strong> ${restaurant.cuisine}</p>
