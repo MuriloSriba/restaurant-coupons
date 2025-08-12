@@ -487,7 +487,6 @@ function openRestaurantModal(restaurantId) {
                 </div>
             </div>
         `;
-        `;
 
         restaurantMap.innerHTML = restaurant.map_embed;
 
