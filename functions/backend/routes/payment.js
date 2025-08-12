@@ -56,7 +56,9 @@ router.post('/', async (req, res) => {
                 identification: {
                     type: 'CPF', // Example: 'CPF', 'CNPJ', 'RG'
                     number: '12345678909' // Example: a valid CPF or CNPJ number
-                }
+                },
+                first_name: 'Test', // Placeholder
+                last_name: 'User' // Placeholder
             },
             // Removed point_of_interaction as it's likely incorrect for direct PIX key specification.
             // The PIX key is usually associated with the Mercado Pago account linked to the ACCESS_TOKEN.
