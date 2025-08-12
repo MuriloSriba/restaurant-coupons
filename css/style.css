@@ -667,13 +667,15 @@ button {
     max-width: 800px;
     height: 600px; /* Fixed height */
     overflow-y: hidden; /* Changed to hidden to prevent scroll */
-    position: relative;
+    position: absolute; /* Changed to absolute */
     font-family: 'Inter', sans-serif;
     font-size: 0.95rem;
     line-height: 1.6;
     box-sizing: border-box;
     box-shadow: var(--shadow-hover);
-    margin: auto; /* Explicitly center within flex container */
+    left: 50%; /* Added for horizontal centering */
+    transform: translate(-50%, -50%); /* Added for horizontal and vertical centering */
+    top: 50%; /* Added for vertical centering */
 }
 
 .modal-restaurant-content {

@@ -152,7 +152,7 @@ function createCouponCard(coupon) {
             <div class="coupon-footer">
                 ${priceHTML}
                 ${buttonHTML}
-            }
+            </div>
         </div>
     `;
 

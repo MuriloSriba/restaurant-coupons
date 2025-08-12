@@ -1,0 +1,49 @@
+@media (max-width: 768px) {
+    .modal-content {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+        background-color: #f8f9fa; /* Light background for less glare */
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        border-bottom: 1px solid #dee2e6;
+        background-color: #ffffff;
+        flex-shrink: 0;
+    }
+
+    .modal-header .modal-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-dark);
+    }
+
+    .modal-content .close {
+        position: static; /* Remove absolute positioning */
+        font-size: 1.5rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        padding: 5px;
+    }
+
+    .coupon-details, #restaurantDetails {
+        overflow-y: auto;
+        padding: 20px;
+        flex-grow: 1;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    #restaurantMap {
+        height: 250px; /* A bit more space for the map */
+        flex-shrink: 0;
+    }
+}

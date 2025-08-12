@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodCupons - Descontos em Restaurantes</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modal-mobile.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -261,7 +262,12 @@
     <!-- Coupon Modal -->
     <div class="modal" id="couponModal" style="display:none;">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h5 class="modal-title">Detalhes do Cupom</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="coupon-details" id="couponDetails">
                 <!-- Coupon details will be loaded here -->
             </div>
@@ -270,8 +276,13 @@
 
     <!-- Restaurant Modal -->
     <div class="modal" id="restaurantModal" style="display:none;">
-        <div class="modal-content" style=" position: relative;">
-            <span class="close" id="restaurantModalClose" style="cursor:pointer; position: absolute; top: 10px; right: 15px; font-size: 28px;">&times;</span>
+        <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title">Detalhes do Restaurante</h5>
+                <button type="button" class="close" id="restaurantModalClose" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div id="restaurantDetails">
                 <!-- Restaurant details will be loaded here -->
             </div>
