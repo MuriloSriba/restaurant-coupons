@@ -125,6 +125,18 @@ function createCouponCard(coupon) {
     card.dataset.id = coupon.id;
 
     const isLoggedIn = !!localStorage.getItem('token');
+    let loggedInUser = null; // Initialize to null
+
+    try {
+        const storedUser = localStorage.getItem('loggedInUser');
+        if (storedUser) {
+            loggedInUser = JSON.parse(storedUser);
+        }
+    } catch (e) {
+        console.error("Error parsing loggedInUser from localStorage:", e);
+        // Optionally clear invalid data
+        localStorage.removeItem('loggedInUser');
+    }
 
     const hasPrice = coupon.originalPrice != null && coupon.discountedPrice != null;
     const priceHTML = hasPrice
@@ -137,10 +149,14 @@ function createCouponCard(coupon) {
 
     let buttonHTML = '';
     if (isLoggedIn) {
-        if (loggedInUser && loggedInUser.status === 'complete') {
+        if (loggedInUser && loggedInUser.role === 'admin') { // Admin user
+            buttonHTML = `<button class="coupon-cta" onclick="openCouponModal(${coupon.id})">Ver Cupom</button>`; // Admin always sees "Ver Cupom"
+        } else if (loggedInUser && loggedInUser.status === 'complete') { // Regular user, paid
             buttonHTML = `<button class="coupon-cta" onclick="openCouponModal(${coupon.id})">Ver Cupom</button>`;
-        } else { // Logged in but status is 'pending'
+        } else if (loggedInUser && loggedInUser.status === 'pending') { // Regular user, not paid
             buttonHTML = `<button class="coupon-cta coupon-cta-subscribe" onclick="window.location.href='payment.html'">Assine para Ver</button>`;
+        } else { // Fallback for unexpected logged-in state (e.g., loggedInUser is null or status is something else)
+            buttonHTML = `<button class="coupon-cta" onclick="window.location.href='login.html'">Faça Login para Ver</button>`;
         }
     } else { // Not logged in
         buttonHTML = `<button class="coupon-cta" onclick="window.location.href='login.html'">Faça Login para Ver</button>`;
