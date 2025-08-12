@@ -68,21 +68,19 @@ router.post('/', async (req, res) => {
         const result = await mercadopago.payment.create(pixPaymentData);
         console.log('Mercado Pago PIX creation result:', JSON.stringify(result, null, 2));
 
-        if (result) { // Simplified check as point_of_interaction is removed
-            // Assuming qr_code_base64 and qr_code are directly in the result object or a top-level property
-            // Please consult Mercado Pago's official PIX API documentation for the exact response structure.
-            const qrCodeBase64 = result.qr_code_base64 || (result.point_of_interaction && result.point_of_interaction.transaction_data && result.point_of_interaction.transaction_data.qr_code_base64);
-            const qrCode = result.qr_code || (result.point_of_interaction && result.point_of_interaction.transaction_data && result.point_of_interaction.transaction_data.qr_code);
+        if (result && result.body) { // Ensure result.body exists
+            const qrCodeBase64 = result.body.point_of_interaction && result.body.point_of_interaction.transaction_data && result.body.point_of_interaction.transaction_data.qr_code_base64;
+            const qrCode = result.body.point_of_interaction && result.body.point_of_interaction.transaction_data && result.body.point_of_interaction.transaction_data.qr_code;
             
             if (qrCodeBase64 || qrCode) {
                 res.status(201).json({ qrCodeBase64, qrCode });
             } else {
-                console.error('Mercado Pago PIX response missing QR code data:', result);
+                console.error('Mercado Pago PIX response missing QR code data:', result.body); // Log result.body for more context
                 res.status(500).json({ error: 'Failed to generate PIX QR Code data. Missing qr_code_base64 or qr_code in response.' });
             }
         } else {
-            console.error('Mercado Pago PIX creation result is empty:', result);
-            res.status(500).json({ error: 'Failed to create PIX payment. Empty response from Mercado Pago.' });
+            console.error('Mercado Pago PIX creation result or body is empty:', result);
+            res.status(500).json({ error: 'Failed to create PIX payment. Empty response or body from Mercado Pago.' });
         }
 
     } catch (error) {
