@@ -676,8 +676,9 @@ button {
     display: flex; /* Enable flexbox for internal layout */
     flex-direction: column; /* Stack children vertically */
     max-height: 90vh; /* Limit height to viewport height */
-    left: 25%;
-    top: 5%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .modal-restaurant-content {
@@ -1474,6 +1475,26 @@ button.btn-submit:hover {
     background-color: rgba(230, 57, 70, 0.1);
 }
 
+/* Close button for modals */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-light);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 10;
+}
+
+.close:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
 /* Prevent body scrolling when modal is open */
 body.modal-open {
     overflow: hidden;
@@ -1835,11 +1856,7 @@ body.modal-open {
         font-size: 0.9rem;
     }
 
-    .close {
-        font-size: 2rem;
-        right: 1rem;
-        top: 1rem;
-    }
+    
 
     #restaurantMap iframe {
         height: 250px;

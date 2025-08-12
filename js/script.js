@@ -310,13 +310,11 @@ function setupEventListeners() {
     // Restaurant modal close
     const restaurantModalClose = restaurantModal.querySelector('.close');
     if (restaurantModalClose) {
-        restaurantModalClose.addEventListener('click', () => {
-            restaurantModal.style.display = 'none';
-        });
+        restaurantModalClose.addEventListener('click', closeRestaurantModal);
     }
     window.addEventListener('click', function(event) {
         if (event.target === restaurantModal) {
-            restaurantModal.style.display = 'none';
+            closeRestaurantModal();
         }
     });
 
@@ -504,6 +502,12 @@ function openRestaurantModal(restaurantId) {
 // Close coupon modal
 function closeCouponModal() {
     couponModal.style.display = 'none';
+    document.body.classList.remove('modal-open'); // Remove class from body
+}
+
+// Close restaurant modal
+function closeRestaurantModal() {
+    restaurantModal.style.display = 'none';
     document.body.classList.remove('modal-open'); // Remove class from body
 }
 

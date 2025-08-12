@@ -140,3 +140,8 @@ router.post('/update-payment-status', authenticateToken, async (req, res) => { /
 });
 
 module.exports = router; // Export only the router
+
+// Token validation route
+router.get('/validate-token', authenticateToken, (req, res) => {
+  res.status(200).json({ message: 'Token is valid', user: req.user });
+});
