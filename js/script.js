@@ -725,44 +725,59 @@ function isFavorite(couponId) {
 }
 
 // Initialize the app
-document.addEventListener('DOMContentLoaded', async function() {
-    try {
-        // Show loading state
-        showLoading();
+    document.addEventListener('DOMContentLoaded', () => {
+        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+        const loginBtn = document.getElementById('loginBtn');
+        const userNameDisplay = document.querySelector('#userNameDisplay span'); // Select the span inside userNameDisplay
+        const userProfileActions = document.querySelector('.user-profile-actions'); // New element
+        const logoutBtn = document.getElementById('logoutBtn');
+        const adminBtn = document.getElementById('adminBtn'); // Get the admin button
+        const mobileLoginAdmin = document.getElementById('mobileLoginAdmin'); // Get the mobile login/admin button
 
-        // Fetch data from backend
-        const [couponsFromApi, restaurantsFromApi] = await Promise.all([
-            fetchCoupons(),
-            fetchRestaurants()
-        ]);
+        if (loggedInUser) {
+            loginBtn.style.display = 'none';
+            userProfileActions.style.display = 'flex'; // Show the new container
 
-        // Transform and store data globally
-        couponsData = couponsFromApi.map(transformCouponFromApi);
-        restaurantsData = restaurantsFromApi;
+            // Show full name if available, else email
+            const fullName = loggedInUser.firstName && loggedInUser.lastName
+                ? loggedInUser.firstName + ' ' + loggedInUser.lastName
+                : loggedInUser.email;
+            userNameDisplay.textContent = fullName;
 
-        // Render the data
-        renderCoupons(couponsData);
-        renderRestaurants(restaurantsData);
-        renderTopRatedRestaurantsSlide();
+            // logoutBtn.style.display = 'inline-block'; // This is now handled by userProfileActions display
 
-        // Setup event listeners
-        setupEventListeners();
-        initNavigation();
+            // Update mobile login/admin button
+            if (mobileLoginAdmin) {
+                if (loggedInUser.role === 'admin') {
+                    mobileLoginAdmin.href = 'admin.html';
+                    mobileLoginAdmin.querySelector('i').className = 'fas fa-user-shield'; // Admin icon
+                    mobileLoginAdmin.querySelector('span').textContent = 'Admin';
+                } else {
+                    mobileLoginAdmin.href = '#'; // Or a profile page
+                    mobileLoginAdmin.querySelector('i').className = 'fas fa-user-circle'; // User icon
+                    mobileLoginAdmin.querySelector('span').textContent = 'Perfil';
+                }
+            }
 
-        // Ensure "All" filter is active by default
-        const allTab = document.querySelector('[data-filter="all"]');
-        if (allTab) {
-            allTab.classList.add('active');
-            filterCoupons('all');
+            // Show admin button in header if user is admin
+            if (loggedInUser.role === 'admin') {
+                adminBtn.style.display = 'inline-block';
+            }
+
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('loggedInUser');
+                localStorage.removeItem('token');
+                window.location.href = 'login.html';
+            });
+        } else {
+            loginBtn.addEventListener('click', () => {
+                window.location.href = 'login.html';
+            });
+            // Ensure mobile login/admin button is set to login if not logged in
+            if (mobileLoginAdmin) {
+                mobileLoginAdmin.href = 'login.html';
+                mobileLoginAdmin.querySelector('i').className = 'fas fa-user';
+                mobileLoginAdmin.querySelector('span').textContent = 'Entrar';
+            }
         }
-
-    } catch (error) {
-        console.error('Erro ao carregar dados iniciais:', error);
-        if (couponsGrid) {
-            couponsGrid.innerHTML = '<p style="text-align: center; color: red;">Não foi possível carregar os cupons. Verifique a conexão com o servidor.</p>';
-        }
-        if (restaurantsGrid) {
-            restaurantsGrid.innerHTML = '<p style="text-align: center; color: red;">Não foi possível carregar os restaurantes. Verifique a conexão com o servidor.</p>';
-        }
-    }
-});
+    });

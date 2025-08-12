@@ -188,7 +188,12 @@
                 const data = await response.json();
 
                 if (!response.ok) {
-                    message.textContent = data.message || 'Erro no cadastro';
+                    if (response.status === 409) {
+                        message.textContent = 'Este e-mail já está cadastrado. Por favor, use outro e-mail.';
+                    } else {
+                        message.textContent = data.message || 'Erro no cadastro. Por favor, tente novamente.';
+                    }
+                    message.classList.add('show'); // Ensure the message is visible
                     return;
                 }
 

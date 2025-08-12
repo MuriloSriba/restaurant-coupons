@@ -57,12 +57,15 @@ button {
     top: 0;
     z-index: 1000;
     padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border-color); /* Subtle border */
 }
 
 .header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 1.5rem; /* Spacing between main header elements */
 }
 
 .logo {
@@ -105,7 +108,7 @@ button {
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 1.2rem;
+    gap: 1.2rem; /* Spacing between action items */
 }
 
 .search-btn,
@@ -142,6 +145,98 @@ button {
     transform: translateY(-3px);
     box-shadow: var(--shadow-hover);
 }
+
+/* New styles for user profile and logout */
+.user-profile-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background-color: var(--bg-light);
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.user-profile-actions:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+.user-name-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-dark);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.user-name-display:hover {
+    color: var(--primary-color);
+}
+
+.user-name-display i {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition);
+    padding: 0.5rem 0.8rem;
+    border-radius: 20px;
+}
+
+.logout-btn:hover {
+    color: var(--primary-color);
+    background-color: rgba(230, 57, 70, 0.1);
+}
+
+.admin-btn {
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    padding: 0.7rem 1.2rem;
+    border-radius: 30px;
+    text-decoration: none;
+}
+
+.admin-btn:hover {
+    color: var(--primary-color);
+    background-color: rgba(69, 123, 157, 0.1);
+}
+
+/* Responsive adjustments for header */
+@media (max-width: 768px) {
+    .header-content {
+        justify-content: center;
+    }
+
+    .nav {
+        order: 1; /* Place navigation below logo on small screens */
+        flex-basis: 100%; /* Take full width */
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .header-actions {
+        order: 2; /* Place actions below nav */
+        flex-basis: 100%;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+}
+
 
 /* Hero Section */
 .hero {
