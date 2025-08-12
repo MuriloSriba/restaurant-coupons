@@ -63,8 +63,8 @@ async function fetchRestaurants() {
     }
 }
 
-// Helper function to transform coupon data from API to frontend format
-function transformCouponFromApi(c) {
+// Helper function to transform coupon data into a display-friendly format
+function transformCoupon(c) {
     let discountText = '';
     if (c.discount_value) {
         if (c.discount_type === 'percentage') {
@@ -81,17 +81,13 @@ function transformCouponFromApi(c) {
         title: c.title,
         restaurant: c.restaurant_name || 'Restaurante',
         description: c.description,
-        discount: discountText,
+        discount: discountText, // Generated field
         originalPrice: c.original_price,
         discountedPrice: c.discounted_price,
         category: c.category,
         type: c.type,
         image: c.image,
-        code: c.code,
-        valid_from: c.valid_from,
-        valid_to: c.valid_to,
-        min_order_value: c.min_order_value,
-        usage_limit: c.usage_limit
+        // Sensitive fields are not included here
     };
 }
 
@@ -114,7 +110,11 @@ function renderCoupons(coupons) {
         couponsGrid.innerHTML = '<p class="empty-state">Nenhum cupom encontrado.</p>';
         return;
     }
-    coupons.forEach(coupon => {
+    
+    // Transform data before rendering
+    const transformedCoupons = coupons.map(transformCoupon);
+    
+    transformedCoupons.forEach(coupon => {
         const couponCard = createCouponCard(coupon);
         couponsGrid.appendChild(couponCard);
     });
@@ -413,27 +413,58 @@ function performSearch(searchTerm) {
 }
 
 // Open coupon modal
-function openCouponModal(couponId) {
+async function openCouponModal(couponId) {
     const isLoggedIn = !!localStorage.getItem('token');
     if (!isLoggedIn) {
         window.location.href = 'login.html';
         return;
     }
 
-    const coupon = couponsData.find(c => c.id === couponId);
-    
-    if (coupon) {
-        const hasPrice = coupon.originalPrice != null && coupon.discountedPrice != null;
+    couponDetails.innerHTML = '<div class="loading">Carregando detalhes do cupom...</div>';
+    couponModal.style.display = 'block';
+    document.body.classList.add('modal-open');
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/coupons/${couponId}`, {
+            headers: getAuthHeaders()
+        });
+
+        if (!response.ok) {
+            if (response.status === 403) {
+                couponDetails.innerHTML = '<p class="error-message">Acesso negado. Você precisa estar logado para ver os detalhes do cupom.</p>';
+            } else if (response.status === 404) {
+                couponDetails.innerHTML = '<p class="error-message">Cupom não encontrado.</p>';
+            } else {
+                throw new Error(`Failed to fetch coupon details: ${response.statusText}`);
+            }
+            return;
+        }
+
+        const coupon = await response.json();
+
+        // Transform the fetched coupon data for display
+        let discountText = '';
+        if (coupon.discount_value) {
+            if (coupon.discount_type === 'percentage') {
+                discountText = `${coupon.discount_value}% OFF`;
+            } else if (coupon.discount_type === 'fixed') {
+                discountText = `R$ ${Number(coupon.discount_value).toFixed(2)} OFF`;
+            } else {
+                discountText = `${coupon.discount_value} OFF`; // Fallback
+            }
+        }
+
+        const hasPrice = coupon.original_price != null && coupon.discounted_price != null;
         const pricingHTML = hasPrice
             ?
             `
             <div class="modal-coupon-pricing">
                 <div class="price-comparison">
-                    <span class="original-price">De: R$ ${Number(coupon.originalPrice).toFixed(2)}</span>
-                    <span class="final-price">Por: R$ ${Number(coupon.discountedPrice).toFixed(2)}</span>
+                    <span class="original-price">De: R$ ${Number(coupon.original_price).toFixed(2)}</span>
+                    <span class="final-price">Por: R$ ${Number(coupon.discounted_price).toFixed(2)}</span>
                 </div>
                 <div class="savings">
-                    Você economiza: R$ ${(Number(coupon.originalPrice) - Number(coupon.discountedPrice)).toFixed(2)}
+                    Você economiza: R$ ${(Number(coupon.original_price) - Number(coupon.discounted_price)).toFixed(2)}
                 </div>
             </div>`
             : '';
@@ -442,10 +473,10 @@ function openCouponModal(couponId) {
             `
             <div class="modal-coupon-header">
                 <h2>${coupon.title}</h2>
-                <span class="discount-badge">${coupon.discount || ''}</span>
+                <span class="discount-badge">${discountText || ''}</span>
             </div>
             <div class="modal-coupon-restaurant">
-                <h3>${coupon.restaurant}</h3>
+                <h3>${coupon.restaurant_name || 'Restaurante'}</h3>
             </div>
             <div class="modal-coupon-description">
                 <p>${coupon.description}</p>
@@ -475,8 +506,9 @@ function openCouponModal(couponId) {
             </div>
         `;
         
-        couponModal.style.display = 'block';
-        document.body.classList.add('modal-open'); // Add class to body
+    } catch (error) {
+        console.error('Error opening coupon modal:', error);
+        couponDetails.innerHTML = '<p class="error-message">Erro ao carregar detalhes do cupom.</p>';
     }
 }
 

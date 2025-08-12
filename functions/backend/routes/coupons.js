@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authenticateToken = require('../middleware/authenticateToken');
+const isAdmin = require('../middleware/isAdmin'); // Import centralized middleware
 
 // Get all coupons - visible to all
 router.get('/', async (req, res) => {
@@ -8,7 +9,7 @@ router.get('/', async (req, res) => {
   
   const query = `
     SELECT 
-      c.id, c.title, c.code, c.description, c.discount_type, c.discount_value, 
+      c.id, c.title, c.description, c.discount_type, c.discount_value, 
       c.category, c.type, c.original_price, c.discounted_price, c.image,
       r.name as restaurant_name 
     FROM coupons c
@@ -54,12 +55,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
 });
 
 // Create new coupon (admin only)
-router.post('/', authenticateToken, async (req, res) => {
-  // Only allow admins to create coupons
-  if (req.user.role !== 'admin') {
-    return res.status(403).json({ message: 'Access denied. Only administrators can create coupons.' });
-  }
-
+router.post('/', isAdmin, async (req, res) => {
   const db = req.app.locals.db;
   const { 
     title, code, description, discount_type, discount_value, category, type, 
@@ -104,12 +100,7 @@ router.post('/', authenticateToken, async (req, res) => {
 });
 
 // Update a coupon (admin only)
-router.put('/:id', authenticateToken, async (req, res) => {
-  // Only allow admins to update coupons
-  if (req.user.role !== 'admin') {
-    return res.status(403).json({ message: 'Access denied. Only administrators can update coupons.' });
-  }
-
+router.put('/:id', isAdmin, async (req, res) => {
   const db = req.app.locals.db;
   const { id } = req.params;
   const { 
@@ -153,12 +144,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
 });
 
 // Delete a coupon
-router.delete('/:id', authenticateToken, async (req, res) => {
-  // Only allow admins to delete coupons
-  if (req.user.role !== 'admin') {
-    return res.status(403).json({ message: 'Access denied. Only administrators can delete coupons.' });
-  }
-
+router.delete('/:id', isAdmin, async (req, res) => {
   const db = req.app.locals.db;
   const { id } = req.params;
 

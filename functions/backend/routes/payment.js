@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const mercadopago = require('mercadopago');
+const authenticateToken = require('../middleware/authenticateToken'); // Import centralized middleware
 
 // Configure o Mercado Pago com suas credenciais (versão 1.x)
 mercadopago.configurations.setAccessToken(process.env.MERCADOPAGO_ACCESS_TOKEN || 'TEST_ACCESS_TOKEN');
 console.log('Mercado Pago Access Token (first 5 chars):', process.env.MERCADOPAGO_ACCESS_TOKEN ? process.env.MERCADOPAGO_ACCESS_TOKEN.substring(0, 5) : 'Not set');
 
-router.post('/process-payment', async (req, res) => {
+router.post('/process-payment', authenticateToken, async (req, res) => {
     const { token, amount, description, installments, payment_method_id, issuer_id, payer } = req.body;
 
     try {
@@ -40,9 +41,9 @@ router.post('/process-payment', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/pix-payment', async (req, res) => {
     console.log('Received request for /pix-payment');
-    const { amount, description, payerEmail } = req.body; 
+    const { amount, description, payerEmail, additional_info } = req.body; 
 
     try {
         const pixPaymentData = {
@@ -51,19 +52,15 @@ router.post('/', async (req, res) => {
             payment_method_id: 'pix',
             payer: {
                 email: payerEmail || 'test_user@example.com',
-                // Mercado Pago often requires identification for PIX payments.
-                // Using placeholder values. Replace with actual payer identification from frontend if available.
                 identification: {
-                    type: 'CPF', // Example: 'CPF', 'CNPJ', 'RG'
-                    number: '12345678909' // Example: a valid CPF or CNPJ number
+                    type: additional_info.payer.identification.type || 'CPF', 
+                    number: additional_info.payer.identification.number || '12345678909' 
                 },
-                first_name: 'Test', // Placeholder
-                last_name: 'User' // Placeholder
+                first_name: additional_info.payer.first_name || 'Test', 
+                last_name: additional_info.payer.last_name || 'User' 
             },
             additional_info: {
-                // This is a common way to pass recipient's PIX key for some Mercado Pago integrations.
-                // Please verify with Mercado Pago's official PIX API documentation for the exact field.
-                external_reference: 'PIX_TO_CPF_42189406811', // Custom reference
+                external_reference: 'PIX_TO_CPF_42189406811', 
                 items: [
                     {
                         id: 'subscription',
@@ -73,46 +70,36 @@ router.post('/', async (req, res) => {
                         unit_price: amount
                     }
                 ],
-                payer: { // This payer object is for additional info about the payer, not the recipient
-                    first_name: 'Test',
-                    last_name: 'User',
+                payer: { 
+                    first_name: additional_info.payer.first_name || 'Test',
+                    last_name: additional_info.payer.last_name || 'User',
                     phone: {
-                        area_code: '11',
-                        number: '999999999'
+                        area_code: additional_info.payer.phone.area_code || '11',
+                        number: additional_info.payer.phone.number || '999999999'
                     },
                     address: {
-                        zip_code: '01000000',
-                        street_name: 'Test Street',
-                        street_number: '123',
-                        neighborhood: 'Test Neighborhood',
-                        city: 'Test City',
-                        federal_unit: 'SP'
+                        zip_code: additional_info.payer.address.zip_code || '01000000',
+                        street_name: additional_info.payer.address.street_name || 'Test Street',
+                        street_number: additional_info.payer.address.street_number || '123',
+                        neighborhood: additional_info.payer.address.neighborhood || 'Test Neighborhood',
+                        city: additional_info.payer.address.city || 'Test City',
+                        federal_unit: additional_info.payer.address.federal_unit || 'SP'
                     }
                 },
-                // For specifying the recipient's PIX key (CPF), Mercado Pago's documentation
-                // often points to using 'receiver_address' within 'point_of_interaction.transaction_data'
-                // or a specific 'pix_key' field. Since 'receiver_address' caused an error,
-                // and 'additional_info' is for extra data, the most reliable way to ensure
-                // the payment goes to a specific CPF is to ensure the ACCESS_TOKEN used
-                // belongs to the account with that CPF as its PIX key.
-                // If the ACCESS_TOKEN is for a different account, and you need to target
-                // a specific CPF, you MUST consult Mercado Pago's official PIX API documentation
-                // for the correct field to specify the recipient's PIX key in the request.
-                // The 'additional_info' here is for general payment details, not recipient PIX key.
             },
         };
 
         const result = await mercadopago.payment.create(pixPaymentData);
         console.log('Mercado Pago PIX creation result:', JSON.stringify(result, null, 2));
 
-        if (result && result.body) { // Ensure result.body exists
+        if (result && result.body) { 
             const qrCodeBase64 = result.body.point_of_interaction && result.body.point_of_interaction.transaction_data && result.body.point_of_interaction.transaction_data.qr_code_base64;
             const qrCode = result.body.point_of_interaction && result.body.point_of_interaction.transaction_data && result.body.point_of_interaction.transaction_data.qr_code;
             
             if (qrCodeBase64 || qrCode) {
                 res.status(201).json({ qrCodeBase64, qrCode });
             } else {
-                console.error('Mercado Pago PIX response missing QR code data:', result.body); // Log result.body for more context
+                console.error('Mercado Pago PIX response missing QR code data:', result.body); 
                 res.status(500).json({ error: 'Failed to generate PIX QR Code data. Missing qr_code_base64 or qr_code in response.' });
             }
         } else {
@@ -133,3 +120,4 @@ router.post('/', async (req, res) => {
 });
 
 module.exports = router;
+

@@ -62,6 +62,7 @@ app.use(express.json({ limit: '5mb' }));
 app.use('/restaurants', restaurantsRouter);
 app.use('/coupons', couponsRouter);
 app.use('/auth', authRouter);
+app.use('/process-payment', paymentRouter);
 app.use('/pix-payment', paymentRouter);
 
 // Make db pool available to all routes

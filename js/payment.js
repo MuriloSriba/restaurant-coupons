@@ -230,10 +230,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (response.ok) {
-                showFeedback('success', 'Pagamento efetuado com sucesso! Redirecionando para o login...');
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 3000);
+                showFeedback('success', 'Pagamento efetuado com sucesso! Atualizando status...');
+                await updateUserPaymentStatusAndRedirect();
             } else {
                 const error = await response.json();
                 showFeedback('error', `Erro no pagamento: ${error.message || response.statusText}`);
@@ -254,13 +252,55 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    pixPaidBtn.addEventListener('click', () => {
+    pixPaidBtn.addEventListener('click', async () => {
         // This part remains the same for PIX
-        showFeedback('success', 'Pagamento PIX simulado com sucesso! Redirecionando para o login...');
-        setTimeout(() => {
-            window.location.href = 'login.html';
-        }, 3000);
+        showFeedback('success', 'Pagamento PIX simulado com sucesso! Atualizando status...');
+        // Simulate successful PIX payment and update user status
+        await updateUserPaymentStatusAndRedirect();
     });
+
+    async function updateUserPaymentStatusAndRedirect() {
+        try {
+            const currentToken = localStorage.getItem('token');
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+            if (!currentToken || !loggedInUser) {
+                showFeedback('error', 'Usuário não logado. Redirecionando para o login...');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 3000);
+                return;
+            }
+
+            const response = await fetch('/api/auth/update-payment-status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${currentToken}`
+                },
+                body: JSON.stringify({ userId: loggedInUser.id }) // Send user ID if needed by backend
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('token', data.token); // Update token with new status
+                // Update loggedInUser object with new status
+                const updatedUser = { ...loggedInUser, status: 'complete' };
+                localStorage.setItem('loggedInUser', JSON.stringify(updatedUser));
+
+                showFeedback('success', 'Status de pagamento atualizado com sucesso! Redirecionando...');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 3000);
+            } else {
+                const error = await response.json();
+                showFeedback('error', `Erro ao atualizar status de pagamento: ${error.message || response.statusText}`);
+            }
+        } catch (error) {
+            console.error('Erro na atualização do status de pagamento:', error);
+            showFeedback('error', `Erro na comunicação com o servidor ao atualizar status: ${error.message}`);
+        }
+    }
 
     function showFeedback(type, message) {
         paymentFeedback.textContent = message;
