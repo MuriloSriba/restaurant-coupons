@@ -402,7 +402,8 @@ function openCouponModal(couponId) {
     if (coupon) {
         const hasPrice = coupon.originalPrice != null && coupon.discountedPrice != null;
         const pricingHTML = hasPrice
-            ? `
+            ?
+            `
             <div class="modal-coupon-pricing">
                 <div class="price-comparison">
                     <span class="original-price">De: R$ ${Number(coupon.originalPrice).toFixed(2)}</span>
@@ -414,7 +415,8 @@ function openCouponModal(couponId) {
             </div>`
             : '';
 
-        couponDetails.innerHTML = `
+        couponDetails.innerHTML =
+            `
             <div class="modal-coupon-header">
                 <h2>${coupon.title}</h2>
                 <span class="discount-badge">${coupon.discount || ''}</span>
@@ -451,6 +453,7 @@ function openCouponModal(couponId) {
         `;
         
         couponModal.style.display = 'block';
+        document.body.classList.add('modal-open'); // Add class to body
     }
 }
 
@@ -463,7 +466,8 @@ function openRestaurantModal(restaurantId) {
             ? restaurant.image
             : 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'150\' viewBox=\'0 0 150 150\'%3E%3Crect width=\'150\' height=\'150\' fill=\'%23ccc\'%3E%3C/rect%3E%3Ctext x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'50\' fill=\'%23fff\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E${encodeURIComponent(restaurant.name)}%3C/text%3E%3C/svg%3E'; // Fallback for old data or icon classes
 
-        restaurantDetails.innerHTML = `
+        restaurantDetails.innerHTML =
+            `
             <div class="modal-restaurant-content">
                 <img src="${imageSrc}" alt="${restaurant.name}" class="modal-restaurant-image" style="width: 200px; height: 200px; object-fit: cover; border-radius: 8px; margin-right: 20px;"/>
                 <div class="modal-restaurant-info">
@@ -494,12 +498,14 @@ function openRestaurantModal(restaurantId) {
         }
 
         restaurantModal.style.display = 'block';
+        document.body.classList.add('modal-open'); // Add class to body
     }
 }
 
 // Close coupon modal
 function closeCouponModal() {
     couponModal.style.display = 'none';
+    document.body.classList.remove('modal-open'); // Remove class from body
 }
 
 // Copy coupon code
@@ -557,7 +563,8 @@ function renderTopRatedRestaurantsSlide() {
         slideContent.style.textAlign = 'center';
         slideContent.style.color = 'white';
         
-        slideContent.innerHTML = `
+        slideContent.innerHTML =
+            `
             <h2>${restaurant.name}</h2>
             <p>${restaurant.cuisine} • ${restaurant.rating} ⭐</p>
             <button class="hero-cta" onclick="openRestaurantModal(${restaurant.id})">

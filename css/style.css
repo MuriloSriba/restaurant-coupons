@@ -661,21 +661,21 @@ button {
 
 .modal-content {
     background-color: var(--white);
-    padding: 25px; /* Reduced padding */
+    padding: 25px;
     border-radius: var(--border-radius);
     width: 90%;
     max-width: 800px;
-    height: 600px; /* Fixed height */
-    overflow-y: hidden; /* Changed to hidden to prevent scroll */
-    position: absolute; /* Changed to absolute */
+    /* Removed fixed height */
+    overflow-y: visible; /* Allow content to dictate height, internal scroll will handle overflow */
+    position: relative; /* Changed to relative for better flow, absolute positioning handled by .modal */
     font-family: 'Inter', sans-serif;
     font-size: 0.95rem;
     line-height: 1.6;
     box-sizing: border-box;
     box-shadow: var(--shadow-hover);
-    left: 50%; /* Added for horizontal centering */
-    transform: translate(-50%, -50%); /* Added for horizontal and vertical centering */
-    top: 50%; /* Added for vertical centering */
+    display: flex; /* Enable flexbox for internal layout */
+    flex-direction: column; /* Stack children vertically */
+    max-height: 90vh; /* Limit height to viewport height */
 }
 
 .modal-restaurant-content {
@@ -1426,6 +1426,12 @@ button.btn-submit:hover {
     margin-bottom: 8px;
 }
 
+/* General modal content scrolling */
+.coupon-details, #restaurantDetails {
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
 /* Mobile Bottom Navigation */
 .mobile-bottom-nav {
     position: fixed;
@@ -1464,6 +1470,11 @@ button.btn-submit:hover {
 .mobile-bottom-nav .nav-item:hover {
     color: var(--primary-color);
     background-color: rgba(230, 57, 70, 0.1);
+}
+
+/* Prevent body scrolling when modal is open */
+body.modal-open {
+    overflow: hidden;
 }
 
 /* Responsive Design */
