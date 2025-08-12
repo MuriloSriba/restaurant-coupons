@@ -122,12 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pixLoading.style.display = 'block'; // Show loading message
                 // Fetch PIX QR Code from backend
                 try {
-                    const response = await fetch('/api/pix-payment', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        // Get address information for PIX
+                    // Get address information for PIX
                 const streetName = pixStreetNameElement.value.trim();
                 const streetNumber = parseInt(pixStreetNumberElement.value.trim());
                 const city = pixCityElement.value.trim();
