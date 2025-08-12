@@ -30,13 +30,19 @@ router.post('/process-payment', async (req, res) => {
         res.status(201).json(result);
     } catch (error) {
         console.error('Error processing payment:', error);
+        if (error.cause) {
+            console.error('Mercado Pago API error cause:', error.cause);
+        }
+        if (error.status) {
+            console.error('Mercado Pago API error status:', error.status);
+        }
         res.status(500).json({ error: error.message || 'Failed to process payment' });
     }
 });
 
 router.post('/', async (req, res) => {
     console.log('Received request for /pix-payment');
-    const { amount, description } = req.body;
+    const { amount, description, payerEmail } = req.body; 
 
     try {
         const pixPaymentData = {
@@ -44,8 +50,17 @@ router.post('/', async (req, res) => {
             description: description,
             payment_method_id: 'pix',
             payer: {
-                email: 'test_user@example.com', // Substitua pelo email real do usuário
+                email: payerEmail || 'test_user@example.com', 
             },
+            // Adding recipient's PIX key (assuming this is the correct way based on common API patterns)
+            // This might need adjustment based on actual Mercado Pago PIX API documentation
+            point_of_interaction: {
+                transaction_data: {
+                    qr_code_info: {
+                        email: 'riba.murilo@gmail.com' // Recipient's PIX key
+                    }
+                }
+            }
         };
 
         const result = await mercadopago.payment.create(pixPaymentData);
