@@ -59,10 +59,10 @@ app.options('*', cors(corsOptions));
 app.use(express.json({ limit: '5mb' }));
 
 // API Routes
-app.use('/api/restaurants', restaurantsRouter);
-app.use('/api/coupons', couponsRouter);
-app.use('/api/auth', authRouter);
-app.use('/api/pix-payment', paymentRouter);
+app.use('/restaurants', restaurantsRouter);
+app.use('/coupons', couponsRouter);
+app.use('/auth', authRouter);
+app.use('/pix-payment', paymentRouter);
 
 // Make db pool available to all routes
 app.locals.db = pool;

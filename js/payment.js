@@ -9,6 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const pixCopyButton = document.getElementById('pixCopyButton');
     const pixLoading = document.getElementById('pixLoading');
 
+    // New address input elements for PIX
+    const pixStreetNameElement = document.getElementById('pixStreetName');
+    const pixStreetNumberElement = document.getElementById('pixStreetNumber');
+    const pixCityElement = document.getElementById('pixCity');
+    const pixStateElement = document.getElementById('pixState');
+    const pixZipCodeElement = document.getElementById('pixZipCode');
+
     const publicKey = 'TEST-4f89ed7c-eb97-48a2-a7c1-a056df9601a1'; // Substitua pela sua chave pública
     const mercadopago = new MercadoPago(publicKey, { locale: 'pt_BR' }); // Adicionado locale
 
@@ -120,9 +127,40 @@ document.addEventListener('DOMContentLoaded', () => {
                         headers: {
                             'Content-Type': 'application/json',
                         },
+                        // Get address information for PIX
+                const streetName = pixStreetNameElement.value.trim();
+                const streetNumber = parseInt(pixStreetNumberElement.value.trim());
+                const city = pixCityElement.value.trim();
+                const state = pixStateElement.value.trim();
+                const zipCode = pixZipCodeElement.value.trim();
+
+                // Basic validation for address fields
+                if (!streetName || isNaN(streetNumber) || !city || !state || !zipCode) {
+                    showFeedback('error', 'Por favor, preencha todos os campos de endereço para PIX.');
+                    pixLoading.style.display = 'none'; // Hide loading message
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/pix-payment', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
                         body: JSON.stringify({
                             amount: 25.00,
                             description: 'Assinatura Mensal FoodCupons - PIX',
+                            additional_info: {
+                                payer: {
+                                    address: {
+                                        street_name: streetName,
+                                        street_number: streetNumber,
+                                        city: city,
+                                        state: state,
+                                        zip_code: zipCode,
+                                    },
+                                },
+                            },
                         }),
                     });
 
