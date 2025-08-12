@@ -2,13 +2,38 @@ const express = require('express');
 const router = express.Router();
 const authenticateToken = require('../middleware/authenticateToken'); // Import the middleware
 
-// Get all coupons
-router.get('/', authenticateToken, async (req, res) => { // Apply middleware here
+// Get all coupons - visible to all but detailed access restricted
+router.get('/', async (req, res) => {
   const db = req.app.locals.db;
+  
+  // Always show coupons in list
+  const query = `
+    SELECT 
+      c.id, c.title, c.code, c.description, c.discount_type, c.discount_value, 
+      c.category, c.type, c.original_price, c.discounted_price, c.image,
+      r.name as restaurant_name 
+    FROM coupons c
+    LEFT JOIN restaurants r ON c.restaurant_id = r.id
+    ORDER BY c.id
+  `;
+
+  try {
+    const result = await db.query(query);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// Get coupon details - restricted access
+router.get('/:id', authenticateToken, async (req, res) => {
+  const db = req.app.locals.db;
+  const { id } = req.params;
 
   // Check user role and status from the authenticated token
   if (req.user.role !== 'admin' && req.user.status !== 'complete') {
-    return res.status(403).json({ message: 'Access denied. Only administrators and paying users can view coupons.' });
+    return res.status(403).json({ message: 'Access denied. Only administrators and paying users can view coupon details.' });
   }
 
   const query = `
@@ -17,8 +42,23 @@ router.get('/', authenticateToken, async (req, res) => { // Apply middleware her
       r.name as restaurant_name 
     FROM coupons c
     LEFT JOIN restaurants r ON c.restaurant_id = r.id
-    ORDER BY c.id
+    WHERE c.id = $1
   `;
+
+  try {
+    const result = await db.query(query, [id]);
+    const row = result.rows[0];
+
+    if (!row) {
+      return res.status(404).json({ message: 'Coupon not found' });
+  }
+
+    res.json(row);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
   try {
     const result = await db.query(query);

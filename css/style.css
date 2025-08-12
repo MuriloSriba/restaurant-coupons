@@ -602,7 +602,6 @@ button {
     border-radius: var(--border-radius);
     width: 90%;
     max-width: 800px;
-    max-height: 90vh;
     overflow-y: auto;
     position: relative;
     font-family: 'Inter', sans-serif;
