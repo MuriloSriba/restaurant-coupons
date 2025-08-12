@@ -543,7 +543,7 @@ function renderTopRatedRestaurantsSlide() {
     topRestaurants.forEach((restaurant, index) => {
         const slide = document.createElement('div');
         slide.className = 'hero-slide';
-        slide.style.background = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'600\' viewBox=\'0 0 1200 600\'%3E%3Crect width=\'1200\' height=\'600\' fill=\'%23ccc\'%3E%3C/rect%3E%3Ctext x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'50\' fill=\'%23fff\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E${encodeURIComponent(restaurant.name)}%3C/text%3E%3C/svg%3E')`;
+        slide.style.background = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='600' viewBox='0 0 1200 600'%3E%3Crect width='1200' height='600' fill='%23ccc'%3E%3C/rect%3E%3Ctext x='50%' y='50%' font-family='sans-serif' font-size='50' fill='%23fff' text-anchor='middle' dominant-baseline='middle'%3E${encodeURIComponent(restaurant.name)}%3C/text%3E%3C/svg%3E")`;
         slide.style.backgroundSize = 'cover';
         slide.style.backgroundPosition = 'center';
         slide.style.position = 'absolute';
