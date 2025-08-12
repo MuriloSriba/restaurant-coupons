@@ -50,7 +50,13 @@ router.post('/', async (req, res) => {
             description: description,
             payment_method_id: 'pix',
             payer: {
-                email: payerEmail || 'test_user@example.com', 
+                email: payerEmail || 'test_user@example.com',
+                // Mercado Pago often requires identification for PIX payments.
+                // Using placeholder values. Replace with actual payer identification from frontend if available.
+                identification: {
+                    type: 'CPF', // Example: 'CPF', 'CNPJ', 'RG'
+                    number: '12345678909' // Example: a valid CPF or CNPJ number
+                }
             },
             // Removed point_of_interaction as it's likely incorrect for direct PIX key specification.
             // The PIX key is usually associated with the Mercado Pago account linked to the ACCESS_TOKEN.
