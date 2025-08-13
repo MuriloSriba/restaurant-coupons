@@ -134,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!streetName || isNaN(streetNumber) || !city || !state || !zipCode) {
                         showFeedback('error', 'Por favor, preencha todos os campos de endereço para PIX.');
                         pixLoading.style.display = 'none'; // Hide loading message
+                        return; // Keep return here to prevent API call if validation fails
                     }
 
                     const response = await fetch('/api/pix-payment', {
@@ -197,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Create card token using Mercado Pago SDK
-            const token = await mercadopago.fields.createCardToken({
+            const token = await mercadago.fields.createCardToken({
                 cardholderName: cardholderName,
                 cardholderEmail: cardholderEmail,
                 identificationType: identificationType,
