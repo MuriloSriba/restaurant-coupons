@@ -4,7 +4,7 @@ const authenticateToken = require('../middleware/authenticateToken');
 const isAdmin = require('../middleware/isAdmin'); // Import centralized middleware
 
 // Get all coupons - visible to all
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', async (req, res) => {
   const db = req.app.locals.db;
   console.log('Coupons GET / route hit.');
   try {
