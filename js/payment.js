@@ -178,8 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } // This is the missing closing brace for the 'if' statement
         });
     });
-        });
-    });
 
     paymentForm.addEventListener('submit', async (e) => {
         e.preventDefault();
