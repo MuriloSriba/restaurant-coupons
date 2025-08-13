@@ -109,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tabs.forEach(tab => {
         tab.addEventListener('click', async () => {
+            console.log('Tab clicked:', tab.dataset.target);
             tabs.forEach(item => item.classList.remove('active'));
             contents.forEach(item => item.classList.remove('active'));
 
