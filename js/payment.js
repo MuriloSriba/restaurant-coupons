@@ -121,23 +121,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 pixQrCodeImage.style.display = 'none';
                 pixCopyPasteCode.textContent = '';
                 pixLoading.style.display = 'block'; // Show loading message
-                // Fetch PIX QR Code from backend
+                
                 try {
                     // Get address information for PIX
-                const streetName = pixStreetNameElement.value.trim();
-                const streetNumber = parseInt(pixStreetNumberElement.value.trim());
-                const city = pixCityElement.value.trim();
-                const state = pixStateElement.value.trim();
-                const zipCode = pixZipCodeElement.value.trim();
+                    const streetName = pixStreetNameElement.value.trim();
+                    const streetNumber = parseInt(pixStreetNumberElement.value.trim());
+                    const city = pixCityElement.value.trim();
+                    const state = pixStateElement.value.trim();
+                    const zipCode = pixZipCodeElement.value.trim();
 
-                // Basic validation for address fields
-                if (!streetName || isNaN(streetNumber) || !city || !state || !zipCode) {
-                    showFeedback('error', 'Por favor, preencha todos os campos de endereço para PIX.');
-                    pixLoading.style.display = 'none'; // Hide loading message
-                    return;
-                }
+                    // Basic validation for address fields
+                    if (!streetName || isNaN(streetNumber) || !city || !state || !zipCode) {
+                        showFeedback('error', 'Por favor, preencha todos os campos de endereço para PIX.');
+                        return;
+                    }
 
-                try {
                     const response = await fetch('/api/pix-payment', {
                         method: 'POST',
                         headers: {
@@ -172,13 +170,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch (error) {
                     showFeedback('error', `Erro na comunicação com o servidor para PIX: ${error.message}`);
                 } finally {
-                    pixLoading.style.display = 'none'; // Hide loading message
+                    pixLoading.style.display = 'none'; // Always hide loading message
                 }
-            } catch (error) {
-                console.error('Erro geral na aba PIX:', error);
-                showFeedback('error', `Erro ao processar PIX: ${error.message}`);
-                pixLoading.style.display = 'none';
-            }
         });
     });
 
