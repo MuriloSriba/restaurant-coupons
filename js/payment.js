@@ -172,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } finally {
                     pixLoading.style.display = 'none'; // Always hide loading message
                 }
+            } // This is the missing closing brace for the 'if' statement
         });
     });
 
