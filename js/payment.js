@@ -174,9 +174,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             showFeedback('error', `Erro na comunicação com o servidor para PIX: ${error.message}`);
                         } finally {
                             pixLoading.style.display = 'none'; // Always hide loading message
-                        }
-                    }
-            }
+                }
+            } // This is the missing closing brace for the 'if' statement
+        });
+    });
         });
     });
 
