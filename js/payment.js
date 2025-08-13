@@ -134,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!streetName || isNaN(streetNumber) || !city || !state || !zipCode) {
                         showFeedback('error', 'Por favor, preencha todos os campos de endereço para PIX.');
                         pixLoading.style.display = 'none'; // Hide loading message
-                        return; // Keep return here to prevent API call if validation fails
                     }
 
                     const response = await fetch('/api/pix-payment', {
