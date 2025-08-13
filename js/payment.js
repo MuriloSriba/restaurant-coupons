@@ -133,47 +133,49 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Basic validation for address fields
                     if (!streetName || isNaN(streetNumber) || !city || !state || !zipCode) {
                         showFeedback('error', 'Por favor, preencha todos os campos de endereço para PIX.');
-                        return;
-                    }
-
-                    const response = await fetch('/api/pix-payment', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            amount: 25.00,
-                            description: 'Assinatura Mensal FoodCupons - PIX',
-                            additional_info: {
-                                payer: {
-                                    address: {
-                                        street_name: streetName,
-                                        street_number: streetNumber,
-                                        city: city,
-                                        state: state,
-                                        zip_code: zipCode,
-                                    },
-                                },
-                            },
-                        }),
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        console.log('PIX response data:', data);
-                        pixQrCodeImage.src = `data:image/png;base64,${data.qrCodeBase64}`;
-                        pixCopyPasteCode.textContent = data.qrCode;
-                        pixQrCodeImage.style.display = 'block'; // Show QR code
+                        pixLoading.style.display = 'none'; // Hide loading message
                     } else {
-                        const error = await response.json();
-                        console.error('PIX error response:', error);
-                        showFeedback('error', `Erro ao gerar PIX: ${error.error || response.statusText}`);
+                        // Only attempt to fetch PIX if fields are valid
+                        try {
+                            const response = await fetch('/api/pix-payment', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    amount: 25.00,
+                                    description: 'Assinatura Mensal FoodCupons - PIX',
+                                    additional_info: {
+                                        payer: {
+                                            address: {
+                                                street_name: streetName,
+                                                street_number: streetNumber,
+                                                city: city,
+                                                state: state,
+                                                zip_code: zipCode,
+                                            },
+                                        },
+                                    },
+                                }),
+                            });
+
+                            if (response.ok) {
+                                const data = await response.json();
+                                console.log('PIX response data:', data);
+                                pixQrCodeImage.src = `data:image/png;base64,${data.qrCodeBase64}`;
+                                pixCopyPasteCode.textContent = data.qrCode;
+                                pixQrCodeImage.style.display = 'block'; // Show QR code
+                            } else {
+                                const error = await response.json();
+                                console.error('PIX error response:', error);
+                                showFeedback('error', `Erro ao gerar PIX: ${error.error || response.statusText}`);
+                            }
+                        } catch (error) {
+                            showFeedback('error', `Erro na comunicação com o servidor para PIX: ${error.message}`);
+                        } finally {
+                            pixLoading.style.display = 'none'; // Always hide loading message
+                        }
                     }
-                } catch (error) {
-                    showFeedback('error', `Erro na comunicação com o servidor para PIX: ${error.message}`);
-                } finally {
-                    pixLoading.style.display = 'none'; // Always hide loading message
-                }
             }
         });
     });
