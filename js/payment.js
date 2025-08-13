@@ -160,11 +160,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (response.ok) {
                         const data = await response.json();
+                        console.log('PIX response data:', data);
                         pixQrCodeImage.src = `data:image/png;base64,${data.qrCodeBase64}`;
                         pixCopyPasteCode.textContent = data.qrCode;
                         pixQrCodeImage.style.display = 'block'; // Show QR code
                     } else {
                         const error = await response.json();
+                        console.error('PIX error response:', error);
                         showFeedback('error', `Erro ao gerar PIX: ${error.error || response.statusText}`);
                     }
                 } catch (error) {
@@ -172,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } finally {
                     pixLoading.style.display = 'none'; // Always hide loading message
                 }
-            } // This is the missing closing brace for the 'if' statement
+            }
         });
     });
 
