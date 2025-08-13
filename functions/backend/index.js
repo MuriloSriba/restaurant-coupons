@@ -150,7 +150,7 @@ module.exports.handler = (event, context) => {
   return dbInitializedPromise
     .then(() => {
       console.log('Database initialized. Creating serverless handler...');
-      const serverlessHandler = serverless(app);
+      const serverlessHandler = serverless(app, { basePath: '/api' });
       console.log('Invoking serverless handler with event.');
       return serverlessHandler(event, context);
     })
