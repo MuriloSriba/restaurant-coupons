@@ -4,24 +4,20 @@ const authenticateToken = require('../middleware/authenticateToken');
 const isAdmin = require('../middleware/isAdmin'); // Import centralized middleware
 
 // Get all coupons - visible to all
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
   const db = req.app.locals.db;
-  
-  const query = `
-    SELECT 
-      c.id, c.title, c.description, c.discount_type, c.discount_value, 
-      c.category, c.type, c.original_price, c.discounted_price, c.image,
-      r.name as restaurant_name 
-    FROM coupons c
-    LEFT JOIN restaurants r ON c.restaurant_id = r.id
-    ORDER BY c.id
-  `;
-
+  console.log('Coupons GET / route hit.');
   try {
-    const result = await db.query(query);
+    const result = await db.query(
+      `SELECT c.*, r.name as restaurant_name 
+       FROM coupons c
+       JOIN restaurants r ON c.restaurant_id = r.id
+       ORDER BY c.id`
+    );
+    console.log('Fetched coupons:', result.rows.length);
     res.json(result.rows);
   } catch (err) {
-    console.error(err);
+    console.error('Error in coupons GET /:', err);
     return res.status(500).json({ message: 'Internal server error' });
   }
 });

@@ -5,12 +5,13 @@ const isAdmin = require('../middleware/isAdmin'); // Import centralized middlewa
 // Get all restaurants
 router.get('/', async (req, res) => {
   const db = req.app.locals.db;
-  
+  console.log('Restaurants GET / route hit.');
   try {
     const result = await db.query('SELECT * FROM restaurants ORDER BY id');
+    console.log('Fetched restaurants:', result.rows.length);
     res.json(result.rows);
   } catch (err) {
-    console.error(err);
+    console.error('Error in restaurants GET /:', err);
     return res.status(500).json({ message: 'Internal server error' });
   }
 });
