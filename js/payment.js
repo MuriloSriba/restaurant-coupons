@@ -174,6 +174,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 } finally {
                     pixLoading.style.display = 'none'; // Hide loading message
                 }
+            } catch (error) {
+                console.error('Erro geral na aba PIX:', error);
+                showFeedback('error', `Erro ao processar PIX: ${error.message}`);
+                pixLoading.style.display = 'none';
             }
         });
     });
